@@ -1,0 +1,28 @@
+.register-form {
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 40vh;
+  background: white;
+  width : 80%;
+  margin-top : 50px;
+  
+  box-shadow: -60px 0px 100px -90px #000000,
+               60px 0px 100px -90px #000000;
+}
+
+.input {
+  margin-bottom : 30px;
+  text-align : center;
+  width : 80%;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #343a40;
+  font-size : 1.5rem; 
+}
+
+.submit {
+  
+}

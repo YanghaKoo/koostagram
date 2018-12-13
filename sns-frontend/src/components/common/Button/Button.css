@@ -1,0 +1,31 @@
+a{
+  text-decoration: none;
+  color : white;
+}
+
+a:hover, a:active, a:visited {
+  text-decoration: none;
+}
+
+.button {
+  color : white;
+  border : 3px solid white;
+  padding : 5px;
+  font-weight: 300;
+  font-size : 1rem;
+}
+
+.disable{
+  color : #868e96;
+  border : 3px solid #868e96;
+  padding : 5px;
+  font-weight: 300;
+  font-size : 1rem;
+}
+
+@media (max-width: 401px) { 
+  .button {
+    font-size : 0.9rem;
+  }
+
+}

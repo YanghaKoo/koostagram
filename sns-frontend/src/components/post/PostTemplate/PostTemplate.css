@@ -1,0 +1,25 @@
+.center{
+  display:grid;
+  grid-auto-rows : 200px;
+  grid-template-areas: "pic pic pic content"
+                       "pic pic pic content" 
+                       "pic pic pic comment" ;
+  width : 80%;
+  height: 80vh;
+  margin-top : 20px;
+}
+
+.pic{
+  grid-area: pic;
+  background: blue;
+  
+}
+
+.content{
+  grid-area : content;
+  background: yellow;
+}
+.comment{
+  grid-area : comment;
+  background: yellowgreen;
+}
