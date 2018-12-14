@@ -5,6 +5,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "immutable": "^3.8.2",
+    "include-media": "^1.4.9",
+    "node-sass": "^4.11.0",
+    "open-color": "^1.6.3",
     "react": "^16.6.3",
     "react-dom": "^16.5.2",
     "react-dropzone": "^5.1.1",
@@ -13,7 +16,8 @@
     "react-scripts": "^2.1.1",
     "redux": "^4.0.0",
     "redux-actions": "^2.6.1",
-    "redux-pender": "^1.2.1"
+    "redux-pender": "^1.2.1",
+    "sass-loader": "^7.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

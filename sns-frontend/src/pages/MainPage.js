@@ -1,10 +1,10 @@
 import React from 'react';
-import MainTemplate from 'components/main/MainTemplate'
+import LoginContainer from 'containers/main/LoginContainer';
 
 const MainPage = () => {
   return (
     <div>
-      <MainTemplate/>
+      <LoginContainer/>
     </div>
   );
 };

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import "./Login.css";
+import "./Login.scss";
 import image from "images/mainpage.jpg";
 import {Link} from 'react-router-dom'
 import axios from "axios";
 
 class Login extends Component {
-  render() {
-    
+  render() {    
     return (
       <div className="login">
         <div className="inner">

@@ -3,7 +3,6 @@ const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const path = require('path')
 const session = require('express-session')
-// const fileUpload = require('express-fileupload');
 const cors = require('cors');
 
 const passport = require('passport')
