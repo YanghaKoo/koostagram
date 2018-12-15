@@ -56,7 +56,13 @@ router.post("/", upload.single('img'), async (req, res, next) => {              
   }
 });
 
+router.post("/getPosts", async (req,res,next)=>{
+  const {userid} = req.body
+  console.log(typeof userid)
 
+  
+  res.json({1:2})
+})
 
 //기존 글만 업로드
 // router.post('/',  async (req,res, next)=>{

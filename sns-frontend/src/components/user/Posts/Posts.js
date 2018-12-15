@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./Posts.css";
+import "./Posts.scss";
 
 // 얘는 일단 사진을 받아와야해
 // 해서 map함수로 사진 조그만한거 받아와서 렌더링 하는 식으로

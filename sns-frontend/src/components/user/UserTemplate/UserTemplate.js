@@ -1,13 +1,12 @@
 import React from 'react';
-import './UserTemplate.css'
-import Profile from 'components/user/Profile'
-import Header from 'components/common/Header'
+import './UserTemplate.scss'
 import Posts from '../Posts';
+import ProfileContainer from '../../../containers/user/ProfileContainer';
 
 const UserTemplate = () => {
   return (
-    <div>
-      <Profile />
+    <div>      
+      <ProfileContainer/>
       <Posts/>
     </div>
   );

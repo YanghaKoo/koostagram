@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header.css'
+import './Header.scss'
 import Button from 'components/common/Button'
 import {Link} from 'react-router-dom'
 
