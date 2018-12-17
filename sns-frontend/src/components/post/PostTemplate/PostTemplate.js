@@ -4,6 +4,7 @@ import "./PostTemplate.scss";
 import { withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
 import Comment from "../Comment/Comment";
+import CommentContainer from "../../../containers/user/CommentContainer";
 
 class PostTemplate extends Component {
   state = {
@@ -46,8 +47,9 @@ class PostTemplate extends Component {
             <p>
             {content}test
             </p>
-          </div>
-          <Comment match={this.props.match}/>          
+          </div> 
+          {/* <Comment/>          */}
+          <CommentContainer match={this.props.match}/>
         </div>
       </div>
     );

@@ -37,7 +37,6 @@ db.User.belongsToMany(db.User, {through : 'Follow', as : "Following", foreignKey
 // 한사람이 여러개를 좋아요 할 수 있고, 하나의 게시글에 좋아요가 여러개 달릴수 있음 --> 다대다
 // 사용자와 게시글간의 좋아요라는 다대다 관계가 맺어지는 거지
 db.User.belongsToMany(db.Post, {through : 'Like'})
-db.Post.belongsToMany(db.User, {through : 'Like'})
-
+db.Post.belongsToMany(db.User, {through : 'Like', as :"Liker"})
 
 module.exports = db;
