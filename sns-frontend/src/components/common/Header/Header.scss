@@ -8,6 +8,7 @@
   color : white;
   font-weight: 600;
   font-size : 2rem;
+  box-shadow: 5px 5px 39px -9px #000000;
 
   @include media("<small"){
     font-size: 1.7rem;

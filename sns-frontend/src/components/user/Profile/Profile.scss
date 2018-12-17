@@ -1,9 +1,12 @@
   .profile {
-    background: gray;
+    background: #e9ecef;
     //height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 5px 5px 39px -9px #000000;
+    margin-bottom : 30px;
+    
     .profile-pic{
       background: $oc-gray-5;
       width : 200px;

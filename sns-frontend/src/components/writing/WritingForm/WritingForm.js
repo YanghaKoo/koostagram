@@ -28,10 +28,14 @@ class WritingForm extends Component {
       headers : { 'Content-Type': 'multipart/form-data'}
     }
     
-    await axios.post('/post', fd, contentType )
-      .then(res=>console.log(res))
-      .catch(e=>console.log(e))
+    const submit = await axios.post('/post', fd, contentType )
+      // .then(res=>console.log(res))
+      // .catch(e=>console.log(e))
+    console.log(submit.data)
+    history.push(`/user/${submit.data.userId}/${submit.data.id}`)
     
+
+
     // 지금 postInfo랑 redux에서의 action.payload.data가 같은걸 가리키고 있음
     
     // const postInfo = await onSubmit(data);      // onSubmit(data,img)

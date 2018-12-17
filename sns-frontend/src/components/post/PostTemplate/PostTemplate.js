@@ -1,21 +1,57 @@
 import React, { Component } from "react";
-import Header from "components/common/Header";
-import "./PostTemplate.css";
+import axios from "axios";
+import "./PostTemplate.scss";
+import { withRouter } from "react-router-dom";
+import ReactLoading from "react-loading";
+import Comment from "../Comment/Comment";
 
 class PostTemplate extends Component {
+  state = {
+    img: null,
+    content: null,
+    nick : null
+  };
+
+  async componentDidMount() {
+    const { userid, postid } = this.props.match.params;
+    const post = await axios.post("/post/getSinglePost", { postid });
+    const user = await axios.post('/post/getNick', {userid})
+    
+    console.log(post.data);
+    this.setState({
+      img: post.data.img,
+      content: post.data.content,
+      nick : user.data
+    });
+  }
+
   render() {
+    const { img, content } = this.state;
+    if (!img) {
+      return (
+        <div className="loading">
+          <ReactLoading type="bars" color="black" height={"20%"} width="20%" />
+        </div>
+      );
+    }
+
     return (
       <div className="post-template">
-        <center>
-        <div className="center">
-          <div className="pic">사진</div>
-          <div className="content">내용 영역</div>
-          <div className="comment">댓글 영역</div>
+        <div className="pic">
+          <img src={img} />
         </div>
-        </center>
+        <div className="right">
+          <div className="content">
+            <b>{this.state.nick}</b>
+            <p>
+            {content}test
+            </p>
+          </div>
+          <Comment match={this.props.match}/>          
+        </div>
       </div>
     );
   }
 }
 
-export default PostTemplate;
+export default withRouter(PostTemplate);

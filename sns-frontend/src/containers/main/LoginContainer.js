@@ -11,7 +11,7 @@ class LoginContainer extends Component {
   constructor(props){
     super(props)
     const {LoginActions} = this.props
-    LoginActions.login();
+    LoginActions.login();    
   }
 
   render() {
@@ -20,7 +20,7 @@ class LoginContainer extends Component {
       // console.log(user.email)
       this.props.history.push(`/user/${user.id}`)
     }
-
+   
     return (
       <div>
         <Login />

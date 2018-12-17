@@ -13,9 +13,9 @@ class App extends Component {
         {user ? (<Header isAble={true} to={`/user/${user.id}`} />) : (<Header isAble={false} to="123"/>)}             
         <Switch>
           <Route exact path='/' component={MainPage} />          
-          <Route path='/post/:userid/:postId' component={EachPostPage} />
-          <Route path='/write' component={WritingPage} />
+          <Route path='/user/:userid/:postid' component={EachPostPage} />
           <Route path='/user/:userid' component={UserPage} />
+          <Route path='/write' component={WritingPage} />          
           <Route path="/register" component={RegisterPage} />
           <Route component={NotFound} />
         </Switch>

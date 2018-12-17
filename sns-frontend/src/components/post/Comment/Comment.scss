@@ -1,0 +1,12 @@
+
+.comment{
+  height: 36%;
+  background: $oc-red-5;
+  padding : 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include media("<large"){ 
+    width: 100%;
+   }
+}

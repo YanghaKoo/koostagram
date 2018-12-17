@@ -4,6 +4,8 @@ import Posts from '../Posts';
 import ProfileContainer from '../../../containers/user/ProfileContainer';
 
 const UserTemplate = () => {
+
+    
   return (
     <div>      
       <ProfileContainer/>
