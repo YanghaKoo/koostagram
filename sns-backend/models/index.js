@@ -33,6 +33,7 @@ db.Hashtag.belongsToMany(db.Post, {through : 'PostHashtag'});
 db.User.belongsToMany(db.User, {through : 'Follow', as : "Followers", foreignKey : 'followingId'}); // 얘가 일반인들팔로우 하는애들
 db.User.belongsToMany(db.User, {through : 'Follow', as : "Following", foreignKey : 'followerId'});  // 얘가 유명한사람
 
+
 // 게시글 좋아요 및 취소 기능
 // 한사람이 여러개를 좋아요 할 수 있고, 하나의 게시글에 좋아요가 여러개 달릴수 있음 --> 다대다
 // 사용자와 게시글간의 좋아요라는 다대다 관계가 맺어지는 거지

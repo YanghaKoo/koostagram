@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
 import Profile from '../../components/user/Profile/Profile';
+import {connect} from 'react-redux'
 
 class ProfileContainer extends Component {
-  render() {
+  render() {        
     return (
       <div>
         <Profile user={this.props.user}/>

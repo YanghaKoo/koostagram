@@ -63,11 +63,22 @@ router.post('/login',(req,res, next)=>{    // req.body.eamil , req.body.password
   })(req,res,next);
 })
 
+
+
+
 router.get('/logout', (req,res)=>{
   req.logout();
   req.session.destroy(); // req.user, 세션을 지워주는 거임
   res.redirect('/auth/login')
   
+})
+
+
+// 프론트에서 로그아웃
+router.post('/logout',(req,res)=>{
+  req.logout();
+  req.session.destroy();
+  res.redirect('/auth/login')
 })
 
 

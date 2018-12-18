@@ -23,13 +23,14 @@ class Post extends Component {
   render() {
     const {item} = this.props
     return (
-      <img
-        src={item.img}
-        style={{ width: "100%", height: "100%" }}
-        alt=""
-        onClick={this.handleClick}
-        
-      />
+      // <div className="post">
+        <img
+          src={item.img}
+          style={{ width: "100%", height: "100%" }}
+          alt=""
+          onClick={this.handleClick}        
+        />
+      // </div>
     );
   }
 }
@@ -47,8 +48,8 @@ class Posts extends Component {
     axios.post("/post/getPosts", { userid }).then(posts => {
       this.setState({
         posts: posts.data.reverse()
-      });
-      console.log(this.state.posts);
+      })
+      // console.log(this.state.posts);
     });
   }
 

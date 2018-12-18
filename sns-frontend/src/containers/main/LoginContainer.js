@@ -7,24 +7,23 @@ import {withRouter} from 'react-router-dom'
 
 class LoginContainer extends Component {
   
-  
   constructor(props){
-    super(props)
+    super(props)        
+    const { user } = this.props
+    if(user){      
+      this.props.history.push(`/user/${user.id}`)    
+      return  
+    }    
+  }  
+  
+  componentDidMount() {
     const {LoginActions} = this.props
     LoginActions.login();    
   }
 
   render() {
-    const { user } = this.props
-    if(user){
-      // console.log(user.email)
-      this.props.history.push(`/user/${user.id}`)
-    }
-   
     return (
-      <div>
         <Login />
-      </div>
     );
   }
 }

@@ -7,6 +7,7 @@
     box-shadow: 5px 5px 39px -9px #000000;
     margin-bottom : 30px;
     
+    
     .profile-pic{
       background: $oc-gray-5;
       width : 200px;
@@ -20,13 +21,18 @@
     .user-detail{
       background: $oc-gray-5;
       width : 500px;
-      height: 200px;
+      height: 170px;
       margin-left: 10%;
+      padding : 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
     }     
 
     @include media("<medium"){
       flex-direction: column;
       justify-content: space-around;
+      
       .profile-pic{
         background: blue;
         width : 150px;
@@ -38,6 +44,7 @@
       }
       .user-detail{
         margin-left : 0;
+        width : 100%;
       }
     }
   }

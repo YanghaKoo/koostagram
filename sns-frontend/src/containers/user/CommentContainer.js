@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 
 class CommentContainer extends Component {
   render() {
-    const { match, id, nick } = this.props
+    const { match, user } = this.props    
+    console.log(user)
     return (
-      <div>
-        <Comment match={match} id={id} nick={nick}/>
+      <div style={{height : "36%"}}>
+        <Comment match={match} user={user}/>
       </div>
     );
   }
@@ -16,7 +17,6 @@ class CommentContainer extends Component {
 
 export default connect(
   state=>({
-    id : state.login.user.id,
-    nick : state.login.user.nick
+    user : state.login.user
   })
 )(CommentContainer)

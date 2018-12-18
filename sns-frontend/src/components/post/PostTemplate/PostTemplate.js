@@ -10,19 +10,32 @@ class PostTemplate extends Component {
   state = {
     img: null,
     content: null,
-    nick : null
+    nick: null
   };
 
-  async componentDidMount() {
+  async componentWillMount() {
     const { userid, postid } = this.props.match.params;
+
+    // 게시글 가져오기 실패는 빈 배열이라도 리턴해 주니까 catch가 아닌 이런 방식으로 해야함
     const post = await axios.post("/post/getSinglePost", { postid });
-    const user = await axios.post('/post/getNick', {userid})
-    
+    if (!post.data) {
+      alert("Wrong Request(해당 게시글이 존재하지 않습니다.)");
+      this.props.history.push("/");
+      return;
+    }
+
+    // nick은 가져오기 실패시 catch로 디버깅
+    const user = await axios.post("/post/getNick", { userid }).catch(e => {
+      alert("Wrong Request(해당 유저가 존재하지 않습니다.)");
+      this.props.history.push("/");
+      return;
+    });
+
     console.log(post.data);
     this.setState({
       img: post.data.img,
       content: post.data.content,
-      nick : user.data
+      nick: user.data
     });
   }
 
@@ -39,17 +52,14 @@ class PostTemplate extends Component {
     return (
       <div className="post-template">
         <div className="pic">
-          <img src={img} />
+          <img src={img} alt="" />
         </div>
         <div className="right">
           <div className="content">
-            <b>{this.state.nick}</b>
-            <p>
-            {content}test
-            </p>
-          </div> 
-          {/* <Comment/>          */}
-          <CommentContainer match={this.props.match}/>
+            <b>@{this.state.nick}</b>
+            <p>{content}</p>
+          </div>
+          <CommentContainer match={this.props.match} />
         </div>
       </div>
     );
