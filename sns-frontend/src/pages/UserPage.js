@@ -1,13 +1,17 @@
 import React from 'react';
-import UserTemplate from 'components/user/UserTemplate'
+import ProfileContainer from 'containers/user/ProfileContainer';
+import Posts from 'components/user/Posts'
+import {withRouter} from 'react-router-dom'
 
 // 나중에 버튼으로 세션으로 ~~
-const UserPage = () => {
+const UserPage = ({match}) => {
+  const { userid : uid } = match.params;
   return (
     <div>
-      <UserTemplate />   
+      <ProfileContainer uid={uid} match={match}/>
+      <Posts uid={uid}/>
     </div>
   );
 };
 
-export default UserPage;
+export default withRouter(UserPage)

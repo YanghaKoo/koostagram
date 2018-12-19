@@ -13,11 +13,12 @@ class Comment extends Component {
   }
   
   // likeUsers에 좋아요 누른 애들 정보 들어있음
-  async componentWillMount() {
+  async componentDidMount() {
     const { postid } = this.props.match.params;
     const { user } = this.props    
     const likeUsers = await axios.post('/post/getLikeCount', {postid})    
     
+    console.log(user)
     this.setState({
       likeCount : likeUsers.data.length
     })
@@ -31,6 +32,7 @@ class Comment extends Component {
         }
       })    
     }
+ 
     
   }
   

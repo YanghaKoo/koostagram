@@ -1,20 +1,28 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import "./Profile.scss";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
 
-class Profile extends Component {
+class Profile extends PureComponent {
   state = {
     nick: "",
     buttonLabel: "follow",
     followers: [],
-    following: []
+    following: [], 
+    user : null   
   };
+ 
+  async componentDidMount() {      
+    this.initializer()
+  }
 
-  // 왜 user가 not defined??????????????? 프론트의 세션에 받아놓을수 있는 방법이 있나???????
-  async componentWillMount() {
+  componentDidUpdate(prevProps, prevState) {    
+    const {uid} = this.props    
+    if(prevProps.uid !== uid)  this.initializer();        
+  }
+
+  initializer = async () => {
     const { userid } = this.props.match.params;
-    const { history, user } = this.props;
+    const { history } = this.props;    
 
     const nick = await axios.post("/post/getNick", { userid }).catch(e => {
       alert("Wrong Request(해당 유저가 존재하지 않습니다.)");
@@ -29,15 +37,23 @@ class Profile extends Component {
       followers: followers.data,
       following: following.data
     });
+     
+    this.checkFollow()
+  }
 
-    followers.data.map(item => {
-      if (user && item.id == user.id) {
-        this.setState({
-          buttonLabel: "unfollow"
-        });
-      }
-    });
-  
+  checkFollow = () => {
+    const {user} = this.props
+    if(user){      
+      console.log(1)
+      this.state.followers.map((item)=>{
+        console.log('inside')
+        if (item.id === user.id) {
+          this.setState({
+            buttonLabel: "unfollow"
+          });
+        }
+      })
+    }
   }
 
 
@@ -46,23 +62,30 @@ class Profile extends Component {
     //팔로우 버튼 누르면
     const { userid } = this.props.match.params;
     const { user } = this.props;
+    const { followers } = this.state
 
     if (this.state.buttonLabel === "follow") {
       axios.post("/post/follow", { followid: user.id, userid });
       this.setState({
-        buttonLabel: "unfollow"
+        buttonLabel: "unfollow",
+        followers : followers.concat({ id : user.id, nick : user.nick })              
       });
     } else {
       axios.post("/post/unfollow", { followid: user.id, userid });
       this.setState({
-        buttonLabel: "follow"
+        buttonLabel: "follow",
+        followers : followers.filter(item => item.id !== user.id)              
       });
     }
   };
-
+  
   render() {
     const { userid } = this.props.match.params;
     const { user } = this.props;
+    // const { buttonLabel, followers } = this.state    
+
+    console.log(this.state.followers)
+
 
     return (
       <div className="profile">
@@ -98,4 +121,4 @@ class Profile extends Component {
   }
 }
 
-export default withRouter(Profile);
+export default Profile;

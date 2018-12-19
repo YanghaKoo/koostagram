@@ -3,7 +3,6 @@ import axios from "axios";
 import "./PostTemplate.scss";
 import { withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
-import Comment from "../Comment/Comment";
 import CommentContainer from "../../../containers/user/CommentContainer";
 
 class PostTemplate extends Component {
@@ -13,8 +12,10 @@ class PostTemplate extends Component {
     nick: null
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { userid, postid } = this.props.match.params;
+
+
 
     // 게시글 가져오기 실패는 빈 배열이라도 리턴해 주니까 catch가 아닌 이런 방식으로 해야함
     const post = await axios.post("/post/getSinglePost", { postid });
@@ -31,7 +32,8 @@ class PostTemplate extends Component {
       return;
     });
 
-    console.log(post.data);
+    // console.log(post.data);
+    
     this.setState({
       img: post.data.img,
       content: post.data.content,

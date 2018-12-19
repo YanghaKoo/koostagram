@@ -9,7 +9,8 @@ const LOGIN = 'login/LOGIN'
 export const login = createAction(LOGIN,checkLogin)
 
 const initialState = {
-  user : null
+  user : null,
+  id : null
 }
 
 // reducer
