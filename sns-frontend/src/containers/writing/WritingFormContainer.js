@@ -11,10 +11,9 @@ class WritingFormContainer extends Component {
       <div>
         <WritingForm
           input={input}          
-          onSubmit={PostActions.submit}
-          // loading ={loading}
-          // failure ={failure}
+          onSubmit={PostActions.submit}          
           onChange={(e)=>{PostActions.change(e)}}
+          
         />
       </div>
     );
@@ -24,8 +23,6 @@ class WritingFormContainer extends Component {
 export default connect(
   state => ({
     input: state.post.input,
-    // loading : state.pender.pending['SUBMIT'],
-    // failure : state.pender.failure['SUBMIT']
   }),
   dispatch => ({
     PostActions: bindActionCreators(postActions, dispatch)

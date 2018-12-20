@@ -10,7 +10,7 @@ class WritingForm extends Component {
 
 
   handleSubmit = async data => {
-    const { onSubmit, history, input } = this.props;
+    const { onSubmit, history, input, onChange } = this.props;
     const { selectedFile } = this.state
     // content가 비어있다면 경고창
 
@@ -32,6 +32,7 @@ class WritingForm extends Component {
       // .then(res=>console.log(res))
       // .catch(e=>console.log(e))
     console.log(submit.data)
+    onChange('')
     history.push(`/user/${submit.data.userId}/${submit.data.id}`)
     
 

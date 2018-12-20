@@ -5,8 +5,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 class ProfileContainer extends Component {
-  render() {    
-    console.log(this.props.user)
+  render() {        
     return (
       <div>
         <Profile

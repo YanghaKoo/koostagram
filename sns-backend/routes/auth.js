@@ -57,7 +57,8 @@ router.post('/login',(req,res, next)=>{    // req.body.eamil , req.body.password
         return next(loginError)
       }
       
-      return res.redirect(`/user/${user.id}`)
+      // return res.redirect(`/user/${user.id}`)
+      return res.redirect('/feed')
     })
 
   })(req,res,next);

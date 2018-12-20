@@ -8,7 +8,7 @@ const Header = ({isAble, to}) => {
     <div className="header">
       <Link className="logo" to="/">Koostagram</Link>
       <div className="right-part">
-        <Button isAble={isAble} to='/write'>Write Post</Button>
+        <Button isAble={isAble} to='/write'>Write Post</Button>              
         <Button isAble={isAble} to={to} >My Page</Button>        
       </div>
     </div>

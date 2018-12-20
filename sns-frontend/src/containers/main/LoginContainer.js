@@ -11,7 +11,8 @@ class LoginContainer extends Component {
     super(props)        
     const { user } = this.props
     if(user){      
-      this.props.history.push(`/user/${user.id}`)    
+      // this.props.history.push(`/user/${user.id}`)    
+      this.props.history.push('/feed')
       return  
     }    
   }  

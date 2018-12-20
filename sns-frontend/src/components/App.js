@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Switch, Route } from 'react-router-dom'
-import {MainPage, EachPostPage, UserPage, WritingPage, NotFound, RegisterPage} from 'pages'
+import {MainPage, EachPostPage, UserPage, WritingPage, NotFound, RegisterPage, FeedPage} from 'pages'
 import Header from 'components/common/Header'
 
 
@@ -17,6 +17,7 @@ class App extends Component {
           <Route path='/user/:userid' component={UserPage} />
           <Route path='/write' component={WritingPage} />          
           <Route path="/register" component={RegisterPage} />
+          <Route path="/feed" component={FeedPage} />
           <Route component={NotFound} />
         </Switch>
       </div>

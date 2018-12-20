@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const multer = require("multer");
 const path = require("path");
+const Sequelize = require('sequelize')
 
 const { Post, Hashtag, User } = require("../models");
 
@@ -189,5 +190,41 @@ router.post("/getFollowing", async (req, res, next) => {
     next(e);
   }
 });
+
+
+// following 하는 feed 가져오기
+router.post("/getFollowingPosts", async (req,res,next)=>{
+  const { userid } = req.body;
+  try {
+    const user = await User.find({
+      where : {id : userid}
+    });
+
+    let following = await user.getFollowing()
+    following = following.map(item => ( item.id))
+
+
+    try{
+      const post = await Post.findAll({
+        where : {
+          userId : {
+            [Sequelize.Op.or] : following
+          }
+        }
+      })      
+      console.log(post)
+      res.json(post)
+    
+    }catch(e){
+      console.log(e);
+      next(e);
+    }
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+})
+
+
 
 module.exports = router;

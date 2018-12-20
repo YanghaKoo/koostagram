@@ -27,6 +27,11 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+      
+      .show-follow{
+        font-size : 2rem;
+        cursor: pointer;
+      }
     }     
 
     @include media("<medium"){

@@ -1,28 +1,42 @@
-import React, { Component, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import "./Profile.scss";
 import axios from "axios";
+import Modal from "../../common/Modal/Modal";
 
 class Profile extends PureComponent {
   state = {
     nick: "",
     buttonLabel: "follow",
     followers: [],
-    following: [], 
-    user : null   
+    following: [],
+    modal: false,
+    select : 0
   };
- 
-  async componentDidMount() {      
-    this.initializer()
+
+  async componentDidMount() {
+    this.initializer();
   }
 
-  componentDidUpdate(prevProps, prevState) {    
-    const {uid} = this.props    
-    if(prevProps.uid !== uid)  this.initializer();        
+  componentDidUpdate(prevProps, prevState) {
+    const { uid } = this.props;
+    if (prevProps.uid !== uid) this.initializer();
   }
 
+  renderModal = () => {
+    return <Modal open={this.state.modal} />;
+  };
+
+  // 초기화 함수
   initializer = async () => {
     const { userid } = this.props.match.params;
-    const { history } = this.props;    
+    const { history } = this.props;
+
+    // 버튼라벨 초기화
+    if (this.state.buttonLabel === "unfollow") {
+      this.setState({
+        buttonLabel: "follow"
+      });
+    }
 
     const nick = await axios.post("/post/getNick", { userid }).catch(e => {
       alert("Wrong Request(해당 유저가 존재하지 않습니다.)");
@@ -37,67 +51,88 @@ class Profile extends PureComponent {
       followers: followers.data,
       following: following.data
     });
-     
-    this.checkFollow()
-  }
+    this.checkFollow();
+  };
 
   checkFollow = () => {
-    const {user} = this.props
-    if(user){      
-      console.log(1)
-      this.state.followers.map((item)=>{
-        console.log('inside')
+    const { user } = this.props;
+    const { followers } = this.state;
+
+    if (user) {
+      followers.map(item => {
+        console.log("inside");
         if (item.id === user.id) {
+          console.log("inininininside");
           this.setState({
             buttonLabel: "unfollow"
           });
         }
-      })
+      });
     }
-  }
-
-
+  };
 
   handleFollow = e => {
     //팔로우 버튼 누르면
     const { userid } = this.props.match.params;
     const { user } = this.props;
-    const { followers } = this.state
+    const { followers, buttonLabel } = this.state;
 
-    if (this.state.buttonLabel === "follow") {
+    if (buttonLabel === "follow") {
       axios.post("/post/follow", { followid: user.id, userid });
       this.setState({
         buttonLabel: "unfollow",
-        followers : followers.concat({ id : user.id, nick : user.nick })              
+        followers: followers.concat({ id: user.id, nick: user.nick })
       });
     } else {
       axios.post("/post/unfollow", { followid: user.id, userid });
       this.setState({
         buttonLabel: "follow",
-        followers : followers.filter(item => item.id !== user.id)              
+        followers: followers.filter(item => item.id !== user.id)
       });
     }
   };
+
+  // select로 follower를 띄울 모달인지 following를 띄울 모달인지 구별해줌
+  showFollowerModal = (e) => {
+    this.setState({
+      modal: true,      
+      select : 0
+    });
+  };
   
+  showFollowingModal = (e) => {
+    this.setState({
+      modal: true,    
+      select : 1  
+    });
+  };
+
+  handleModal = bool => {
+    this.setState({
+      modal: bool
+    });
+  };
+
   render() {
     const { userid } = this.props.match.params;
     const { user } = this.props;
-    // const { buttonLabel, followers } = this.state    
+    const { followers, following, buttonLabel, nick, modal, select } = this.state;
 
-    console.log(this.state.followers)
-
-
+    console.log("Profile rendered")
+    
     return (
       <div className="profile">
+        {select ?  <Modal open={modal} handleModal={this.handleModal} check="Following" list={following}/> : <Modal open={modal} handleModal={this.handleModal} check="Followers" list={followers} />}
+                    
         <div className="profile-pic" />
         <div className="user-detail">
           <center>
             <div>
-              {this.state.nick ? "@" + this.state.nick : "loading..."} <br />
+              {nick ? "@" + nick : "loading..."} <br />
               {!user || Number(userid) === user.id ? null : (
                 <input
                   type="button"
-                  value={this.state.buttonLabel}
+                  value={buttonLabel}
                   onClick={this.handleFollow}
                 />
               )}
@@ -105,13 +140,17 @@ class Profile extends PureComponent {
           </center>
           <center>
             <div>
-              {this.state.followers.length} <br />
+              <div className="show-follow" onClick={this.showFollowerModal}>
+                {followers.length} <br />
+              </div>
               Followers
             </div>
           </center>
           <center>
             <div>
-              {this.state.following.length} <br />
+              <div className="show-follow" onClick={this.showFollowingModal}>
+                {following.length} <br />
+              </div>
               Following
             </div>
           </center>
