@@ -9,7 +9,8 @@ const Header = ({isAble, to}) => {
       <Link className="logo" to="/">Koostagram</Link>
       <div className="right-part">
         <Button isAble={isAble} to='/write'>Write Post</Button>              
-        <Button isAble={isAble} to={to} >My Page</Button>        
+        <Button isAble={isAble} to={to} >My Page</Button> 
+        {/* <Button isAble={isAble} to={to} token="lo" >Logout</Button>         */}
       </div>
     </div>
   );

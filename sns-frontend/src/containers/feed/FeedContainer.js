@@ -1,32 +1,17 @@
 import React, { Component } from 'react';
 import Feed from 'components/feed/Feed'
-import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import axios from "axios"
+import {connect} from 'react-redux'
 
 class FeedContainer extends Component {
+  //   const followingList = await axios.post("/post/getFollowingPosts", {userid : user.id})
+  //   return followingList.data
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    const user = this.checkLogin()
-    console.log(user)
-    if(!user){
-      alert("Please Login First")
-      this.props.history.push("/")
-    }
-
-//    axios.post("/post/getFollowingPosts", {userid : user.id})
-
-
-  }
-  
-  checkLogin = () => {
-    const {user} = this.props    
-    return user
-  }
-  render() {    
+  render() {             
     return (
       <div>
-        <Feed />
+        <Feed user={this.props.user} history={this.props.history}/>
       </div>
     );
   }

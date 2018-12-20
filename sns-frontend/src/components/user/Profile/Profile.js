@@ -13,7 +13,7 @@ class Profile extends PureComponent {
     select : 0
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.initializer();
   }
 
@@ -114,11 +114,11 @@ class Profile extends PureComponent {
   };
 
   render() {
+    console.log(localStorage.getItem('nick'))
     const { userid } = this.props.match.params;
     const { user } = this.props;
     const { followers, following, buttonLabel, nick, modal, select } = this.state;
-
-    console.log("Profile rendered")
+    console.log("Profile rendered")        
     
     return (
       <div className="profile">

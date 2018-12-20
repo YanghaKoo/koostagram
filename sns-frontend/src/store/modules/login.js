@@ -18,8 +18,12 @@ export default handleActions({
   ...pender({
     type : LOGIN,
     onSuccess : (state,action) =>{
-      const {data} = action.payload
+      const { data } = action.payload
+      // localStorage.id = data.user.id
+      // localStorage.nick = data.user.nick
+      
       return {user : data.user}
+      // return {user : 'asdasd'}
     }
   })
 },initialState)

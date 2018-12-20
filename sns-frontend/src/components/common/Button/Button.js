@@ -1,10 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Button.css";
+import {withRouter} from 'react-router-dom'
 
 const Div = ({ children, ...rest }) => <div {...rest}>{children}</div>;
-const Button = ({ children, isAble, to }) => {
+
+class Button extends React.Component {  
+  handleClick= () => {
+    localStorage.removeItem('user')
+    this.props.history.push('/user/4')
+  }
   
+  render() {
+  const { children, isAble, to, token } = this.props
   const Element = isAble && to ? Link : Div;
 
   let classes = "button";
@@ -12,6 +20,15 @@ const Button = ({ children, isAble, to }) => {
     classes = "button disable";
   }
 
+  if(token){
+    return (
+      <div className={classes} onClick={this.handleClick} style={{cursor : "pointer"}}>
+        {children}      
+      </div>
+    ) 
+  }
+
+    
   return (
     <Element href ={to} to={to} className={classes}>
       {children}
@@ -19,4 +36,10 @@ const Button = ({ children, isAble, to }) => {
   );
 };
 
-export default Button;
+
+
+    
+  
+}
+
+export default withRouter(Button)
