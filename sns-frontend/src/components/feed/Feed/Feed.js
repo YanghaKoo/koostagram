@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import EachFeed from "../EachFeed/EachFeed";
+import "./Feed.scss"
+import ReactLoading from 'react-loading'
 
 class Feed extends Component {
   state = {
@@ -13,8 +15,14 @@ class Feed extends Component {
   }
 
   initializer = async () => {
-    const { user } = this.props;
+    const { user, history } = this.props;
     console.log(user);
+
+    if(!user){
+      alert('Please Login First')
+      history.push('/')
+      return
+    }
     const followingList = await axios.post("/post/getFollowingPosts", {
       userid: user.id
     });
@@ -38,14 +46,21 @@ class Feed extends Component {
             nick={item.nick}
             history={history}
             key={item.id}
+            date={item.createdAt}
+            userid={item.userId}
           />
         ));
-      return <div>{eachList}</div>;
+      return (
+      <div className="feed">
+        <div className="list">
+        {eachList}
+        </div>
+      </div>);
     }
 
 
 
-    return <div>loading...</div>;
+    return <div className="loading"><ReactLoading type="bars" color="black" height={"20%"} width="20%" /></div>
   }
 }
 

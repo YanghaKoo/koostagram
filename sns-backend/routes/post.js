@@ -40,8 +40,7 @@ router.post("/", upload.single("img"), async (req, res, next) => {
 
 // 여기는 user에 페이지에 각각의 데이터를 뿌려주는 부분
 router.post("/getNick", async (req, res, next) => {
-  const { userid } = req.body;
-  console.log(typeof userid);
+  const { userid } = req.body;  
   try {
     const info = await User.findOne({
       where: { id: userid }

@@ -1,0 +1,38 @@
+.each-feed{
+  margin : 30px;
+
+  .top{
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    padding-left : 15px;
+    display: flex;
+    justify-content: space-between;
+    width : 550px;
+    .left{
+      min-width: 115px;
+      display: flex;
+      justify-content: space-around;
+      .profile-pic{
+        background: $oc-blue-3;
+        width : 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+
+  .img-area{
+    cursor: pointer;
+    width : 600px;
+    height: auto;    
+    border-radius: 5%;
+    img{
+      width:100%;
+      object-fit: contain;
+      border-radius: 5%;
+      box-shadow: 5px 5px 39px -9px #000000;  
+          
+    }
+  }
+}

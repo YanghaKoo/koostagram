@@ -3,10 +3,7 @@ import Feed from 'components/feed/Feed'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-class FeedContainer extends Component {
-  //   const followingList = await axios.post("/post/getFollowingPosts", {userid : user.id})
-  //   return followingList.data
-  // }
+class FeedContainer extends Component { 
 
   render() {             
     return (
