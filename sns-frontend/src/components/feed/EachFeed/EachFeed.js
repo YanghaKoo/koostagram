@@ -11,11 +11,6 @@ class EachFeed extends Component {
     this.initializer();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    this.initializer()
-  }
-  
-
   initializer = async () => {
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
@@ -26,13 +21,13 @@ class EachFeed extends Component {
     });
   };
 
-  handleClick =() => {
-    const {history, id : postid, userid} = this.props
-    history.push(`/user/${userid}/${postid}`)
-  }
+  handleClick = () => {
+    const { history, id: postid, userid } = this.props;
+    history.push(`/user/${userid}/${postid}`);
+  };
 
   render() {
-    const { id, img, date } = this.props;
+    const { id, img, date, content } = this.props;
     const { nick } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
 
@@ -40,19 +35,18 @@ class EachFeed extends Component {
       <div className="each-feed">
         <div className="top">
           <div className="left">
-            <div className="profile-pic"></div>
+            <div className="profile-pic" />
             {nick}
           </div>
           <div className="right">
-            {date.substr(0,10)} {time}
+            {date.substr(0, 10)} {time}
           </div>
         </div>
         <div className="img-area" onClick={this.handleClick}>
           <img src={img} />
+          <div className="content-area">{content ? content : null}</div>
         </div>
-        <div className="comment-area">
-          좋아요 & 댓글
-        </div>        
+        <div className="comment-area">좋아요 & 댓글</div>
       </div>
     );
   }

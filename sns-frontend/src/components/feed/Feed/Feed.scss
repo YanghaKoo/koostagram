@@ -1,8 +1,12 @@
 .feed {
-  display: flex;
-  justify-content: center;   
-  padding : 20px;
-  border : 1px solid black;
+  
+  padding : 2px;  
+  
+  .list{     
+    width: 100%;
+    height: calc(100vh - 84px);
+    overflow : scroll;            
+  }
   
 }
 
