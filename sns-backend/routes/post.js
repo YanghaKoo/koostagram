@@ -194,14 +194,20 @@ router.post("/getFollowing", async (req, res, next) => {
 // following 하는 feed 가져오기
 router.post("/getFollowingPosts", async (req,res,next)=>{
   const { userid } = req.body;
+  
   try {
     const user = await User.find({
-      where : {id : userid}
+      where : { id : userid }
     });
-
+    
     let following = await user.getFollowing()
-    following = following.map(item => ( item.id))
+    following = following.map(item => ( item.id) )    
 
+    // 팔로우가 없거나 게시물이 없는 경우
+    if(!following[0]){
+      res.send('no data')
+      return
+    }
 
     try{
       const post = await Post.findAll({
@@ -211,7 +217,7 @@ router.post("/getFollowingPosts", async (req,res,next)=>{
           }
         }
       })      
-      console.log(post)
+      
       res.json(post)
     
     }catch(e){

@@ -1,118 +1,129 @@
 import React, { Component } from "react";
 import axios from "axios";
 import EachFeed from "../EachFeed/EachFeed";
-import "./Feed.scss"
-import ReactLoading from 'react-loading'
+import "./Feed.scss";
 
 class Feed extends Component {
   state = {
-    list: null,    
-    loadingState : false,
-    items : [],
-  }; 
-  
-  start = 0
-  end = 2;
+    list: null,
+    loadingState: false,
+    items: [],
+    noPost: null,
+    tk: 0
+  };
+
+  items = [];
+  it = 0;
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState !== this.state) return false;
-    this.initializer();        
+
+    console.log(1);
+    this.initializer();
   }
 
-
   initializer = async () => {
-    const { user, history } = this.props;   
-    
-    if(!user){
-      alert('Please Login First')
-      history.push('/')
-      return
+    const { user, history } = this.props;
+
+    if (!user) {
+      alert("Please Login First");
+      history.push("/");
+      return;
     }
+
     const followingList = await axios.post("/post/getFollowingPosts", {
       userid: user.id
     });
-    const listData = followingList.data
-    //console.log(listData);
-    
-    this.setState({
-      list: listData.reverse(),
-      items : [listData[0], listData[1], listData[2]]
-    });    
-    this.rend = [listData[0], listData[1], listData[2]]
-    this.infiniteScroll(listData.reverse())    
 
+    let listData = followingList.data;
+
+    if (listData === "no data") {
+      console.log("1");
+      this.setState({
+        noPost: 1
+      });
+      return;
+    } else {
+      // console.log(listData); // 역순
+      listData = listData.reverse();
+      this.items = listData.splice(0, 3);
+
+      // to rendering
+      this.setState({
+        tk: !this.state.tk
+      });
+
+      if (!this.items.length < 3 ) {
+        this.infiniteScroll(listData);
+      }
+    }
   };
 
-  infiniteScroll = (listData) => {   
+  infiniteScroll = listData => {
     this.refs.iScroll.addEventListener("scroll", () => {
-      if (this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight >= this.refs.iScroll.scrollHeight){
-        this.loadMoreItems(listData);        
+      if (
+        this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight >=
+        this.refs.iScroll.scrollHeight
+      ) {
+        this.loadMoreItems(listData);
       }
     });
-  }
-  
-  loadMoreItems(listData) {
-    const { items } = this.state    
-    let {start, end, rend} = this
-    
-    console.log("start  :", start)
-    console.log("end : ", end)
-    //console.log('도착')
-    console.log(listData)    
-    this.setState({ loadingState: true });      
-    
-    const temp = []
-    for(let i = start; i <end; i++){
-      console.log("iterator : ",i)
-      temp.push(listData[i])
-    }
-    
-    if(end < listData.length){
-      this.start += 2
-      this.end += 2
-    }  
-    console.log("sex", temp)
+  };
 
+  loadMoreItems(listData) {
+    const { items } = this;
+    this.setState({ loadingState: true });
+
+    const temp = listData.splice(0, 3); // listData는 앞에 3개를 줄였음
+
+    console.log("temp", temp); // 3,4,5
+    console.log(this.items);
+    this.items = items.concat(temp);
+    
     setTimeout(() => {
-      this.setState({ items : items.concat(temp), loadingState: false });
-    }, 1000)    
+      console.log(this.items);
+      this.setState({ loadingState: false });
+    }, 1000);
   }
- 
 
   render() {
-    
-    const { list, items, } = this.state;
+    const { items } = this;
     const { history } = this.props;
-    console.log("render items  : " , items)
+    console.log("render items  : ", items);
 
-    if(!list){
-      return <div className="loading"><ReactLoading type="bars" color="black" height={"20%"} width="20%" /></div>
-    }else{
+    if (this.state.noPost) {
+      return <div>No Post! Follow Someone You Want</div>;
+    }
 
+    const eachList = items.map(item => (
+      <EachFeed
+        id={item.id}
+        img={item.img}
+        nick={item.nick}
+        history={history}
+        key={item.id}
+        date={item.createdAt}
+        userid={item.userId}
+        content={item.content}
+      />
+    ));
 
-      const eachList = items.map(item => (
-          <EachFeed
-            id={item.id}
-            img={item.img}
-            nick={item.nick}
-            history={history}
-            key={item.id}
-            date={item.createdAt}
-            userid={item.userId}
-            content={item.content}
-          />
-        ));
-    
-      return (
-       <div className="feed">
-        
-        <div ref="iScroll" className="list">          
+    return (
+      <div className="feed">
+        <div ref="iScroll" className="list">
           <center>{eachList}</center>
-          {this.state.loadingState ? <center><p> loading More Items..</p></center> : ""}
+          {this.state.loadingState ? (
+            <center>
+              <p> loading More Items..</p>
+            </center>
+          ) : (
+            ""
+          )}
         </div>
-      </div>);    
-      }    
+      </div>
+    );
   }
 }
+//}
 
 export default Feed;
