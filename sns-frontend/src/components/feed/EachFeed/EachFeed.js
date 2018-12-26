@@ -4,7 +4,8 @@ import axios from "axios";
 
 class EachFeed extends Component {
   state = {
-    nick: ""
+    nick: "",
+    likeCounts : 0
   };
 
   componentDidMount() {
@@ -12,12 +13,18 @@ class EachFeed extends Component {
   }
 
   initializer = async () => {
+    const { id } = this.props
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
     });
+
+    const likeCounts = await axios.post("/post/getLikeCount", {postid : id})
+    console.log(likeCounts.data)
+
     //console.log(nick.data)
     this.setState({
-      nick: nick.data
+      nick: nick.data,
+      likeCounts : likeCounts.data.length
     });
   };
 
@@ -27,8 +34,8 @@ class EachFeed extends Component {
   };
 
   render() {
-    const { id, img, date, content } = this.props;
-    const { nick } = this.state;
+    const { img, date, content } = this.props
+    const { nick, likeCounts } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
 
     return (
@@ -43,10 +50,10 @@ class EachFeed extends Component {
           </div>
         </div>
         <div className="img-area" onClick={this.handleClick}>
-          <img src={img} />
+          <img src={img} alt=""/>
           <div className="content-area">{content ? content : null}</div>
         </div>
-        <div className="comment-area">좋아요 & 댓글</div>
+        <div className="comment-area">{likeCounts} likes</div>
       </div>
     );
   }

@@ -35,7 +35,7 @@ class RecommendUser extends Component {
     });
     return (
       <center>
-        <div> 끝! 여기다 팔로우할 계정 추천 </div>
+        <div>Feed에 더이상 소식이 없습니다. 아래 계정들도 둘러보세요!</div>
         <div className="following-rec">{list}</div>
       </center>
     );
@@ -163,7 +163,7 @@ class Feed extends Component {
 
   render() {
     const { items } = this;
-    const { history } = this.props;
+    const { history, users } = this.props;
     console.log("render items  : ", items);
 
     if (this.state.noPost) {
