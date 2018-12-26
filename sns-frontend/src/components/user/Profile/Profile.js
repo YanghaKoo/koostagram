@@ -9,8 +9,10 @@ class Profile extends PureComponent {
     buttonLabel: "follow",
     followers: [],
     following: [],
+    profilePic : "",
     modal: false,
-    select : 0
+    select : 0,
+    style : null
   };
 
   componentDidMount() {
@@ -29,7 +31,7 @@ class Profile extends PureComponent {
   // 초기화 함수
   initializer = async () => {
     const { userid } = this.props.match.params;
-    const { history } = this.props;
+    const { history, uid, user } = this.props;
 
     // 버튼라벨 초기화
     if (this.state.buttonLabel === "unfollow") {
@@ -45,11 +47,20 @@ class Profile extends PureComponent {
 
     const followers = await axios.post("/post/getFollowers", { userid });
     const following = await axios.post("/post/getFollowing", { userid });
-
+    const profilePic = await axios.post("/post/getUserPic", {userid})
+    
+    // 자기 프로필 일 때만 커서를 pointer로 해서 edit 하기 위함
+    let style = null
+    if(user){
+      style = (Number(uid) === user.id) ?  {cursor : 'pointer'} : null
+    }
+    
     this.setState({
       nick: nick.data,
       followers: followers.data,
-      following: following.data
+      following: following.data,
+      profilePic : profilePic.data,
+      style : style
     });
     this.checkFollow();
   };
@@ -60,9 +71,7 @@ class Profile extends PureComponent {
 
     if (user) {
       followers.map(item => {
-        console.log("inside");
         if (item.id === user.id) {
-          console.log("inininininside");
           this.setState({
             buttonLabel: "unfollow"
           });
@@ -113,18 +122,34 @@ class Profile extends PureComponent {
     });
   };
 
+  editProfile =() => {
+    const { uid, user, history} = this.props
+    console.log(uid, user.id)
+    if(Number(uid) === user.id){
+      history.push('/edit')
+    }else{
+      return
+    }
+  }
+
+
   render() {
     console.log(localStorage.getItem('nick'))
     const { userid } = this.props.match.params;
     const { user } = this.props;
-    const { followers, following, buttonLabel, nick, modal, select } = this.state;
+    const { followers, following, buttonLabel, nick, modal, select, profilePic, style } = this.state;
     console.log("Profile rendered")        
+
+    
+    
     
     return (
       <div className="profile">
         {select ?  <Modal open={modal} handleModal={this.handleModal} check="Following" list={following}/> : <Modal open={modal} handleModal={this.handleModal} check="Followers" list={followers} />}
                     
-        <div className="profile-pic" />
+        <div className="profile-pic" onClick={this.editProfile} style={style}>
+          {profilePic? <img src={profilePic} alt='' /> : null }
+        </div>
         <div className="user-detail">
           <center>
             <div>

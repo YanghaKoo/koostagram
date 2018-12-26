@@ -21,6 +21,10 @@ module.exports =  (sequelize ,DataTypes) => (
       snsId : {       // 카카오로 로그인 시 카카오아이디를 알려줌, 그걸 저장을 하는거야, 이메일/pw로 로그인 했을 경우엔 null d이겠지
         type: DataTypes.STRING(30),
         allowNull : true
+      },
+      pic : {
+        type : DataTypes.STRING(200),
+        allowNull : true,
       }
   },{
     timestamps : true, // 얘는 생성일, 수정일 자동으로 기록해줌 시간

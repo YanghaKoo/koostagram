@@ -6,8 +6,7 @@
     align-items: center;
     box-shadow: 5px 5px 39px -9px #000000;
     margin-bottom : 30px;
-    
-    
+        
     .profile-pic{
       background: $oc-gray-5;
       width : 200px;
@@ -16,6 +15,12 @@
       border-radius: 50%;
       margin-top : 20px;
       margin-bottom: 20px;
+      img{
+        border-radius: 50%;
+        width : 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
   
     .user-detail{
@@ -39,7 +44,7 @@
       justify-content: space-around;
       
       .profile-pic{
-        background: blue;
+        background: $oc-gray-5;
         width : 150px;
         height: 150px;
         min-width: 150px;

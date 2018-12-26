@@ -5,7 +5,8 @@ import axios from "axios";
 class EachFeed extends Component {
   state = {
     nick: "",
-    likeCounts : 0
+    likeCounts: 0,
+    profilePic : ''
   };
 
   componentDidMount() {
@@ -13,18 +14,21 @@ class EachFeed extends Component {
   }
 
   initializer = async () => {
-    const { id } = this.props
+    const { id } = this.props;
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
     });
 
-    const likeCounts = await axios.post("/post/getLikeCount", {postid : id})
-    console.log(likeCounts.data)
+    const likeCounts = await axios.post("/post/getLikeCount", { postid: id });
+    const profilePic = await axios.post("/post/getUserPic", {userid : this.props.userid})
+
+    console.log(likeCounts.data);
 
     //console.log(nick.data)
     this.setState({
       nick: nick.data,
-      likeCounts : likeCounts.data.length
+      likeCounts: likeCounts.data.length,
+      profilePic : profilePic.data
     });
   };
 
@@ -34,15 +38,23 @@ class EachFeed extends Component {
   };
 
   render() {
-    const { img, date, content } = this.props
-    const { nick, likeCounts } = this.state;
+    const { img, date, content, userid, history } = this.props;
+    const { nick, likeCounts, profilePic } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
 
     return (
       <div className="each-feed">
         <div className="top">
-          <div className="left">
-            <div className="profile-pic" />
+          <div
+            className="left"
+            onClick={() => {
+              history.push(`/user/${userid}`);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <div className="profile-pic">
+              {profilePic ? <img src={profilePic} alt=''/> : null}
+            </div>
             {nick}
           </div>
           <div className="right">
@@ -50,10 +62,11 @@ class EachFeed extends Component {
           </div>
         </div>
         <div className="img-area" onClick={this.handleClick}>
-          <img src={img} alt=""/>
+          <img src={img} alt="" />
+          <div className="comment-area">{likeCounts} likes</div>
           <div className="content-area">{content ? content : null}</div>
         </div>
-        <div className="comment-area">{likeCounts} likes</div>
+        
       </div>
     );
   }

@@ -20,23 +20,40 @@ const upload = multer({
   })
 });
 
+// 글 작성
 router.post("/", upload.single("img"), async (req, res, next) => {
-  // without upload.single('img'),
   console.log(req.file);
   console.log(req.body);
   try {
     const post = await Post.create({
       content: req.body.text,
       img: `/img/${req.file.filename}`,
-      userId: req.user["id"] // 왜 req.user.id는 안되지..
+      userId: req.user["id"] 
     });
-    // 이게 새로고침이 되어서 로그인이 풀리는 듯?
+
     res.json(post);
   } catch (e) {
     console.log(e);
     next(e);
   }
 });
+
+
+// 프로필사진 변경 ///////////////////
+router.post("/profile", upload.single("img"), async (req, res, next) => {
+  console.log(req.file.filename);
+  const {userid} = req.body
+
+  try {
+    const user = await User.update({pic : `/img/${req.file.filename}`}, {where : { id : userid}})
+    console.log(user)
+    res.send("success");
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
 
 // 여기는 user에 페이지에 각각의 데이터를 뿌려주는 부분
 router.post("/getNick", async (req, res, next) => {
@@ -234,13 +251,28 @@ router.post("/getFollowingPosts", async (req,res,next)=>{
 router.post("/getAllUser", async (req, res, next) => {
   try {
     const user = await User.findAll();
-    res.json(user)
-    
+    res.json(user) 
   } catch (e) {
     console.log(e);
     next(e);
   }
 });
+
+
+// 프사 가져오기
+router.post("/getUserPic", async (req, res, next) => {
+  try {
+    const {userid} = req.body
+    const user = await  User.find({where : {id : userid}})
+    res.send(user.dataValues.pic)
+
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+
 
 
 

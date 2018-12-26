@@ -163,7 +163,7 @@ class Feed extends Component {
 
   render() {
     const { items } = this;
-    const { history, users } = this.props;
+    const { history } = this.props;
     console.log("render items  : ", items);
 
     if (this.state.noPost) {
@@ -185,6 +185,7 @@ class Feed extends Component {
         date={item.createdAt}
         userid={item.userId}
         content={item.content}
+        
       />
     ));
 

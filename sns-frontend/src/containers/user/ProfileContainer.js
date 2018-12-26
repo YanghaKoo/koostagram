@@ -11,7 +11,8 @@ class ProfileContainer extends Component {
         <Profile
           user={this.props.user}
           uid={this.props.uid}
-          match={this.props.match}          
+          match={this.props.match}   
+          history={this.props.history}       
         />
       </div>
     );
