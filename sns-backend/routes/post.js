@@ -230,6 +230,19 @@ router.post("/getFollowingPosts", async (req,res,next)=>{
   }
 })
 
+// 추천 팔로우 계정 찾기용 모든 유저 데이터 가져오기
+router.post("/getAllUser", async (req, res, next) => {
+  try {
+    const user = await User.findAll();
+    res.json(user)
+    
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+
 
 
 module.exports = router;

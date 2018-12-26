@@ -1,15 +1,36 @@
 .feed {
-  
   padding : 2px;  
-  
   .list{     
     width: 100%;
     height: calc(100vh - 84px);
     overflow : scroll;            
   }
-  
 }
 
 .loading{
   height: calc(100vh - 80px);
+}
+
+.following-rec{
+  display: flex;
+  flex-wrap : wrap;
+  justify-content: center;
+  align-items : center;
+  .each-rec{
+    cursor: pointer;
+    margin : 20px;
+    padding : 10px;
+    display : flex;
+    flex-direction: column;
+    background: $oc-red-2;
+    min-width : 200px;
+
+    align-items: center;
+    .profile-pic{
+      background: $oc-blue-3;
+      width : 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
 }

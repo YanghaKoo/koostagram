@@ -8,7 +8,7 @@ class FeedContainer extends Component {
   render() {             
     return (
       <div>
-        <Feed user={this.props.user} history={this.props.history}/>
+        <Feed user={this.props.user} history={this.props.history} />
       </div>
     );
   }
