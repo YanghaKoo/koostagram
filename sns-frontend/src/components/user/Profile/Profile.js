@@ -171,7 +171,7 @@ class Profile extends PureComponent {
               Followers
             </div>
           </center>
-          <center>
+          <center> 
             <div>
               <div className="show-follow" onClick={this.showFollowingModal}>
                 {following.length} <br />

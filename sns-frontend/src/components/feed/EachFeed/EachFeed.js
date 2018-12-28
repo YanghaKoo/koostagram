@@ -6,7 +6,7 @@ class EachFeed extends Component {
   state = {
     nick: "",
     likeCounts: 0,
-    profilePic : ''
+    profilePic: ""
   };
 
   componentDidMount() {
@@ -20,7 +20,9 @@ class EachFeed extends Component {
     });
 
     const likeCounts = await axios.post("/post/getLikeCount", { postid: id });
-    const profilePic = await axios.post("/post/getUserPic", {userid : this.props.userid})
+    const profilePic = await axios.post("/post/getUserPic", {
+      userid: this.props.userid
+    });
 
     console.log(likeCounts.data);
 
@@ -28,13 +30,17 @@ class EachFeed extends Component {
     this.setState({
       nick: nick.data,
       likeCounts: likeCounts.data.length,
-      profilePic : profilePic.data
+      profilePic: profilePic.data
     });
   };
 
   handleClick = () => {
     const { history, id: postid, userid } = this.props;
     history.push(`/user/${userid}/${postid}`);
+  };
+
+  makeHashTag = content => {
+    return content.replace(/#[^\s]*/g, "테스트");
   };
 
   render() {
@@ -53,7 +59,7 @@ class EachFeed extends Component {
             style={{ cursor: "pointer" }}
           >
             <div className="profile-pic">
-              {profilePic ? <img src={profilePic} alt=''/> : null}
+              {profilePic ? <img src={profilePic} alt="" /> : null}
             </div>
             {nick}
           </div>
@@ -61,12 +67,13 @@ class EachFeed extends Component {
             {date.substr(0, 10)} {time}
           </div>
         </div>
-        <div className="img-area" onClick={this.handleClick}>
-          <img src={img} alt="" />
+        <div className="img-area">
+          <div onClick={this.handleClick} className="onimg">
+            <img src={img} alt="" />
+          </div>
           <div className="comment-area">{likeCounts} likes</div>
           <div className="content-area">{content ? content : null}</div>
         </div>
-        
       </div>
     );
   }

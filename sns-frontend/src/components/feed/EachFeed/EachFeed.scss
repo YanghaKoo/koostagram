@@ -40,7 +40,10 @@
   }
 
   .img-area {
-    cursor: pointer;
+    .onimg{
+      cursor: pointer;
+    }
+
     width: 750px;
     height: auto;
     border-radius: 5%;

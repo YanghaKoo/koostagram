@@ -5,6 +5,16 @@ import { withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
 import CommentContainer from "../../../containers/user/CommentContainer";
 
+class Hash extends Component {
+  render() {
+    return (
+      <div className="hashd">
+        {this.props.hash}
+      </div>
+    );
+  }
+}
+
 class PostTemplate extends Component {
   state = {
     img: null,
@@ -12,10 +22,10 @@ class PostTemplate extends Component {
     nick: null
   };
 
+  hashtags = []
+
   async componentDidMount() {
     const { userid, postid } = this.props.match.params;
-
-
 
     // 게시글 가져오기 실패는 빈 배열이라도 리턴해 주니까 catch가 아닌 이런 방식으로 해야함
     const post = await axios.post("/post/getSinglePost", { postid });
@@ -32,14 +42,25 @@ class PostTemplate extends Component {
       return;
     });
 
-    // console.log(post.data);
-    
     this.setState({
       img: post.data.img,
       content: post.data.content,
       nick: user.data
     });
   }
+
+  makeHashTag = content => {
+    return content.replace(/#[^\s]*/g, hashtag => {
+      const a = document.createElement('div')
+      a.setAttribute('className', "hashed")
+      a.innerHTML = hashtag
+      return a
+      
+      
+      //return <Hash hash={hashtag} />
+      //return <div className="hashed">hashtag</div>
+    });
+  };
 
   render() {
     const { img, content } = this.state;
@@ -59,7 +80,12 @@ class PostTemplate extends Component {
         <div className="right">
           <div className="content">
             <b>@{this.state.nick}</b>
-            <p>{content}</p>
+            
+            <div className="hashed"> 
+              test
+            </div>
+
+            <p id="a">{ this.makeHashTag(content) }</p>
           </div>
           <CommentContainer match={this.props.match} />
         </div>

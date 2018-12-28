@@ -31,6 +31,20 @@ router.post("/", upload.single("img"), async (req, res, next) => {
       userId: req.user["id"] 
     });
 
+
+    // 해쉬태그 db에 추가
+    const hashtags = req.body.text.match(/#[^\s]*/g);
+    if (hashtags) {
+      const result = await Promise.all(
+        hashtags.map(tag =>
+          Hashtag.findOrCreate({
+            where: { title: tag.slice(1).toLowerCase() }
+          })
+        )
+      );
+      await post.addHashtags(result.map(r => r[0]));
+    }
+
     res.json(post);
   } catch (e) {
     console.log(e);

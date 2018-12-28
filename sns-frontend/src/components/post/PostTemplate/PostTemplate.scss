@@ -66,3 +66,11 @@
     height : calc(100vh - 500px);
   }
 }
+
+.hashed{
+  color : $oc-blue-5;
+  cursor: pointer;
+  &:hover {
+    color : $oc-blue-7;
+  }
+}
