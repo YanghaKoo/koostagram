@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Switch, Route } from 'react-router-dom'
-import {MainPage, EachPostPage, UserPage, WritingPage, NotFound, RegisterPage, FeedPage, EditPage} from 'pages'
+import {MainPage, EachPostPage, UserPage, WritingPage, NotFound, RegisterPage, FeedPage, EditPage, HashTagSearch} from 'pages'
 import Header from 'components/common/Header'
 
 

@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
-import Feed from 'components/feed/Feed'
-import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux'
+import React, { Component } from "react";
+import Feed from "components/feed/Feed";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-class FeedContainer extends Component { 
+class FeedContainer extends Component {
 
-  render() {             
+  render() {
     return (
       <div>
-        <Feed user={this.props.user} history={this.props.history} />
+        <Feed
+          user={this.props.user}
+          history={this.props.history}
+          location={this.props.location}
+        />
       </div>
     );
   }
 }
 
-export default connect(
-  state => ({
-    user : state.login.user
-  })
-)(withRouter(FeedContainer));
+export default connect(state => ({
+  user: state.login.user
+}))(withRouter(FeedContainer));

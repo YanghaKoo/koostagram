@@ -5,15 +5,15 @@ import { withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
 import CommentContainer from "../../../containers/user/CommentContainer";
 
-class Hash extends Component {
-  render() {
-    return (
-      <div className="hashd">
-        {this.props.hash}
-      </div>
-    );
-  }
-}
+// class Hash extends Component {
+//   render() {
+//     return (
+//       <div className="hashd">
+//         {this.props.hash}
+//       </div>
+//     );
+//   }
+// }
 
 class PostTemplate extends Component {
   state = {
@@ -51,17 +51,10 @@ class PostTemplate extends Component {
 
   makeHashTag = content => {
     return content.replace(/#[^\s]*/g, hashtag => {
-      const a = document.createElement('div')
-      a.setAttribute('className', "hashed")
-      a.innerHTML = hashtag
-      return a
-      
-      
-      //return <Hash hash={hashtag} />
-      //return <div className="hashed">hashtag</div>
+      return `<span class='hashed' onclick="">${hashtag}</span>`
     });
-  };
-
+  };  
+  
   render() {
     const { img, content } = this.state;
     if (!img) {
@@ -80,12 +73,7 @@ class PostTemplate extends Component {
         <div className="right">
           <div className="content">
             <b>@{this.state.nick}</b>
-            
-            <div className="hashed"> 
-              test
-            </div>
-
-            <p id="a">{ this.makeHashTag(content) }</p>
+            <div dangerouslySetInnerHTML={{ __html : this.makeHashTag(content)}}></div>            
           </div>
           <CommentContainer match={this.props.match} />
         </div>

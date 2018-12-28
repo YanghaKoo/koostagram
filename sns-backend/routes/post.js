@@ -229,10 +229,9 @@ router.post("/getFollowingPosts", async (req,res,next)=>{
   try {
     const user = await User.find({
       where : { id : userid }
-    });
-    
+    });   
     let following = await user.getFollowing()
-    following = following.map(item => ( item.id) )    
+    following = following.map(item => ( item.id ) )    
 
     // 팔로우가 없거나 게시물이 없는 경우
     if(!following[0]){
@@ -285,6 +284,27 @@ router.post("/getUserPic", async (req, res, next) => {
     next(e);
   }
 });
+
+// hashtag query로 접근할 때
+router.post("/getHashTagPost", async (req, res, next) => {
+  try {
+    const {tag} = req.body
+    console.log(tag)
+    const hashtag = await Hashtag.find({where : {title : tag}})
+    
+    if(hashtag){
+      const post = await hashtag.getPosts()
+      console.log(post)
+      res.json(post)
+    }else{
+      res.send("no data")  
+    }
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
 
 
 

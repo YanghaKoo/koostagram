@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import EachFeed from "../EachFeed/EachFeed";
 import "./Feed.scss";
+import qs from "query-string";
 
 class RecommendUser extends Component {
   state = {
@@ -31,7 +32,9 @@ class RecommendUser extends Component {
     console.log(shuffled);
 
     const list = shuffled.map(user => {
-      return <EachRecommend user={user} key={user.id} history={this.props.history}/>;
+      return (
+        <EachRecommend user={user} key={user.id} history={this.props.history} />
+      );
     });
     return (
       <center>
@@ -46,24 +49,15 @@ const EachRecommend = ({ user, history }) => {
   return (
     <div
       className="each-rec"
-      onClick={()=> {
-        history.push(`/user/${user.id}`)
+      onClick={() => {
+        history.push(`/user/${user.id}`);
       }}
-      >
-      
+    >
       <div className="profile-pic" />
       <div className="nick">{user.nick}</div>
     </div>
   );
 };
-
-
-
-
-
-
-
-
 
 class Feed extends Component {
   state = {
@@ -90,17 +84,18 @@ class Feed extends Component {
   // }
 
   initializer = async () => {
-    const { user, history } = this.props;
+    const { location, user, history } = this.props;
+    const query = qs.parse(location.search);
 
     if (!user) {
       alert("Please Login First");
       history.push("/");
       return;
     }
+    const followingList = query.hashtag
+      ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
+      : await axios.post("/post/getFollowingPosts", { userid: user.id });
 
-    const followingList = await axios.post("/post/getFollowingPosts", {
-      userid: user.id
-    });
     let listData = followingList.data;
 
     if (listData === "no data") {
@@ -163,13 +158,17 @@ class Feed extends Component {
 
   render() {
     const { items } = this;
-    const { history } = this.props;
+    const { history, location } = this.props;
+    const query = qs.parse(location.search);
+
     console.log("render items  : ", items);
+
+    const hashtag = qs.parse(location.search);
+    console.log(hashtag);
 
     if (this.state.noPost) {
       return (
-        <div>
-          <div>No Post! Follow Someone You Want</div>
+        <div style={{marginTop : "100px"}}>
           <RecommendUser history={this.props.history} />
         </div>
       );
@@ -185,12 +184,12 @@ class Feed extends Component {
         date={item.createdAt}
         userid={item.userId}
         content={item.content}
-        
       />
     ));
 
     return (
       <div className="feed">
+        {query.hashtag ? <center><div className="searched-hashtag">Searched Hashtag : #{query.hashtag}</div></center> : null}
         <div ref="iScroll" className="list">
           <center>{eachList}</center>
           {this.endOfList ? <RecommendUser history={this.props.history} /> : ""}
