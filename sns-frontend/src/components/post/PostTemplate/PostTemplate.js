@@ -5,15 +5,21 @@ import { withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
 import CommentContainer from "../../../containers/user/CommentContainer";
 
-// class Hash extends Component {
-//   render() {
-//     return (
-//       <div className="hashd">
-//         {this.props.hash}
-//       </div>
-//     );
-//   }
-// }
+class Hashtag extends Component {
+  render() {
+    const { history, hashtag } = this.props;
+    return (
+      <div 
+        className="hashed"
+        onClick={() => {
+          history.push(`/feed?hashtag=${hashtag.slice(1)}`);
+        }}
+      >
+        {hashtag}
+      </div>
+    );
+  }
+}
 
 class PostTemplate extends Component {
   state = {
@@ -22,7 +28,7 @@ class PostTemplate extends Component {
     nick: null
   };
 
-  hashtags = []
+  // hashtags = []
 
   async componentDidMount() {
     const { userid, postid } = this.props.match.params;
@@ -49,14 +55,24 @@ class PostTemplate extends Component {
     });
   }
 
-  makeHashTag = content => {
-    return content.replace(/#[^\s]*/g, hashtag => {
-      return `<span class='hashed' onclick="">${hashtag}</span>`
-    });
-  };  
-  
   render() {
     const { img, content } = this.state;
+
+    let contentWithHashtag;
+    if (content) {
+      contentWithHashtag = content.split(" ");
+      contentWithHashtag = contentWithHashtag.map(item => {
+        if (item[0] === "#") {
+          return (
+            <div>
+              <Hashtag hashtag={item} history={this.props.history} />
+            </div>
+          );
+        }
+        return <div className="word">{item}</div>;
+      });
+    }
+
     if (!img) {
       return (
         <div className="loading">
@@ -73,7 +89,10 @@ class PostTemplate extends Component {
         <div className="right">
           <div className="content">
             <b>@{this.state.nick}</b>
-            <div dangerouslySetInnerHTML={{ __html : this.makeHashTag(content)}}></div>            
+            <div className="test">
+              {contentWithHashtag}
+            </div>
+            <div>{this.hashtags}</div>
           </div>
           <CommentContainer match={this.props.match} />
         </div>

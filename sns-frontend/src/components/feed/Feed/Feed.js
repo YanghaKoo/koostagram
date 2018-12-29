@@ -87,7 +87,8 @@ class Feed extends Component {
     const { location, user, history } = this.props;
     const query = qs.parse(location.search);
 
-    if (!user) {
+    // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
+    if (!user && !query.hashtag) {
       alert("Please Login First");
       history.push("/");
       return;
@@ -163,8 +164,6 @@ class Feed extends Component {
 
     console.log("render items  : ", items);
 
-    const hashtag = qs.parse(location.search);
-    console.log(hashtag);
 
     if (this.state.noPost) {
       return (
@@ -186,7 +185,7 @@ class Feed extends Component {
         content={item.content}
       />
     ));
-
+    
     return (
       <div className="feed">
         {query.hashtag ? <center><div className="searched-hashtag">Searched Hashtag : #{query.hashtag}</div></center> : null}
