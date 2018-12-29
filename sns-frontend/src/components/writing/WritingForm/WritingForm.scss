@@ -1,0 +1,46 @@
+.register-form{
+  .title{
+    font-size : 2rem;
+    margin : 30px;
+    padding : 10px;
+    border-bottom : 1px solid black;
+    width : 310px;
+    font-weight: 1000;
+  }
+  .text{
+    width : 80%;
+    height: 200px;
+    overflow: auto;
+    font-size : 1.5rem;
+    font-weight: 800;
+    margin-bottom : 10px;
+    border : 1px solid $oc-gray-6;
+    padding : 20px;
+    
+    &:focus{
+      outline : none;
+      border : 1.2px solid $oc-gray-9;
+      box-shadow: -60px 0px 100px -90px #000000,
+                  60px 0px 100px -90px #000000;
+    }
+  }
+  
+  .submit{
+    background-color : $oc-gray-6;
+    border : none;
+    text-decoration: none;
+    color : white;
+    font-size : 1.5rem;
+    padding: 10px 10px;
+    margin : 20px;
+    cursor: pointer;
+ 
+    &:hover{
+      background-color : $oc-gray-7;
+    }
+  }
+
+  .word-count{
+    font-size : 1rem;
+  }
+}

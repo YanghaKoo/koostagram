@@ -16,6 +16,7 @@ class RecommendUser extends Component {
     });
   }
 
+  // 친구추천을 위한 랜덤 3명 추천 logic
   shuffle = array => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from 'axios'
+import './WritingForm.scss'
+
 
 class WritingForm extends Component {
 
@@ -10,14 +12,26 @@ class WritingForm extends Component {
 
 
   handleSubmit = async data => {
-    const { onSubmit, history, input, onChange } = this.props;
+    const { history, input, onChange } = this.props;
     const { selectedFile } = this.state
-    // content가 비어있다면 경고창
 
-    // if (!input) {
-    //   alert("content를 입력해 주세요.");
-    //   return;
-    // }
+    let re = input.match(/#[^\s]*/g)
+    console.log(re)
+    
+    // 사진을 업로드하지 않은 경우
+    if (!selectedFile) {
+      alert("사진은 필수로 첨부해주세요.");
+      return;
+    }else if(input.length >= 140){
+      alert("본문 내용은 140자 이내로 해주세요.")
+      return
+    }else if(re){
+      re = re.filter(item => item.length >= 14)
+      if(re[0]) {
+        alert("12자가 넘는 해쉬태그가 존재합니다.")
+        return
+      }
+    }
 
     const fd = new FormData();
     console.log(selectedFile)
@@ -29,22 +43,13 @@ class WritingForm extends Component {
     }
     
     const submit = await axios.post('/post', fd, contentType )
-      // .then(res=>console.log(res))
-      // .catch(e=>console.log(e))
     console.log(submit.data)
     onChange('')
     history.push(`/user/${submit.data.userId}/${submit.data.id}`)
     
-
-
-    // 지금 postInfo랑 redux에서의 action.payload.data가 같은걸 가리키고 있음
-    
-    // const postInfo = await onSubmit(data);      // onSubmit(data,img)
-    // console.log(postInfo.data)
-    // history.push(`/post/${postInfo.data.userId}/${postInfo.data.id}`);
   };
 
-  handleChange = e => {
+  handleChange = e => {    
     const { onChange } = this.props;
     onChange(e.target.value);
   };
@@ -58,22 +63,23 @@ class WritingForm extends Component {
 
   render() {
     const { input } = this.props;
+    const style = input.length < 140 ? null : {color : "red"}
+    console.log(window.innerWidth)
+    const placeholder = (window.innerWidth > 450) ?  "오늘의 하루는 어떠셨나요? :)"   : "오늘의 하루는\n어떠셨나요? :)"
 
     return (
-      //  <form method="post" action="/post/test"  encType="multipart/form-data">
-      //   <input name="img" id="img" type="file" />
-      //   <button type="submit">aa</button>
-      // </form>
       <center>
         
         <div className="register-form">
-          <input
+          <div className="title">Post Your Contents</div>
+          <textarea
             name="content"
-            placeholder="content"
-            className="input"
+            placeholder={placeholder}
+            className="text"
             value={input}
             onChange={this.handleChange}
           />
+          <div className="word-count" style={style}>{input.length < 140 ?  input.length : "글자수 초과"}</div>
           <input
             id="img"
             name="img"

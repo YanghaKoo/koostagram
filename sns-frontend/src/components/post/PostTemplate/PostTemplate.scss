@@ -3,9 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 90vh;
-  
-  
-  
+    
   .pic{
     background: $oc-red-1;
     
@@ -32,9 +30,10 @@
     .content{
       height: 50%;
       width : 400px;      
+      overflow : auto;
       background: $oc-red-4;
       padding : 20px;
-      font-size : 1.5rem;      
+      font-size : 1.5rem;   
     }
   }
 
@@ -88,3 +87,5 @@
   flex-wrap : wrap;
   
 }
+
+

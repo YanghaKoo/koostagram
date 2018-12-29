@@ -75,6 +75,7 @@ class Comment extends Component {
       <div className="comment">
         <div>          
           <img
+            style={{cursor:"pointer"}}
             src= {this.state.like}
             width={30}
             height={30}

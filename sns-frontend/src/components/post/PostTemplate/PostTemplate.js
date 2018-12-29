@@ -57,6 +57,7 @@ class PostTemplate extends Component {
 
   render() {
     const { img, content } = this.state;
+    const { userid, history } = this.props.match.params;
 
     let contentWithHashtag;
     if (content) {
@@ -88,7 +89,7 @@ class PostTemplate extends Component {
         </div>
         <div className="right">
           <div className="content">
-            <b>@{this.state.nick}</b>
+            <b style={{cursor : "pointer"}} onClick={()=>{history.push(`/user/${userid}`)}}>@{this.state.nick}</b>
             <div className="test">
               {contentWithHashtag}
             </div>

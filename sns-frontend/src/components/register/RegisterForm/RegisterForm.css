@@ -3,13 +3,14 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 40vh;
+  height: 65vh;
   background: white;
   width : 80%;
   margin-top : 50px;
   
   box-shadow: -60px 0px 100px -90px #000000,
                60px 0px 100px -90px #000000;
+  
 }
 
 .input {
