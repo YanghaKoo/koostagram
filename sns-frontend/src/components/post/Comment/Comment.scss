@@ -1,12 +1,26 @@
 
+$baseColor :  #ebe5d9;
+
 .comment{
-  height: 100%;
-  background: $oc-red-5;
+  height: 160%;
+  background: $baseColor;
   padding : 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   @include media("<large"){ 
+    height: 400px;
     width: 100%;
    }
+   
+  .comments-list{
+    height: 80%;
+    overflow: auto;
+    overflow-x: auto;
+    overflow-y: auto;
+    width : 100%;
+    @include media("<large"){ 
+      height: 1000px;
+     }
+  }
 }

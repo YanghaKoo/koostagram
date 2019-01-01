@@ -14,6 +14,7 @@ db.Sequelize = Sequelize;
 db.User = require('./user')(sequelize, Sequelize)
 db.Post = require('./post')(sequelize, Sequelize)
 db.Hashtag = require('./hashtag')(sequelize, Sequelize)
+db.Comment = require('./comment')(sequelize, Sequelize)
 
 // ***관계 설정***
 // 얘네는 1:다 관계, 유저는 포스트가 여러개고 포스트는 하나의 유저만 갖고
@@ -39,8 +40,9 @@ db.User.belongsToMany(db.Post, {through : 'Like'})
 db.Post.belongsToMany(db.User, {through : 'Like', as :"Liker"})
 
 
-// 댓글 기능 다대다
-db.User.belongsToMany(db.Post, {through : "Comment"})
-db.Post.belongsToMany(db.User, {through : "Comment"})
+// 댓글기능 1:다
+db.Post.hasMany(db.Comment)
+db.Comment.belongsTo(db.Post)
+
 
 module.exports = db;

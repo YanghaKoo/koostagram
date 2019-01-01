@@ -9,7 +9,7 @@ class Hashtag extends Component {
   render() {
     const { history, hashtag } = this.props;
     return (
-      <div 
+      <div
         className="hashed"
         onClick={() => {
           history.push(`/feed?hashtag=${hashtag.slice(1)}`);
@@ -83,21 +83,27 @@ class PostTemplate extends Component {
     }
 
     return (
-      <div className="post-template">
-        <div className="pic">
-          <img src={img} alt="" />
-        </div>
-        <div className="right">
-          <div className="content">
-            <b style={{cursor : "pointer"}} onClick={()=>{history.push(`/user/${userid}`)}}>@{this.state.nick}</b>
-            <div className="test">
-              {contentWithHashtag}
-            </div>
-            <div>{this.hashtags}</div>
+      <div className="post-template">        
+          <div className="pic">
+            <img src={img} alt="" />
           </div>
-          <CommentContainer previewCount={5}/>
+          <div className="right">
+            <div className="content">
+              <b
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  history.push(`/user/${userid}`);
+                }}
+              >
+                @{this.state.nick}
+              </b>
+              <div className="test">{contentWithHashtag}</div>
+              <div>{this.hashtags}</div>
+            </div>
+            <CommentContainer previewCount={5} />
+          </div>
         </div>
-      </div>
+      
     );
   }
 }

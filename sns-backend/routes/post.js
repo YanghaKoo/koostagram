@@ -3,7 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const Sequelize = require('sequelize')
 
-const { Post, Hashtag, User } = require("../models");
+const { Post, Hashtag, User, Comment } = require("../models");
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -309,16 +309,50 @@ router.post("/getHashTagPost", async (req, res, next) => {
 // 댓글 등록
 router.post("/uploadComment", async (req, res, next) => {
   try {
-
-
-
-    
+    const {usernick, postid, content} = req.body
+    Comment.create({
+      content :  content,
+      postId :  postid,
+      usernick : usernick
+    }).then(success=>{
+      console.log('------------------------------------------------------')
+      console.log(success)
+      res.send("success")
+    }).catch(e => {
+      console.log('------------------------------------------------------')
+      console.log(e)
+      res.send(null)
+      next(e)      
+    })
   } catch (e) {
     console.log(e);
     next(e);
   }
 });
 
+
+router.post('/getComments', async (req,res,next)=>{
+  try {
+    const { postid } = req.body
+    const comments = await Comment.findAll({where : {postId : postid}})
+    res.send(comments)
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+})
+
+
+router.post('/getIdByNick', async (req,res,next)=>{
+  try {
+    const { nick } = req.body
+    const id = await User.findOne({where : {nick : nick}})
+    res.send(id)
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+})
 
 
 

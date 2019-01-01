@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./EachFeed.scss";
 import axios from "axios";
+import CommentContainer from "../../../containers/user/CommentContainer";
 
 class EachFeed extends Component {
   state = {
@@ -73,7 +74,7 @@ class EachFeed extends Component {
           </div>
           <div className="comment-area">{likeCounts} likes</div>
           <div className="content-area">{content ? content : null}</div>
-        </div>
+        </div>        
       </div>
     );
   }
