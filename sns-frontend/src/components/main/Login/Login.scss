@@ -31,6 +31,7 @@
   }
   .submit {
     width : 290px;
+    height: 50px;
     background: #60a3bc;
     border-radius: 10px;
     border : none;
@@ -38,6 +39,7 @@
     cursor : pointer; 
     &:hover{
       background: #74c0fc;
+      transition: 0.5s;
     }
   }
     

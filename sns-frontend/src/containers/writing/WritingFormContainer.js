@@ -3,8 +3,14 @@ import * as postActions from "store/modules/post";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import WritingForm from "../../components/writing/WritingForm/WritingForm";
+import {withRouter} from 'react-router-dom'
 
 class WritingFormContainer extends Component {
+
+  componentDidMount() {
+    if(!this.props.user) { alert("Please login first."); this.props.history.push('/');}
+  }
+  
   render() {
     const { PostActions, input } = this.props;
     return (
@@ -12,8 +18,7 @@ class WritingFormContainer extends Component {
         <WritingForm
           input={input}          
           onSubmit={PostActions.submit}          
-          onChange={(e)=>{PostActions.change(e)}}
-          
+          onChange={(e)=>{PostActions.change(e)}}          
         />
       </div>
     );
@@ -23,8 +28,9 @@ class WritingFormContainer extends Component {
 export default connect(
   state => ({
     input: state.post.input,
+    user : state.login.user
   }),
   dispatch => ({
     PostActions: bindActionCreators(postActions, dispatch)
   })
-)(WritingFormContainer);
+)(withRouter(WritingFormContainer));

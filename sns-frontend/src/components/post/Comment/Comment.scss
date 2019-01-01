@@ -19,8 +19,26 @@ $baseColor :  #ebe5d9;
     overflow-x: auto;
     overflow-y: auto;
     width : 100%;
+
     @include media("<large"){ 
       height: 1000px;
      }
   }
+}
+
+// 전체 스크롤바 설정
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

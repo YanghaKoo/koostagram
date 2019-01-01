@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./EachFeed.scss";
 import axios from "axios";
-import CommentContainer from "../../../containers/user/CommentContainer";
+//import CommentContainer from "../../../containers/user/CommentContainer";
 
 class EachFeed extends Component {
   state = {

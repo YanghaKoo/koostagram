@@ -57,8 +57,10 @@ class PostTemplate extends Component {
 
   render() {
     const { img, content } = this.state;
-    const { userid, history } = this.props.match.params;
+    const { userid } = this.props.match.params;
+    const { history } = this.props;
 
+    // 본문의 hashtag부분을 해당 해쉬태그 검색과 연결시키는 부분, string형태의 본문을 재구성하여 해쉬태그부분을 차별화
     let contentWithHashtag;
     if (content) {
       contentWithHashtag = content.split(" ");
@@ -83,27 +85,27 @@ class PostTemplate extends Component {
     }
 
     return (
-      <div className="post-template">        
-          <div className="pic">
-            <img src={img} alt="" />
-          </div>
-          <div className="right">
-            <div className="content">
-              <b
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  history.push(`/user/${userid}`);
-                }}
-              >
-                @{this.state.nick}
-              </b>
-              <div className="test">{contentWithHashtag}</div>
-              <div>{this.hashtags}</div>
-            </div>
-            <CommentContainer previewCount={5} />
-          </div>
+      <div className="post-template">
+        <div className="pic">
+          <img src={img} alt="" />
         </div>
-      
+        <div className="right">
+          <div className="content">
+            <b
+              className="nick"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                history.push(`/user/${userid}`);
+              }}
+            >
+              @{this.state.nick}
+            </b>
+            <div className="test">{contentWithHashtag}</div>
+            <div>{this.hashtags}</div>
+          </div>
+          <CommentContainer previewCount={5} />
+        </div>
+      </div>
     );
   }
 }

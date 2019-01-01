@@ -39,7 +39,7 @@ router.post("/", upload.single("img"), async (req, res, next) => {
         hashtags.map(tag =>
           Hashtag.findOrCreate({
             where: { title: tag.slice(1).toLowerCase() }
-          })
+          }).catch(e=>{console.log(e)})
         )
       );
       await post.addHashtags(result.map(r => r[0]));
