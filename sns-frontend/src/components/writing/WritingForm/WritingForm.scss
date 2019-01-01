@@ -1,7 +1,8 @@
 .register-form{
   .title{
     font-size : 2rem;
-    margin : 30px;
+    margin-top : 30px;
+    margin-bottom: 30px;
     padding : 10px;
     border-bottom : 1px solid black;
     width : 310px;
@@ -24,17 +25,40 @@
                   60px 0px 100px -90px #000000;
     }
   }
+
+  .file-wrapper {
+    padding: 10px;
+    background: $oc-blue-6; 
+    cursor: pointer;
+    font-size: 1.5rem;    
+    color: #fff;
+    width : 300px;
+    margin-bottom : 20px;
+    &:hover{
+      background-color : $oc-blue-8;
+    }
+    .file-upload {
+      display: none;
+    }
   
+  }
+  
+  
+
+
   .submit{
     background-color : $oc-gray-6;
+    border-radius: 5%;
     border : none;
     text-decoration: none;
     color : white;
     font-size : 1.5rem;
     padding: 10px 10px;
-    margin : 20px;
+    margin-top :20px;
+    width : 300px;
     cursor: pointer;
- 
+    
+
     &:hover{
       background-color : $oc-gray-7;
     }

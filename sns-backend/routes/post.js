@@ -306,6 +306,18 @@ router.post("/getHashTagPost", async (req, res, next) => {
 });
 
 
+// 댓글 등록
+router.post("/uploadComment", async (req, res, next) => {
+  try {
+
+
+
+    
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
 
 
 

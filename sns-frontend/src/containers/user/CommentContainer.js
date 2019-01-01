@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 
 class CommentContainer extends Component {
   render() {
-    const { match, user } = this.props;
+    const { user, previewCount } = this.props;
     console.log(user);
     return (
       <div style={{ height: "36%" }}>
-        <Comment match={match} user={user} />
+        <Comment  user={user} previewCount={previewCount}/>
       </div>
     );
   }

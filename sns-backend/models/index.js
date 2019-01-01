@@ -10,8 +10,6 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-
-
 // 모델들 가져오기
 db.User = require('./user')(sequelize, Sequelize)
 db.Post = require('./post')(sequelize, Sequelize)
@@ -39,5 +37,10 @@ db.User.belongsToMany(db.User, {through : 'Follow', as : "Following", foreignKey
 // 사용자와 게시글간의 좋아요라는 다대다 관계가 맺어지는 거지
 db.User.belongsToMany(db.Post, {through : 'Like'})
 db.Post.belongsToMany(db.User, {through : 'Like', as :"Liker"})
+
+
+// 댓글 기능 다대다
+db.User.belongsToMany(db.Post, {through : "Comment"})
+db.Post.belongsToMany(db.User, {through : "Comment"})
 
 module.exports = db;

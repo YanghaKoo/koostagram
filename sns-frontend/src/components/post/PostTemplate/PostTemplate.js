@@ -95,7 +95,7 @@ class PostTemplate extends Component {
             </div>
             <div>{this.hashtags}</div>
           </div>
-          <CommentContainer match={this.props.match} />
+          <CommentContainer previewCount={5}/>
         </div>
       </div>
     );
