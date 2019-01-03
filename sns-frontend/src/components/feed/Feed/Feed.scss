@@ -3,7 +3,8 @@
   .list{     
     width: 100%;
     height: calc(100vh - 84px);
-    overflow : scroll;            
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 
@@ -51,4 +52,9 @@
   color : $oc-gray-7;
   margin-top : 15px;
   margin-bottom : 15px;
+}
+
+.rec-user{
+  
+  
 }

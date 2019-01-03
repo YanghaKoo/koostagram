@@ -12,6 +12,7 @@ class FeedContainer extends Component {
           user={this.props.user}
           history={this.props.history}
           location={this.props.location}
+          ht = {this.props.ht}
         />
       </div>
     );

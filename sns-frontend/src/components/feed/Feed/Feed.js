@@ -37,9 +37,10 @@ class RecommendUser extends Component {
         <EachRecommend user={user} key={user.id} history={this.props.history} pic={user.pic}/>
       );
     });
+
     return (
-      <div style={{textAlign :'center'}}>
-        <div style={{fontSize : "1.25rem", fontWeight : "700"}}>Feed에 더이상 소식이 없습니다. 아래 계정들도 둘러보세요!</div>
+      <div style={{textAlign :'center'}} className="rec-user">
+        <div style={{fontSize : "1.25rem", fontWeight : "700", marginTop : "30px"}}>Feed에 더 이상 소식이 없습니다. 아래 계정들도 둘러보세요!</div>
         <div className="following-rec">{list}</div>
       </div>
     );
@@ -67,7 +68,8 @@ class Feed extends Component {
     list: null,
     loadingState: false,
     noPost: null,
-    tk: 0
+    tk: 0,
+    uid : null
   };
 
   // 인피니트 스크롤 관련 변수들
@@ -76,15 +78,21 @@ class Feed extends Component {
   endOfList = false;
 
   componentDidMount() {
+    console.log("Component did mount")
     setTimeout(() => {
       this.initializer();
     }, 100);
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState !== this.state) return false;
-  //   this.initializer();
-  // }
+
+  // feed에서 query가 바뀔때 바로 적용하기 위해서
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Component did UPDATA!!!!")
+    const { ht } = this.props;
+    if (prevProps.ht !== ht) this.initializer();
+    document.getElementById('list').scrollTo(0,0)
+  }
+
 
   initializer = async () => {
     const { location, user, history } = this.props;
@@ -191,8 +199,9 @@ class Feed extends Component {
     
     return (
       <div className="feed">
-        {query.hashtag ? <center><div className="searched-hashtag">Searched Hashtag : #{query.hashtag}</div></center> : null}
-        <div ref="iScroll" className="list">
+        
+        <div ref="iScroll" className="list" id="list">
+          {query.hashtag ? <center><div className="searched-hashtag">Searched Hashtag : #{query.hashtag}</div></center> : null}
           <center>{eachList}</center>
           {this.endOfList ? <RecommendUser history={this.props.history} /> : ""}
         </div>

@@ -1,18 +1,23 @@
 .each-feed {
-  margin: 30px;
+  margin-top : 20px;
   @include media("<medium") {
     margin-left: 0;
     margin-right: 0;
   }
+  
 
   .top {
     font-size: 1.5rem;
     margin-bottom: 10px;
     padding-left: 15px;
     display: flex;
+    width : 300px;
+   
+    
     justify-content: space-between;
     align-items: center;
     width: 600px;
+    
     @include media("<medium") {
       width: 100%;
       font-size: 1.25rem;
@@ -34,8 +39,12 @@
           width : 100%;
           height: 100%;
           object-fit: contain;
+          
         }
       }
+    }
+    .right{      
+      width : 300px;
     }
   }
 
@@ -46,7 +55,7 @@
     width: 750px;
     height: auto;
     border-radius: 5%;    
-    @include media("<medium") {
+    @include media("<large") {
       width: 100%;
     }
 
@@ -59,7 +68,7 @@
     .content-area {
       font-size: 1.5rem;
       margin-bottom: 5px;
-      padding-left: 15px;
+      padding-left: 5px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -71,8 +80,20 @@
         font-size: 1.25rem;
       }
     }
+    .test{
+      font-size: 1.5rem;
+      padding : 3px;
+      
+      @include media("<medium") {
+        width: 100%;
+        font-size: 1.25rem;
+      }
+    }
   }
+
+  
   .comment-area{
     font-size : 1.5rem;
   }
 }
+

@@ -3,7 +3,6 @@ import ProfileContainer from 'containers/user/ProfileContainer';
 import Posts from 'components/user/Posts'
 import {withRouter} from 'react-router-dom'
 
-// 나중에 버튼으로 세션으로 ~~
 const UserPage = ({match, history}) => {
   const { userid : uid } = match.params;
   return (

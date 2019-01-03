@@ -3,23 +3,24 @@ import axios from "axios";
 import "./PostTemplate.scss";
 import { withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
-import CommentContainer from "../../../containers/user/CommentContainer";
+import CommentContainer from "../../../containers/user/CommentContainer"
+import Hashtag from "../Hashtag/Hashtag";
 
-class Hashtag extends Component {
-  render() {
-    const { history, hashtag } = this.props;
-    return (
-      <div
-        className="hashed"
-        onClick={() => {
-          history.push(`/feed?hashtag=${hashtag.slice(1)}`);
-        }}
-      >
-        {hashtag}
-      </div>
-    );
-  }
-}
+// class Hashtag extends Component {
+//   render() {
+//     const { history, hashtag } = this.props;
+//     return (
+//       <div
+//         className="hashed"
+//         onClick={() => {
+//           history.push(`/feed?hashtag=${hashtag.slice(1)}`);
+//         }}
+//       >
+//         {hashtag}
+//       </div>
+//     );
+//   }
+// }
 
 class PostTemplate extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./EachFeed.scss";
 import axios from "axios";
-//import CommentContainer from "../../../containers/user/CommentContainer";
+import Hashtag from "../../post/Hashtag/Hashtag";
 
 class EachFeed extends Component {
   state = {
@@ -14,6 +14,7 @@ class EachFeed extends Component {
     this.initializer();
   }
 
+  // 이니셜라이저, 요청하는 부분
   initializer = async () => {
     const { id } = this.props;
     const nick = await axios.post("/post/getNick", {
@@ -49,6 +50,21 @@ class EachFeed extends Component {
     const { nick, likeCounts, profilePic } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
 
+    let contentWithHashtag;
+    if (content) {
+      contentWithHashtag = content.split(" ");
+      contentWithHashtag = contentWithHashtag.map(item => {
+        if (item[0] === "#") {
+          return (
+            <div>
+              <Hashtag hashtag={item} history={this.props.history} />
+            </div>
+          );
+        }
+        return <div className="word">{item}</div>;
+      });
+    }
+
     return (
       <div className="each-feed">
         <div className="top">
@@ -64,7 +80,7 @@ class EachFeed extends Component {
             </div>
             {nick}
           </div>
-          <div className="right">
+          <div className="right" >
             {date.substr(0, 10)} {time}
           </div>
         </div>
@@ -72,9 +88,9 @@ class EachFeed extends Component {
           <div onClick={this.handleClick} className="onimg">
             <img src={img} alt="" />
           </div>
-          <div className="comment-area">{likeCounts} likes</div>
-          <div className="content-area">{content ? content : null}</div>
-        </div>        
+          <div className="comment-area">{likeCounts} likes</div>      
+          <div className="test" >{contentWithHashtag}</div>
+        </div>                
       </div>
     );
   }
