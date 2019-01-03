@@ -80,6 +80,7 @@ class Profile extends PureComponent {
     }
   };
 
+  // follow(unfollow)버튼 클릭
   handleFollow = e => {
     //팔로우 버튼 누르면
     const { userid } = this.props.match.params;
@@ -102,6 +103,7 @@ class Profile extends PureComponent {
   };
 
   // select로 follower를 띄울 모달인지 following를 띄울 모달인지 구별해줌
+  // Follower와 관련된 modal을 열어줌
   showFollowerModal = (e) => {
     this.setState({
       modal: true,      
@@ -109,6 +111,7 @@ class Profile extends PureComponent {
     });
   };
   
+  // Following과 관련된 modal을 열어줌
   showFollowingModal = (e) => {
     this.setState({
       modal: true,    
@@ -116,12 +119,14 @@ class Profile extends PureComponent {
     });
   };
 
+  // modal 열기/닫기
   handleModal = bool => {
     this.setState({
       modal: bool
     });
   };
 
+  // 본인의 page일 때만 프로필사진 편집이 가능하게 구현, 남의 page에선 동작 X
   editProfile =() => {
     const { uid, user, history} = this.props
     console.log(uid, user.id)
@@ -151,9 +156,9 @@ class Profile extends PureComponent {
           {profilePic? <img src={profilePic} alt='' /> : null }
         </div>
         <div className="user-detail">
-          <center>
+        <div style={{textAlign :'center'}}>
             <div>
-              {nick ? "@" + nick : "loading..."} <br />
+              <div style={{fontSize : "1.5rem"}}>{nick ? "@" + nick : "loading..."}</div> <br />
               {!user || Number(userid) === user.id ? null : (
                 <input
                   type="button"
@@ -162,23 +167,23 @@ class Profile extends PureComponent {
                 />
               )}
             </div>
-          </center>
-          <center>
-            <div>
+          </div>
+          
+            <div style={{textAlign :'center'}}>
               <div className="show-follow" onClick={this.showFollowerModal}>
                 {followers.length} <br />
               </div>
               Followers
             </div>
-          </center>
-          <center> 
-            <div>
+          
+          
+            <div style={{textAlign :'center'}}>
               <div className="show-follow" onClick={this.showFollowingModal}>
                 {following.length} <br />
               </div>
               Following
             </div>
-          </center>
+          
         </div>
       </div>
     );

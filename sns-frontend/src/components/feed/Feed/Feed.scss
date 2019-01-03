@@ -22,15 +22,25 @@
     padding : 10px;
     display : flex;
     flex-direction: column;
-    background: $oc-red-2;
+    background: $oc-gray-3;
     min-width : 200px;
+    border-radius : 20%;
+    
+    &:hover{
+      background: $oc-gray-4;
+      transition: 0.3s;
+    }
 
     align-items: center;
     .profile-pic{
-      background: $oc-blue-3;
+      background: $oc-gray-2;
       width : 100px;
       height: 100px;
       border-radius: 50%;
+      img{
+        object-fit: contain;
+        border-radius: 50%;
+      }
     }
   }
 }

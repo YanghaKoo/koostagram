@@ -6,7 +6,6 @@ import WritingForm from "../../components/writing/WritingForm/WritingForm";
 import {withRouter} from 'react-router-dom'
 
 class WritingFormContainer extends Component {
-
   componentDidMount() {
     if(!this.props.user) { alert("Please login first."); this.props.history.push('/');}
   }

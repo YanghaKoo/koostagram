@@ -9,20 +9,38 @@
   align-items: center;
   justify-content: center;
 
-  .content{
+  .content {
     background: white;
     padding: 3rem;
     width: 200px;
-    min-width : 200px;
+    min-width: 200px;
     height: auto;
-    font-size : 1.2rem;
-  }  
+    font-size: 1.2rem;
+    .flist {
+      max-height: 300px;
+      overflow: auto;
+    }
+    .close {      
+      transition: 0.3s;
+      padding: 3px;
+      background: $oc-blue-6;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #fff;
+      width: 70px;
+      border-radius: 15%;
+      
+      &:hover {
+        background-color: $oc-blue-8;
+      }
+    }
+  }
 }
 
-.show-profile{
-  color : $oc-blue-6;
+.show-profile {
+  color: $oc-blue-6;
   cursor: pointer;
-  &:hover{
-    color : $oc-blue-9;
+  &:hover {
+    color: $oc-blue-9;
   }
 }

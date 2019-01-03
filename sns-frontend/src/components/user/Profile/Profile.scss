@@ -1,6 +1,6 @@
   .profile {
     background: #e9ecef;
-    //height: 250px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,13 +8,14 @@
     margin-bottom : 30px;
         
     .profile-pic{
-      background: $oc-gray-5;
+      background: #ebe5d9;
       width : 200px;
       height: 200px;
       min-width: 200px;
       border-radius: 50%;
       margin-top : 20px;
       margin-bottom: 20px;
+      @include material-shadow(5);
       img{
         border-radius: 50%;
         width : 100%;
@@ -24,7 +25,9 @@
     }
   
     .user-detail{
-      background: $oc-gray-5;
+      background: #ebe5d9;
+      border-radius: 3%;
+      @include material-shadow(2);
       width : 500px;
       height: 170px;
       margin-left: 10%;

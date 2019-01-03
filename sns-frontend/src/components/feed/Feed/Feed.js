@@ -34,19 +34,19 @@ class RecommendUser extends Component {
 
     const list = shuffled.map(user => {
       return (
-        <EachRecommend user={user} key={user.id} history={this.props.history} />
+        <EachRecommend user={user} key={user.id} history={this.props.history} pic={user.pic}/>
       );
     });
     return (
-      <center>
-        <div>Feed에 더이상 소식이 없습니다. 아래 계정들도 둘러보세요!</div>
+      <div style={{textAlign :'center'}}>
+        <div style={{fontSize : "1.25rem", fontWeight : "700"}}>Feed에 더이상 소식이 없습니다. 아래 계정들도 둘러보세요!</div>
         <div className="following-rec">{list}</div>
-      </center>
+      </div>
     );
   }
 }
 
-const EachRecommend = ({ user, history }) => {
+const EachRecommend = ({ user, history, pic }) => {
   return (
     <div
       className="each-rec"
@@ -54,7 +54,9 @@ const EachRecommend = ({ user, history }) => {
         history.push(`/user/${user.id}`);
       }}
     >
-      <div className="profile-pic" />
+      <div className="profile-pic">
+        <img src={pic} width={100} height={100}/>
+      </div>
       <div className="nick">{user.nick}</div>
     </div>
   );

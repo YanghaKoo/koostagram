@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./Modal.scss";
-import {Link, withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 const ModalPortal = ({ children }) => {
   const el = document.getElementById("modal");
@@ -9,53 +9,66 @@ const ModalPortal = ({ children }) => {
 };
 
 class Modal extends Component {
- 
   handleOpenModal = () => {
-    this.props.handleModal(true)
+    this.props.handleModal(true);
   };
-  handleCloseModal = () => {    
-    this.props.handleModal(false)
+  handleCloseModal = () => {
+    this.props.handleModal(false);
   };
 
-  showProfile = (id) => {
-    this.handleCloseModal()
-    this.props.history.push(`/user/${id}`)
-  }
+  showProfile = id => {
+    this.handleCloseModal();
+    this.props.history.push(`/user/${id}`);
+  };
 
-  render() {    
-    const { check, list } = this.props
-    
-    if(this.props.open === true){    
-      const flist = list.map(item=> {
+  render() {
+    // check : modal의 제목(Follower인지 Following 인지 구분)
+    // list : Following(Follower) 목록
+    // open : true일 때 모달을 열어줌
+    const { check, list, open } = this.props;
+
+    // first : 넘어온 list로 목록을 구성해 줌
+    if (open === true) {
+      const flist = list.map(item => {
         return (
-          <div key={item.id} style={{display :"flex", justifyContent : "space-between"}}>
-            <div>
-              {item.nick}                  
+          <div
+            key={item.id}
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <div>{item.nick}</div>
+            <div
+              className="show-profile"
+              onClick={() => {
+                this.showProfile(item.id);
+              }}
+            >
+              show profile
             </div>
-            <div className="show-profile"  onClick={()=> {this.showProfile(item.id)}}>
-              showProfile
-            </div>            
           </div>
-          )
-      })
-      
-    return (
-      <ModalPortal>
-        <div className="modal">
-          <div className="content">
-            <center><h3>{check}</h3></center>
-            {flist}
-            <br/>
-            <center><button onClick={this.handleCloseModal}>close</button></center>
+        );
+      });
+
+
+      return (
+        <ModalPortal>
+          <div className="modal">
+            <div className="content">
+              <center>
+                <h3>{check}</h3>
+              </center>
+              <div className="flist">{flist}</div>
+              <br />
+              <center>
+                <button onClick={this.handleCloseModal} className="close">Close</button>
+              </center>
+            </div>
           </div>
-        </div>
-      </ModalPortal>
-    );
-  }else{
-    return null
+        </ModalPortal>
+      );
+    } else {
+      return null;
+    }
   }
-
-}
 }
 
-export default withRouter(Modal)
+export default withRouter(Modal);
