@@ -14,6 +14,33 @@
     font-size: 1.7rem;
   }
 
+  .search-container{
+    @include media("<medium"){
+      display: none;
+    }
+      
+    .search{
+      height: 40px;
+      width : 300px;
+      border : white;      
+      border-radius: 3%;
+      margin : 10px;
+      background: $oc-gray-7;
+      color : white;
+      text-align: center;
+      font-weight: 700;
+      font-size : 1.5rem;
+      
+      &:focus {
+      
+        outline : none;
+        transition: 0.3s;
+        background: $oc-gray-6;
+        
+      }
+    }
+  }
+
   .right-part{
     width : 180px;  
     display: flex;
@@ -26,3 +53,4 @@
     }
   } 
 }
+

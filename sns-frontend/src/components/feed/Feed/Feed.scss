@@ -1,5 +1,9 @@
 .feed {
   padding : 2px;  
+  .ht{
+    color : $oc-blue-6;
+    font-weight: 600;
+  }
   .list{     
     width: 100%;
     height: calc(100vh - 84px);

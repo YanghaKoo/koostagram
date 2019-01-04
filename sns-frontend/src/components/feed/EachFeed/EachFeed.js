@@ -54,7 +54,7 @@ class EachFeed extends Component {
     if (content) {
       contentWithHashtag = content.split(" ");
       contentWithHashtag = contentWithHashtag.map(item => {
-        if (item[0] === "#") {
+        if (item[0] === "#" && item.length > 1) {
           return (
             <div>
               <Hashtag hashtag={item} history={this.props.history} />

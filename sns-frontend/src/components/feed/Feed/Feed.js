@@ -34,13 +34,22 @@ class RecommendUser extends Component {
 
     const list = shuffled.map(user => {
       return (
-        <EachRecommend user={user} key={user.id} history={this.props.history} pic={user.pic}/>
+        <EachRecommend
+          user={user}
+          key={user.id}
+          history={this.props.history}
+          pic={user.pic}
+        />
       );
     });
 
     return (
-      <div style={{textAlign :'center'}} className="rec-user">
-        <div style={{fontSize : "1.25rem", fontWeight : "700", marginTop : "30px"}}>Feed에 더 이상 소식이 없습니다. 아래 계정들도 둘러보세요!</div>
+      <div style={{ textAlign: "center" }} className="rec-user">
+        <div
+          style={{ fontSize: "1.25rem", fontWeight: "700", marginTop: "30px" }}
+        >
+          Feed에 더 이상 소식이 없습니다. 아래 계정들도 둘러보세요!
+        </div>
         <div className="following-rec">{list}</div>
       </div>
     );
@@ -56,7 +65,7 @@ const EachRecommend = ({ user, history, pic }) => {
       }}
     >
       <div className="profile-pic">
-        <img src={pic} width={100} height={100}/>
+        <img src={pic} width={100} height={100} alt="" />
       </div>
       <div className="nick">{user.nick}</div>
     </div>
@@ -69,7 +78,7 @@ class Feed extends Component {
     loadingState: false,
     noPost: null,
     tk: 0,
-    uid : null
+    wrongAccess: null
   };
 
   // 인피니트 스크롤 관련 변수들
@@ -78,21 +87,26 @@ class Feed extends Component {
   endOfList = false;
 
   componentDidMount() {
-    console.log("Component did mount")
+    console.log("Component did mount");
     setTimeout(() => {
       this.initializer();
     }, 100);
   }
 
-
   // feed에서 query가 바뀔때 바로 적용하기 위해서
   componentDidUpdate(prevProps, prevState) {
-    console.log("Component did UPDATA!!!!")
+    console.log("Component did UPDATA!!!!");
     const { ht } = this.props;
-    if (prevProps.ht !== ht) this.initializer();
-    document.getElementById('list').scrollTo(0,0)
+    if (prevProps.ht !== ht) {
+      this.initializer();
+      try {
+        document.getElementById("list").scrollTo(0, 0);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    }
   }
-
 
   initializer = async () => {
     const { location, user, history } = this.props;
@@ -115,6 +129,7 @@ class Feed extends Component {
         noPost: 1
       });
       return;
+      
     } else {
       this.it = listData.length;
       listData = listData.reverse();
@@ -175,10 +190,9 @@ class Feed extends Component {
 
     console.log("render items  : ", items);
 
-
     if (this.state.noPost) {
       return (
-        <div style={{marginTop : "100px"}}>
+        <div style={{ marginTop: "100px" }}>
           <RecommendUser history={this.props.history} />
         </div>
       );
@@ -196,12 +210,17 @@ class Feed extends Component {
         content={item.content}
       />
     ));
-    
+
     return (
       <div className="feed">
-        
         <div ref="iScroll" className="list" id="list">
-          {query.hashtag ? <center><div className="searched-hashtag">Searched Hashtag : #{query.hashtag}</div></center> : null}
+          {query.hashtag ? (
+            <center>
+              <div className="searched-hashtag">
+                Searched Hashtag : <span className="ht">#{query.hashtag}</span>
+              </div>
+            </center>
+          ) : null}
           <center>{eachList}</center>
           {this.endOfList ? <RecommendUser history={this.props.history} /> : ""}
         </div>

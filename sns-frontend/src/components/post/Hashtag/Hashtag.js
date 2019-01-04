@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class Hashtag extends Component {
   render() {
     const { history, hashtag } = this.props;

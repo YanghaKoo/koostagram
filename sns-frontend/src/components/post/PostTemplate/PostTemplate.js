@@ -6,21 +6,6 @@ import ReactLoading from "react-loading";
 import CommentContainer from "../../../containers/user/CommentContainer"
 import Hashtag from "../Hashtag/Hashtag";
 
-// class Hashtag extends Component {
-//   render() {
-//     const { history, hashtag } = this.props;
-//     return (
-//       <div
-//         className="hashed"
-//         onClick={() => {
-//           history.push(`/feed?hashtag=${hashtag.slice(1)}`);
-//         }}
-//       >
-//         {hashtag}
-//       </div>
-//     );
-//   }
-// }
 
 class PostTemplate extends Component {
   state = {
@@ -66,7 +51,7 @@ class PostTemplate extends Component {
     if (content) {
       contentWithHashtag = content.split(" ");
       contentWithHashtag = contentWithHashtag.map(item => {
-        if (item[0] === "#") {
+        if (item[0] === "#" && item.length > 1) {
           return (
             <div>
               <Hashtag hashtag={item} history={this.props.history} />

@@ -55,7 +55,8 @@ class Posts extends Component {
     if (posts[0] === "noPost") {
       return (
         <div className="loading">
-          <ReactLoading type="bars" color="black" height={"20%"} width="20%" />
+          loading...
+          {/* <ReactLoading type="bars" color="black" height={"20%"} width="20%" /> */}
         </div>
       );
     } else if (posts.length === 0) {
@@ -76,31 +77,3 @@ class Posts extends Component {
 }
 
 export default withRouter(Posts);
-
-// class Post extends Component {
-//   render() {
-//     return (
-//       <div>
-//         <img src={this.props.src} style={{width : '100%', height : '100%'}} alt=""/>
-//       </div>
-//     );
-//   }
-// }
-
-// const sample = [
-//   "http://placehold.it/201",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200",
-//   "http://placehold.it/200"
-// ];

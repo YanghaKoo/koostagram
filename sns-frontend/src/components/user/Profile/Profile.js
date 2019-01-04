@@ -153,17 +153,18 @@ class Profile extends PureComponent {
         {select ?  <Modal open={modal} handleModal={this.handleModal} check="Following" list={following}/> : <Modal open={modal} handleModal={this.handleModal} check="Followers" list={followers} />}
                     
         <div className="profile-pic" onClick={this.editProfile} style={style}>
-          {profilePic? <img src={profilePic} alt='' /> : null }
+          {profilePic? <img src={profilePic} alt='' /> : <div className="no-image">No Image</div>}
         </div>
         <div className="user-detail">
         <div style={{textAlign :'center'}}>
             <div>
-              <div style={{fontSize : "1.5rem"}}>{nick ? "@" + nick : "loading..."}</div> <br />
+              <div className="nick" style={{fontSize : "1.5rem"}}>{nick ? "@" + nick : "loading..."}</div> <br />
               {!user || Number(userid) === user.id ? null : (
                 <input
                   type="button"
                   value={buttonLabel}
                   onClick={this.handleFollow}
+                  className="follow-button"
                 />
               )}
             </div>

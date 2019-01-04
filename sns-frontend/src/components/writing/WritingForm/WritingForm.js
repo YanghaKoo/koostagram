@@ -86,6 +86,7 @@ class WritingForm extends Component {
             />
           </label>
           <textarea
+            spellCheck={false}
             name="content"
             placeholder={placeholder}
             className="text"
