@@ -16,9 +16,39 @@
     border : 1px solid black;
     background: white;
     
+    .user-list{
+      background: $oc-blue-2;
+      height: 100px;
+      width : 100%;
+ 
+    }
+
+    .hash-list{
+      background: $oc-red-2;
+      height: 100px;
+      width : 100%;
+
+    }
+
+    .user-result{
+      width : 100%;
+      cursor: pointer;
+      height: 33.3px;
+      background: $oc-blue-3;
+      font-size : 1.25rem;
+      &:hover{
+        background: $oc-blue-5;
+      }
+    }
+    .ht-result{
+      width : 100%;
+      cursor: pointer;
+      height: 33.3px;
+      background: $oc-red-3;
+      font-size : 1.25rem;
+      &:hover{
+        background: $oc-red-5;
+      }
+    }
   }
-}
-
-.hidden{
-
 }

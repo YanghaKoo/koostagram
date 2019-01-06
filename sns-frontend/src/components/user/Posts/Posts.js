@@ -60,7 +60,7 @@ class Posts extends Component {
         </div>
       );
     } else if (posts.length === 0) {
-      return <div>No post </div>;
+      return <div className="no-post">No post </div>;
     }
 
     // TODO : delete index(key) when deploy(선택사항)

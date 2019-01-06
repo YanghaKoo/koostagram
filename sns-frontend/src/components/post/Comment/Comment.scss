@@ -9,7 +9,7 @@ $baseColor :  #ebe5d9;
   flex-direction: column;
   justify-content: space-between;
   @include media("<large"){ 
-    height: 400px;
+    height: auto;
     width: 100%;
    }
    
@@ -21,7 +21,7 @@ $baseColor :  #ebe5d9;
     width : 100%;
 
     @include media("<large"){ 
-      height: 1000px;
+      height: auto;
      }
   }
 }

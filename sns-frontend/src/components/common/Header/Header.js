@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 class Header extends Component {
   render() {
-    const { isAble, to, input, handleChange } = this.props;
+    const { isAble, to, input, handleChange, handleBlur } = this.props;
 
     return (
       <div className="header">
@@ -20,6 +20,7 @@ class Header extends Component {
             onChange={handleChange}
             spellCheck={false}
             placeholder="Search"
+            onBlur={handleBlur}
           />
         </div>
         <div className="right-part">

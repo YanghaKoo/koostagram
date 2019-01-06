@@ -7,7 +7,8 @@ import axios from "axios";
 class HeaderContainer extends Component {
   state = {
     input: "",
-    results : null
+    results : null,
+    loading : 0
   };
 
   handleChange = e => {
@@ -17,8 +18,23 @@ class HeaderContainer extends Component {
     );
   };
 
+  handleBlur = () =>{
+    setTimeout( () => {
+      this.setState({
+        input : ''
+      })
+    },100)
+  }
+
   searchUser = debounce(async input => {
+    this.setState({
+      loading : 1
+    })
     const results = await axios.post("/post/search", { input: input });
+    this.setState({
+      loading : 0
+    })
+
     this.setState({
       results : results.data
     })
@@ -36,8 +52,9 @@ class HeaderContainer extends Component {
           to={to}
           input={input}
           handleChange={this.handleChange}
+          handleBlur={this.handleBlur}
         />
-        <SearchList data={this.state.results} input={input}/>
+        <SearchList data={this.state.results} input={input} loading={this.state.loading}/>
       </div>
     );
   }

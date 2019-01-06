@@ -1,5 +1,6 @@
 .each-feed {
   margin-top : 20px;
+  
   @include media("<medium") {
     margin-left: 0;
     margin-right: 0;

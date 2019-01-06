@@ -10,11 +10,51 @@
   
   box-shadow: -60px 0px 100px -90px #000000,
                60px 0px 100px -90px #000000;
+
+  .checkSyntax {
+    font-size : 1.25rem;
+    font-weight: 600;
+  }               
+
+  .checkButton {
+    margin-bottom: 40px;
+    font-size : 1rem;
+    border : none;
+    background: $oc-blue-5;
+    width : 140px;
+    height: 30px;
+    padding : 7px;
+    border-radius: 5%;
+    cursor: pointer;
+    color : white;
+    &:hover{
+      background: $oc-blue-7;
+      transition: 0.3s;
+    }
+  }         
+  
+  .submit-regi{
+    color : white;
+    background: $oc-blue-5;
+    cursor: pointer;
+    border : none;
+    outline : none;
+    margin-top : 30px;
+    font-size : 1.5rem;
+    width : 200px;
+    height: 50px;
+    @include material-shadow(2);
+    &:hover{
+      background: $oc-blue-7;
+      transition: 0.3s;
+      
+    }
+  }
   
 }
 
 .input {
-  margin-bottom : 30px;
+  margin-bottom : 10px;
   text-align : center;
   width : 80%;
   height: 30px;

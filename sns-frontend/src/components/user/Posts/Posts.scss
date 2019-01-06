@@ -36,3 +36,12 @@
     height : calc(100vh - 500px);
   }
 }
+
+.no-post{
+  font-size : 2rem;
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-weight: 900;
+}

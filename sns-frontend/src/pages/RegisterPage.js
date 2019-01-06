@@ -1,10 +1,10 @@
 import React from 'react';
 import RegisterForm from 'components/register/RegisterForm'
 
-const RrgisterPage = () => {
+const RrgisterPage = ({history}) => {
   return (
     <div>      
-      <RegisterForm />
+      <RegisterForm history={history}/>
     </div>
   );
 };

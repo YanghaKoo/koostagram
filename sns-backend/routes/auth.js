@@ -9,10 +9,11 @@ router.post('/join', async (req,res,next)=>{
   const { email, nick, password } = req.body
   
   try{
+    // 이미 이메일이 존재하면 회원가입 실패
     const exUser = await User.find({where : {email}})
-    // 이메일이 존재하면 회원가입 시키면 안되지
+    
     if(exUser){ 
-      return res.redirect('/register')
+      return res.send("email duplicate")
     }
 
     // 이제 암호화임 여기는
@@ -23,7 +24,8 @@ router.post('/join', async (req,res,next)=>{
       nick,
       password : hash
     })   
-    return res.redirect('/')
+    return res.send("success")
+
   }catch(e){
     console.log(e)
     next(e)
@@ -63,6 +65,37 @@ router.post('/login',(req,res, next)=>{    // req.body.eamil , req.body.password
 
   })(req,res,next);
 })
+
+// 닉네임 중복 검사
+router.post("/nickCheck", async (req, res, next)=>{
+  try {
+    const {nick} = req.body
+    const user = await User.find({
+      where : { nick }
+    });
+    user? res.send("duplicate") : res.send("ok")
+
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+})
+
+
+router.post("/emailCheck", async (req, res, next)=>{
+  try {
+    const {email} = req.body
+    const user = await User.find({
+      where : { email }
+    });
+    user ? res.send("duplicate") : res.send("ok")
+
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+})
+
 
 
 
