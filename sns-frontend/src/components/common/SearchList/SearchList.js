@@ -69,13 +69,6 @@ class SearchList extends Component {
       return <div />;
     }
 
-    if (this.props.loading)
-      return (
-        <div className="search-list">
-          <div className="list">loading...</div>
-        </div>
-      );
-
     if (data) {
       // 입력을 해서 데이터가 있을 때
       const { user, hashtag } = data;

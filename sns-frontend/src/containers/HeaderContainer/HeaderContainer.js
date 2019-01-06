@@ -8,7 +8,6 @@ class HeaderContainer extends Component {
   state = {
     input: "",
     results : null,
-    loading : 0
   };
 
   handleChange = e => {
@@ -27,14 +26,7 @@ class HeaderContainer extends Component {
   }
 
   searchUser = debounce(async input => {
-    this.setState({
-      loading : 1
-    })
     const results = await axios.post("/post/search", { input: input });
-    this.setState({
-      loading : 0
-    })
-
     this.setState({
       results : results.data
     })
@@ -54,7 +46,7 @@ class HeaderContainer extends Component {
           handleChange={this.handleChange}
           handleBlur={this.handleBlur}
         />
-        <SearchList data={this.state.results} input={input} loading={this.state.loading}/>
+        <SearchList data={this.state.results} input={input} />
       </div>
     );
   }
