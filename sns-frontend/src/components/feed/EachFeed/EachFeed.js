@@ -53,11 +53,11 @@ class EachFeed extends Component {
     let contentWithHashtag;
     if (content) {
       contentWithHashtag = content.split(" ");
-      contentWithHashtag = contentWithHashtag.map(item => {
+      contentWithHashtag = contentWithHashtag.map((item) => {
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>
-              <Hashtag hashtag={item} history={this.props.history} />
+              <Hashtag hashtag={item} history={this.props.history}/>
             </div>
           );
         }
@@ -65,6 +65,8 @@ class EachFeed extends Component {
       });
     }
 
+
+    
     return (
       <div className="each-feed">
         <div className="top">

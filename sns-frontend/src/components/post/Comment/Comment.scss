@@ -18,17 +18,19 @@ $baseColor :  #ECEFEE;
     overflow: auto;
     overflow-x: auto;
     overflow-y: auto;
-    width : 100%;
+    width : 420px;
     background: white;
     margin-bottom: 10px;
     margin-top : 10px;
     border-radius: 5%;
     box-sizing: border-box;
     padding : 20px;
+    
 
 
     @include media("<large"){ 
       height: auto;
+      width : 100%;
      }
     
   }
@@ -50,14 +52,14 @@ $baseColor :  #ECEFEE;
     .comment-submit{
       outline : none;
       border : none;
-      background: $oc-blue-3;
+      background: $oc-blue-5;
       cursor: pointer;
       border-radius: 5%;
       color: white;
       width : 50px;
       height: 30px;
       &:hover{
-        background: $oc-blue-5;
+        background: $oc-blue-7;
         
       }
     }

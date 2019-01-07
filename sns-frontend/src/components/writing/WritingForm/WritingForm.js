@@ -60,7 +60,6 @@ class WritingForm extends Component {
   render() {
     const { input } = this.props;
     const style = input.length < 140 ? null : { color: "red" };
-    console.log(window.innerWidth);
     const placeholder =
       window.innerWidth > 450
         ? "오늘의 하루는 어떠셨나요? :)"

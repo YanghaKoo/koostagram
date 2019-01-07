@@ -64,8 +64,8 @@ const EachRecommend = ({ user, history, pic }) => {
         history.push(`/user/${user.id}`);
       }}
     >
-      <div className="profile-pic">
-        <img src={pic} width={100} height={100} alt="" />
+      <div className="profile-pic">        
+        {pic?  <img src={pic} width={100} height={100} alt="" />    : <div style={{marginTop : "38px"}}>no image</div>} 
       </div>
       <div className="nick">{user.nick}</div>
     </div>

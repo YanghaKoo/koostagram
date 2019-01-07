@@ -7,6 +7,7 @@ $contentColor :  white;
   align-items: center;
   height: 90vh;
   overflow-x: hidden;
+  
   .nick{
     font-size : 1.8rem;
     font-weight: 800;
@@ -29,7 +30,7 @@ $contentColor :  white;
 
   .right{
     height: 80%;
-    // background: $oc-red-3;    
+    background: #ECEFEE;
     @include material-shadow(3);
     @include media("<large"){
       height: 1000px;

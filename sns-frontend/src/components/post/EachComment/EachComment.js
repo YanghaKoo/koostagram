@@ -11,7 +11,6 @@ class EachComment extends Component {
 
   async componentDidMount() {
     const link = await axios.post('/post/getIdByNick', {nick : this.props.usernick})
-    console.log(link.data.id)
     this.setState({
       id : link.data.id
     })

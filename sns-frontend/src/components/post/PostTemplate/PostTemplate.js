@@ -42,20 +42,14 @@ class PostTemplate extends Component {
 
   handleDelete = async () => {
     const { postid, userid } = this.props.match.params;
-    const {history } = this.props
+    const { history } = this.props;
 
-    if(window.confirm("삭제하시겠습니까?")){
-      await axios.post('/post/deletePost', {postid})
-      alert("삭제가 성공적으로 완료되었습니다.")
-      history.push(`/user/${userid}`)
-
-
-    }else{
-      return
+    if (window.confirm("삭제하시겠습니까?")) {
+      await axios.post("/post/deletePost", { postid });
+      history.push(`/user/${userid}`);
+    } else {
+      return;
     }
-      
- 
-    
   };
 
   render() {
@@ -67,7 +61,8 @@ class PostTemplate extends Component {
     let contentWithHashtag;
     if (content) {
       contentWithHashtag = content.split(" ");
-      contentWithHashtag = contentWithHashtag.map(item => {
+      contentWithHashtag = contentWithHashtag.map((item) => {
+        console.log(item)
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>
@@ -104,7 +99,7 @@ class PostTemplate extends Component {
               >
                 <div style={{ marginBottom: "20px" }}>@{this.state.nick}</div>
               </b>
-              { (user ? user.id : null) === Number(userid) ? (
+              {(user ? user.id : null) === Number(userid) ? (
                 <input
                   className="delete-button"
                   type="button"

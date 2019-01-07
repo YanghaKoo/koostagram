@@ -26,7 +26,6 @@ class Comment extends Component {
   
   const likeUsers = await axios.post("/post/getLikeCount", { postid });
   const commentsBefore = await axios.post("/post/getComments", { postid })
-  console.log(commentsBefore.data)
 
   this.setState({
     likeCount: likeUsers.data.length,
@@ -93,27 +92,23 @@ class Comment extends Component {
     const {nick} = this.props.user
   
     if(!comment) alert("내용을 입력해주세요.")
-    const result = await axios.post("/post/uploadComment", {content : comment, postid, usernick : nick})
+    await axios.post("/post/uploadComment", {content : comment, postid, usernick : nick})
     this.setState({
       comment : ''
     })    
     this.updateComment()    
-    
-    // if(result.data) alert("등록완료")
   };
 
   handleKeyPress = (e) =>{
     if(e.key === 'Enter') this.handleSubmit()
   }
 
-
-
-
   render() {
     const { previewCount } = this.props;
     const {commentsBefore} = this.state
-    console.log(commentsBefore)
-    const list = commentsBefore && commentsBefore.map(item => { return <EachComment content={item.content} usernick={item.usernick} key={item.id}/>})
+    let list = commentsBefore && commentsBefore.map(item => { return <EachComment content={item.content} usernick={item.usernick} key={item.id}/>})
+    
+    if(list !== null && list.length ===0) list = "첫 코멘트를 입력해주세요!"
 
   
     return (
@@ -130,6 +125,7 @@ class Comment extends Component {
           &nbsp;{this.state.likeCount} likes
         </div>
         <div className="comments-list" id="cl">{list}</div>        
+
         {  previewCount >= 5 ? (
           <div className="comment-write">
             <input
