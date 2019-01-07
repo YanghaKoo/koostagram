@@ -44,14 +44,13 @@ class Comment extends Component {
   }
  }
 
- // 댓글 등록 후 실시간으로 업데이트 시키기
+ // 댓글 등록 후 실시간으로 업데이트 시키기, 댓글 등록후 스크롤 맨 아래로 내려서 본인이 등록한 댓글 확인
  updateComment = async () => {
   const { postid } = this.props.match.params;
   const commentsBefore = await axios.post("/post/getComments", { postid })
   this.setState({
     commentsBefore : commentsBefore.data
-  });    
- 
+  },() => {document.getElementById('cl').scrollTop = document.getElementById('cl').scrollHeight});     
  }
 
 
@@ -97,9 +96,9 @@ class Comment extends Component {
     const result = await axios.post("/post/uploadComment", {content : comment, postid, usernick : nick})
     this.setState({
       comment : ''
-    })
-
-    this.updateComment()
+    })    
+    this.updateComment()    
+    
     // if(result.data) alert("등록완료")
   };
 
@@ -130,15 +129,17 @@ class Comment extends Component {
           />
           &nbsp;{this.state.likeCount} likes
         </div>
-        <div className="comments-list">{list}</div>        
+        <div className="comments-list" id="cl">{list}</div>        
         {  previewCount >= 5 ? (
-          <div>
+          <div className="comment-write">
             <input
               value={this.state.comment}
               onChange={this.handleCommentChange}
               onKeyPress={this.handleKeyPress}
+              className="comment-input"
+              placeholder="Your Comment"
             />
-            <input type="button" value="submit" onClick={this.handleSubmit}/>
+            <input type="button" value="submit" onClick={this.handleSubmit} className="comment-submit"/>
           </div>
         ) : null}
       </div>

@@ -3,9 +3,8 @@ import axios from "axios";
 import "./PostTemplate.scss";
 import { withRouter } from "react-router-dom";
 import ReactLoading from "react-loading";
-import CommentContainer from "../../../containers/user/CommentContainer"
+import CommentContainer from "../../../containers/user/CommentContainer";
 import Hashtag from "../Hashtag/Hashtag";
-
 
 class PostTemplate extends Component {
   state = {
@@ -41,10 +40,28 @@ class PostTemplate extends Component {
     });
   }
 
+  handleDelete = async () => {
+    const { postid, userid } = this.props.match.params;
+    const {history } = this.props
+
+    if(window.confirm("삭제하시겠습니까?")){
+      await axios.post('/post/deletePost', {postid})
+      alert("삭제가 성공적으로 완료되었습니다.")
+      history.push(`/user/${userid}`)
+
+
+    }else{
+      return
+    }
+      
+ 
+    
+  };
+
   render() {
     const { img, content } = this.state;
     const { userid } = this.props.match.params;
-    const { history } = this.props;
+    const { history, user } = this.props;
 
     // 본문의 hashtag부분을 해당 해쉬태그 검색과 연결시키는 부분, string형태의 본문을 재구성하여 해쉬태그부분을 차별화
     let contentWithHashtag;
@@ -77,15 +94,25 @@ class PostTemplate extends Component {
         </div>
         <div className="right">
           <div className="content">
-            <b
-              className="nick"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                history.push(`/user/${userid}`);
-              }}
-            >
-              @{this.state.nick}
-            </b>
+            <div className="nick-with-delete-button">
+              <b
+                className="nick"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  history.push(`/user/${userid}`);
+                }}
+              >
+                <div style={{ marginBottom: "20px" }}>@{this.state.nick}</div>
+              </b>
+              { (user ? user.id : null) === Number(userid) ? (
+                <input
+                  className="delete-button"
+                  type="button"
+                  value="Delete"
+                  onClick={this.handleDelete}
+                />
+              ) : null}
+            </div>
             <div className="test">{contentWithHashtag}</div>
             <div>{this.hashtags}</div>
           </div>

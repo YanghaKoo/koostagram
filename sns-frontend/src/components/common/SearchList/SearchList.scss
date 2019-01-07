@@ -1,10 +1,14 @@
-.search-list {
-  
+$userlist  : #E7DFE0;
+$hashlist :#DBB2AF;
+
+
+.search-list {  
+  border : white;
   text-align: center;
   width : 100%;
   display: flex;
   justify-content: center;
-  position : relative;
+  position : relative;    
 
   .list{
     position: absolute;
@@ -12,42 +16,48 @@
     margin-top : -18px;
     width : 300px;
     height: 200px;
-    text-align: center;
-    border : 1px solid black;
+    text-align: center;    
     background: white;
     
+    @include material-shadow(5);
+    
     .user-list{
-      background: $oc-blue-2;
+      background: $userlist;
+      border : none;
       height: 100px;
       width : 100%;
+      
  
     }
 
     .hash-list{
-      background: $oc-red-2;
+      border : white;
+      background: $hashlist;
       height: 100px;
       width : 100%;
 
     }
 
     .user-result{
+      border : white;
       width : 100%;
       cursor: pointer;
       height: 33.3px;
-      background: $oc-blue-3;
+      background: #E7DFE0;            
       font-size : 1.25rem;
       &:hover{
-        background: $oc-blue-5;
+        background: $oc-gray-5;
       }
     }
     .ht-result{
+      border : white;
       width : 100%;
       cursor: pointer;
       height: 33.3px;
-      background: $oc-red-3;
+      background: #DBB2AF;
       font-size : 1.25rem;
       &:hover{
-        background: $oc-red-5;
+        background: $oc-gray-5;
       }
     }
   }

@@ -374,5 +374,18 @@ router.post("/search", async (req, res, next) => {
 });
 
 
+//delete post
+router.post("/deletePost", async (req, res, next) => {
+  try {
+    const { postid } = req.body;
+    const id = await Post.destroy({ where: { id: postid } });        
+    res.send(toString(id));
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+
 
 module.exports = router;

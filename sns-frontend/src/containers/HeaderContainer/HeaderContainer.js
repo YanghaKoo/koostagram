@@ -22,7 +22,7 @@ class HeaderContainer extends Component {
       this.setState({
         input : ''
       })
-    },100)
+    },150)
   }
 
   searchUser = debounce(async input => {

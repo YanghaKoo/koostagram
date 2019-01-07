@@ -1,5 +1,5 @@
-$baseColor :  #cfa17d;
-$border : 1px solid #847072;
+$contentColor :  white;
+
 
 .post-template{
   display: flex;
@@ -10,11 +10,13 @@ $border : 1px solid #847072;
   .nick{
     font-size : 1.8rem;
     font-weight: 800;
+    
+    
   }
 
 
   .pic{
-    background: #847072;
+    background: white;
     @include material-shadow(3);
     height: 80%;    
     width : 50%;    
@@ -27,13 +29,18 @@ $border : 1px solid #847072;
 
   .right{
     height: 80%;
+    // background: $oc-red-3;    
     @include material-shadow(3);
+    @include media("<large"){
+      height: 1000px;
+    }
 
     .content{
+      
       height: 30%;
       width : 400px;      
       overflow : auto;
-      background: $baseColor;
+      background : $contentColor;
       padding : 20px;
       font-size : 1.3rem;   
       font-weight: 800;
@@ -41,9 +48,31 @@ $border : 1px solid #847072;
       overflow-x: hidden;
       overflow-y: auto;
       @include media("<large"){
-        height: auto;
+        height: auto;        
+      }
+      .nick-with-delete-button{        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .delete-button{
+          border :none;
+          outline : none;
+          background: $oc-red-6;
+          padding : 8px;
+          color : white;
+          font-size : 1rem;
+          cursor: pointer;
+          border-radius: 5%;
+          &:hover{
+            background: $oc-red-8;
+            font-size : 1.1rem;
+          }
+
+        }
       }
     }
+
+  
   }
 
 

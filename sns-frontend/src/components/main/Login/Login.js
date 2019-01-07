@@ -12,7 +12,7 @@ class Login extends Component {
           <h2>Koostagram</h2>
           <form action="/auth/login" method="post">
             <p>
-              <input placeholder="email" name="email" />
+              <input placeholder="email" name="email" spellCheck={false} />
             </p>
             <p>
               <input placeholder="password" name="password" type="password" />
