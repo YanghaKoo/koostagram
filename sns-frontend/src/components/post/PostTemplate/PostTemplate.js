@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./PostTemplate.scss";
 import { withRouter } from "react-router-dom";
-import ReactLoading from "react-loading";
 import CommentContainer from "../../../containers/user/CommentContainer";
 import Hashtag from "../Hashtag/Hashtag";
+import Spinner from "../../../lib/Spinner";
 
 class PostTemplate extends Component {
   state = {
@@ -77,7 +77,7 @@ class PostTemplate extends Component {
     if (!img) {
       return (
         <div className="loading">
-          <ReactLoading type="bars" color="black" height={"20%"} width="20%" />
+          <Spinner width="100px" height="100px" pw="10%" ph="10vh"/>
         </div>
       );
     }

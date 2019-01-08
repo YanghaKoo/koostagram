@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import "./Posts.scss";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import ReactLoading from "react-loading";
+import Spinner from "../../../lib/Spinner";
 
 class Post extends Component {
+  
   handleClick = (e) => {
     const {item, history} = this.props
     history.push(`/user/${item.userId}/${item.id}`)
@@ -27,7 +28,8 @@ class Post extends Component {
 
 class Posts extends Component {
   state = {
-    posts: ["noPost"]
+    posts: ["noPost"],    
+    isLoading : false
   };
 
   componentDidMount() {
@@ -36,11 +38,12 @@ class Posts extends Component {
 
   initializer = () => {
     const { userid } = this.props.match.params;
+    this.setState({isLoading : true})
     axios.post("/post/getPosts", { userid }).then(posts => {
       this.setState({
-        posts: posts.data.reverse()
+        posts: posts.data.reverse(),
+        isLoading : false
       })
-      // console.log(this.state.posts);
     });
   } 
 
@@ -49,16 +52,15 @@ class Posts extends Component {
   }
   
   render() {
-    const { posts } = this.state;
+    const { posts, isLoading } = this.state;
+    if(isLoading) {
+      return <Spinner width="100px" height="100px" pw="100%" ph="60vh"/>
+    }
+  
 
     // loading , check no post
     if (posts[0] === "noPost") {
-      return (
-        <div className="loading">
-          loading...
-          {/* <ReactLoading type="bars" color="black" height={"20%"} width="20%" /> */}
-        </div>
-      );
+      return null
     } else if (posts.length === 0) {
       return <div className="no-post">No post </div>;
     }

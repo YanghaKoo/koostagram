@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import "./EachFeed.scss";
 import axios from "axios";
 import Hashtag from "../../post/Hashtag/Hashtag";
+import Spinner from "../../../lib/Spinner";
 
 class EachFeed extends Component {
   state = {
     nick: "",
     likeCounts: 0,
-    profilePic: ""
+    profilePic: "",
+    isLoading : false
   };
 
   componentDidMount() {
@@ -16,6 +18,8 @@ class EachFeed extends Component {
 
   // 이니셜라이저, 요청하는 부분
   initializer = async () => {
+    this.setState({isLoading : true})
+
     const { id } = this.props;
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
@@ -25,9 +29,7 @@ class EachFeed extends Component {
     const profilePic = await axios.post("/post/getUserPic", {
       userid: this.props.userid
     });
-
-    console.log(likeCounts.data);
-
+    this.setState({isLoading : false})
     //console.log(nick.data)
     this.setState({
       nick: nick.data,
@@ -49,6 +51,14 @@ class EachFeed extends Component {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
+
+    
+    if(this.state.isLoading) {
+      return <Spinner width="100px" height="100px" pw="100%" ph="90vh"/>
+    }
+    
+
+    
 
     let contentWithHashtag;
     if (content) {

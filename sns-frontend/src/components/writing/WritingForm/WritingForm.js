@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import "./WritingForm.scss";
 
+
 class WritingForm extends Component {
   state = {
     selectedFile: null
@@ -93,7 +94,7 @@ class WritingForm extends Component {
             onChange={this.handleChange}
           />
           <div className="word-count" style={style}>
-            {input.length < 140 ? input.length : "글자수 초과"}
+            {input.length < 140 ? input.length + " / 140" : "글자수 초과"}
           </div>
 
           <input
@@ -104,7 +105,8 @@ class WritingForm extends Component {
               this.handleSubmit(input);
             }}
           />
-        </div>
+        </div>        
+        
       </center>
     );
   }

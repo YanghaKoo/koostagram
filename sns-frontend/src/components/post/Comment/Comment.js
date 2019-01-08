@@ -86,6 +86,7 @@ class Comment extends Component {
   handleSubmit = async e => {
     //여기서부터 시작
     if(!this.props.user) {alert("먼저 로그인해 주세요."); return;}
+    if(this.state.comment.length >= 50) {alert("댓글은 50자 이내로 입력해 주세요."); return}
     
     const { postid } = this.props.match.params;
     const { comment} = this.state

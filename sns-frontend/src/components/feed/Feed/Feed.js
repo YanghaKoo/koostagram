@@ -78,7 +78,8 @@ class Feed extends Component {
     loadingState: false,
     noPost: null,
     tk: 0,
-    wrongAccess: null
+    wrongAccess: null,
+    isLoading : false
   };
 
   // 인피니트 스크롤 관련 변수들
@@ -118,9 +119,11 @@ class Feed extends Component {
       history.push("/");
       return;
     }
+    //this.setState({isLoading : true})
     const followingList = query.hashtag
       ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
       : await axios.post("/post/getFollowingPosts", { userid: user.id });
+//    this.setState({isLoading : false})
 
     let listData = followingList.data;
 
