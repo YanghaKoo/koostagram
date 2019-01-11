@@ -1,7 +1,9 @@
-{
+require('dotenv').config()
+
+module.exports = {
   "development": {
     "username": "root",
-    "password": "satul213",
+    "password": process.env.SEQ_PASSWORD,
     "database": "koostagram",
     "host": "127.0.0.1",
     "dialect": "mysql",
@@ -9,16 +11,18 @@
   },
   "test": {
     "username": "root",
-    "password": null,
+    "password": process.env.SEQ_PASSWORD,
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
+    "password": process.env.SEQ_PASSWORD,
+    "database": "koostagram",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "operatorsAliases" : false,
+    "logging" : false
   }
 }

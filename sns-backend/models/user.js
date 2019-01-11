@@ -28,7 +28,9 @@ module.exports =  (sequelize ,DataTypes) => (
       }
   },{
     timestamps : true, // 얘는 생성일, 수정일 자동으로 기록해줌 시간
-    paranoid : true    // 얘를 넣으면 삭제일도 기록을 해줌, 복구를 위해서
+    paranoid : true,    // 얘를 넣으면 삭제일도 기록을 해줌, 복구를 위해서
+    charset : 'utf8',
+    collate : 'utf8_general_ci',
   })
 )
 
