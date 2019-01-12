@@ -49,7 +49,7 @@ class Edit extends Component {
     return (
       <div className="edit">
         <center>
-          <div className="register-form">
+          <div className="writing-form">
             <label className="file-wrapper">{selectedFile ? "Selected!" : "Click Here to Select New Profile Picture!"}
               <input
                 id="img"
