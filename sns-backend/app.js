@@ -5,6 +5,7 @@ const path = require("path");
 const session = require("express-session");
 const cors = require("cors");
 const passport = require("passport");
+const history = require('connect-history-api-fallback');
 // const helmet = require('helmet')
 // const hpp = require('hpp')
 require("dotenv").config(); // .env를 쓸 수 있게
@@ -24,10 +25,11 @@ passportConfig(passport);
 
 app.set("view engine", "jade");
 app.set("views", "views");
+
 app.set("port", process.env.PORT || 8001);
+
 app.use(cors());
-
-
+app.use(history());
 
 // 배포
 if (process.env.NODE_ENV === "production") {
