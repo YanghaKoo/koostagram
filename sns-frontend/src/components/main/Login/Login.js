@@ -39,8 +39,10 @@ class Login extends Component {
                 <input
                   className="fb submit"
                   type="submit"
-                  value="KaKao Login"
+                  // value="KaKao Login"
+                  value ="Now Beta.."
                   style={{ background: "#fcd411" }}
+                  disabled
                   onClick={() => {
                     axios.post('/auth/kakao')
                   }}
@@ -50,7 +52,7 @@ class Login extends Component {
           </form>
         </div>
         <div className="left-box">
-          <img className="img" src={image} />
+          <img className="img" src={image} alt=""/>
         </div>
       </div>
     );

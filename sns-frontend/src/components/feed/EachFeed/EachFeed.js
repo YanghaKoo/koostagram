@@ -3,13 +3,14 @@ import "./EachFeed.scss";
 import axios from "axios";
 import Hashtag from "../../post/Hashtag/Hashtag";
 import Spinner from "../../../lib/Spinner";
+import likeImage from "../../../images/like.png";
 
 class EachFeed extends Component {
   state = {
     nick: "",
     likeCounts: 0,
     profilePic: "",
-    isLoading : false
+    isLoading: false
   };
 
   componentDidMount() {
@@ -18,7 +19,7 @@ class EachFeed extends Component {
 
   // 이니셜라이저, 요청하는 부분
   initializer = async () => {
-    this.setState({isLoading : true})
+    this.setState({ isLoading: true });
 
     const { id } = this.props;
     const nick = await axios.post("/post/getNick", {
@@ -29,7 +30,7 @@ class EachFeed extends Component {
     const profilePic = await axios.post("/post/getUserPic", {
       userid: this.props.userid
     });
-    this.setState({isLoading : false})
+    this.setState({ isLoading: false });
     //console.log(nick.data)
     this.setState({
       nick: nick.data,
@@ -43,31 +44,27 @@ class EachFeed extends Component {
     history.push(`/user/${userid}/${postid}`);
   };
 
-  makeHashTag = content => {
-    return content.replace(/#[^\s]*/g, "테스트");
-  };
+  // makeHashTag = content => {
+  //   return content.replace(/#[^\s]*/g, "테스트");
+  // };
 
   render() {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
 
-    
-    if(this.state.isLoading) {
-      return <Spinner width="100px" height="100px" pw="100%" ph="90vh"/>
+    if (this.state.isLoading) {
+      return <Spinner width="100px" height="100px" pw="100%" ph="90vh" />;
     }
-    
-
-    
 
     let contentWithHashtag;
     if (content) {
       contentWithHashtag = content.split(" ");
-      contentWithHashtag = contentWithHashtag.map((item) => {
+      contentWithHashtag = contentWithHashtag.map(item => {
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>
-              <Hashtag hashtag={item} history={this.props.history}/>
+              <Hashtag hashtag={item} history={this.props.history} />
             </div>
           );
         }
@@ -75,8 +72,6 @@ class EachFeed extends Component {
       });
     }
 
-
-    
     return (
       <div className="each-feed">
         <div className="top">
@@ -92,7 +87,7 @@ class EachFeed extends Component {
             </div>
             {nick}
           </div>
-          <div className="right" >
+          <div className="right">
             {date.substr(0, 10)} {time}
           </div>
         </div>
@@ -100,9 +95,20 @@ class EachFeed extends Component {
           <div onClick={this.handleClick} className="onimg">
             <img src={img} alt="" />
           </div>
-          <div className="comment-area">{likeCounts} likes</div>      
-          <div className="test" >{contentWithHashtag}</div>
-        </div>                
+          <div className="bottom">
+            <div className="comment-area">
+              <img
+                src={likeImage}
+                width={30}
+                height={30}
+                alt=""
+                style={{ marginTop: "5px", marginRight : "5px" }}
+              />
+              <div style={{ width: "100%" }}>{likeCounts}</div>{" "}
+            </div>
+            <div className="test">{contentWithHashtag}</div>
+          </div>
+        </div>
       </div>
     );
   }

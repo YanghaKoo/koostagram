@@ -78,14 +78,14 @@ class RegisterForm extends Component {
     });
     console.log(check.data);
     // 중복 닉 없음
-    if (check.data === "ok" && this.state.nick.length > 0) {
+    if (check.data === "ok" && this.state.nick.length > 0 && this.state.nick.length <= 10) {
       this.setState({
         n_validity: 1,
         n_placeholder: "사용 가능한 닉네임입니다."
       });
     } else {
       this.setState({
-        n_placeholder: "중복 닉네임입니다."
+        n_placeholder: "중복 닉네임 혹은 닉네임의 길이가 10자 이상입니다."
       });
     }
   };
@@ -123,16 +123,12 @@ class RegisterForm extends Component {
 
   render() {
     const {
-      email,
-      nick,
-      password,
       e_placeholder,
       n_placeholder,
       p_placeholder,
       e_validity,
       n_validity,
       p_validity,
-
     } = this.state;
 
     
@@ -143,9 +139,6 @@ class RegisterForm extends Component {
       //   style: { color: "red", background: "blue" }
       // });
     }
-
-
-
 
     return (
       <form>

@@ -22,8 +22,12 @@ sequelize.sync();
 // sequelize.sync({force : true})
 passportConfig(passport);
 
+app.set("view engine", "jade");
+app.set("views", "views");
 app.set("port", process.env.PORT || 8001);
 app.use(cors());
+
+
 
 // 배포
 if (process.env.NODE_ENV === "production") {
@@ -36,6 +40,11 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/img", express.static(path.join(__dirname, "uploads"))); // /img/abc.png 로 해야 uploads의 폴더로 접근 할 수 있음
+
+if( process.env.NODE_ENV === "production"){
+  app.use("/deploy", express.static(path.join("../sns-frontend/build")));
+}
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

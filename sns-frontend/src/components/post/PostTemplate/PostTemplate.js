@@ -60,13 +60,13 @@ class PostTemplate extends Component {
     // 본문의 hashtag부분을 해당 해쉬태그 검색과 연결시키는 부분, string형태의 본문을 재구성하여 해쉬태그부분을 차별화
     let contentWithHashtag;
     if (content) {
-      contentWithHashtag = content.split(" ");
+      contentWithHashtag = content.split(/\s+/);      // space or newline으로 나눠줌
       contentWithHashtag = contentWithHashtag.map((item) => {
         console.log(item)
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>
-              <Hashtag hashtag={item} history={this.props.history} />
+              <Hashtag hashtag={item} history={this.props.history} />              
             </div>
           );
         }

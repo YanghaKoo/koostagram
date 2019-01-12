@@ -14,8 +14,9 @@ class WritingForm extends Component {
     const { selectedFile } = this.state;
 
     let re = input.match(/#[^\s]*/g);
-    console.log(re);
-
+    let isLinkedTagExist = input.match(/#.*\S#/g)    
+    console.log(isLinkedTagExist)
+    
     // 사진을 업로드하지 않은 경우
     if (!selectedFile) {
       alert("사진은 필수로 첨부해주세요.");
@@ -31,6 +32,11 @@ class WritingForm extends Component {
       }
     }
 
+    if(isLinkedTagExist){        
+      alert("해쉬태그 간에는 공백을 넣어주세요.(space)")
+      return
+    }
+
     const fd = new FormData();
     console.log(selectedFile);
     fd.append("img", selectedFile, selectedFile.name); // 파일의 원본 파일이름 그대로
@@ -43,6 +49,7 @@ class WritingForm extends Component {
     const submit = await axios.post("/post", fd, contentType);
     console.log(submit.data);
     onChange("");
+
     history.push(`/user/${submit.data.userId}/${submit.data.id}`);
   };
 
@@ -72,7 +79,7 @@ class WritingForm extends Component {
 
     return (
       <center>
-        <div className="register-form">
+        <div className="writing-form">
           <div className="title">Post Your Contents</div>
           <label className="file-wrapper">
             {imageButtonLabel}

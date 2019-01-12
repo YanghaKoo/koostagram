@@ -1,4 +1,13 @@
-.register-form {
+.writing-form {
+  background: white;
+  height: calc(100vh - 300px);
+  display : flex;
+  flex-direction: column;
+  margin-top : 13vh;
+  @include media("<large"){
+    height: auto;
+    margin-top : 0;
+  }
   .title {
     font-size: 2rem;
     margin-top: 30px;
