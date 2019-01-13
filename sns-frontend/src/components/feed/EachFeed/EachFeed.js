@@ -3,11 +3,14 @@ import "./EachFeed.scss";
 import axios from "axios";
 import Hashtag from "../../post/Hashtag/Hashtag";
 import Spinner from "../../../lib/Spinner";
+import EachFeedComment from "../EachFeedComment";
 
-
-const unlikeImage = "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png";
-const likeImage = "https://cdn1.iconfinder.com/data/icons/love-icons/512/love-heart-512.png"
-const commentImage = "https://cdn4.iconfinder.com/data/icons/vectory-basic/40/comment_2-512.png"
+const unlikeImage =
+  "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png";
+const likeImage =
+  "https://cdn1.iconfinder.com/data/icons/love-icons/512/love-heart-512.png";
+const commentImage =
+  "https://cdn4.iconfinder.com/data/icons/vectory-basic/40/comment_2-512.png";
 
 class EachFeed extends Component {
   state = {
@@ -15,8 +18,9 @@ class EachFeed extends Component {
     likeCounts: 0,
     profilePic: "",
     isLoading: false,
-    like : unlikeImage,
-    commentsCount : 0
+    like: unlikeImage,
+    commentsCount: 0,
+    commentToggle: 0
   };
 
   componentDidMount() {
@@ -27,7 +31,7 @@ class EachFeed extends Component {
   initializer = async () => {
     this.setState({ isLoading: true });
 
-    const { id, loggedInUser : user } = this.props;
+    const { id, loggedInUser: user } = this.props;
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
     });
@@ -37,13 +41,13 @@ class EachFeed extends Component {
     const profilePic = await axios.post("/post/getUserPic", {
       userid: this.props.userid
     });
-    
+
     //console.log(nick.data)
     this.setState({
       nick: nick.data,
       likeCounts: likeCounts.data.length,
       profilePic: profilePic.data,
-      commentsCount : commentsCount.data.length
+      commentsCount: commentsCount.data.length
     });
 
     if (user) {
@@ -51,7 +55,7 @@ class EachFeed extends Component {
         if (item.id === user.id) {
           this.setState({
             like: likeImage
-          });          
+          });
         }
       });
     }
@@ -64,7 +68,13 @@ class EachFeed extends Component {
   };
 
   handleLikeClick = () => {
-    const { id : postid, loggedInUser } = this.props;
+    const { id: postid, loggedInUser } = this.props;
+    
+    if(!loggedInUser) {
+      alert('좋아요는 로그인 후에 가능합니다.')
+      return
+    }
+
     if (this.state.like === unlikeImage) {
       this.setState({
         like: likeImage,
@@ -80,14 +90,34 @@ class EachFeed extends Component {
     }
   };
 
+  toggleComment = () => {
+    const { commentToggle } = this.state;
+    const {loggedInUser} = this.props
+
+    if(!loggedInUser) {
+      alert('댓글 작성은 로그인 후에 가능합니다.')
+      return
+    }
+
+    this.setState({
+      commentToggle: !commentToggle
+    });
+  };
 
 
+
+  handleCommentAction = () => {
+    const { commentsCount } = this.state;
+    this.setState({
+      commentsCount: commentsCount + 1,
+      commentToggle: 0
+    });
+  };
 
   render() {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic, like, commentsCount } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
-
 
     if (this.state.isLoading) {
       return <Spinner width="100px" height="100px" pw="100%" ph="90vh" />;
@@ -95,13 +125,13 @@ class EachFeed extends Component {
 
     let contentWithHashtag;
     if (content) {
-      contentWithHashtag = content.split(/\s+/);      // space or newline으로 나눠줌
-      contentWithHashtag = contentWithHashtag.map((item) => {
+      contentWithHashtag = content.split(/\s+/); // space or newline으로 나눠줌
+      contentWithHashtag = contentWithHashtag.map(item => {
         // console.log(item)
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>
-              <Hashtag hashtag={item} history={this.props.history} />              
+              <Hashtag hashtag={item} history={this.props.history} />
             </div>
           );
         }
@@ -139,7 +169,12 @@ class EachFeed extends Component {
                 width={30}
                 height={30}
                 alt=""
-                style={{ cursor : "pointer" ,marginTop: "5px", marginRight : "5px", marginLeft : "-10px" }}
+                style={{
+                  cursor: "pointer",
+                  marginTop: "5px",
+                  marginRight: "5px",
+                  marginLeft: "-10px"
+                }}
                 onClick={this.handleLikeClick}
               />
               <div style={{ width: "100%" }}>{likeCounts}</div>{" "}
@@ -148,12 +183,19 @@ class EachFeed extends Component {
                 width={30}
                 height={30}
                 alt=""
-                style={{ marginTop: "5px", marginLeft : "10px" }}
-
+                style={{ marginTop: "5px", marginLeft: "10px", cursor: "pointer"}}
+                onClick={this.toggleComment}
               />
               <div className="cCount">{commentsCount}</div>
             </div>
             <div className="test">{contentWithHashtag}</div>
+            {this.state.commentToggle ? (
+              <EachFeedComment
+                handleCommentAction={this.handleCommentAction}
+                user={this.props.loggedInUser}
+                id={this.props.id}
+              />
+            ) : null}
           </div>
         </div>
       </div>
