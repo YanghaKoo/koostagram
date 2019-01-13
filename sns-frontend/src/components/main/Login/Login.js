@@ -52,7 +52,7 @@ class Login extends Component {
           </form>
         </div>
         <div className="left-box">
-          <img className="img" src={image} alt=""/>
+          <img className="img" src="http://www.parisapartment7eme.com/eiffelcam/etandmoonb.jpg" alt=""/>
         </div>
       </div>
     );
