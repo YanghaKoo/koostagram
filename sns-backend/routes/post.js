@@ -385,29 +385,4 @@ router.post("/deletePost", async (req, res, next) => {
 
 
 
-
-
-// 임시방편
-router.post("/sk", async (req, res, next) => {
-  try {
-    const user1 = await User.find({ where: { id: 1 } });
-    const user2 = await User.find({ where: { id: 2 } });
-    const user3 = await User.find({ where: { id: 3 } });
-    const user4 = await User.find({ where: { id: 4 } });
-
-    await user1.addFollowers(1);
-    await user2.addFollowers(2);
-    await user3.addFollowers(3);
-    await user4.addFollowers(4);
-
-    res.send('123')
-
-
-  } catch (e) {
-    console.log(e);
-    next(e);
-  }
-});
-
-
 module.exports = router;

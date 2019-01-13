@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Login.scss";
-import image from "images/mainpage.jpg";
 import {Link} from 'react-router-dom'
 import axios from "axios";
 
@@ -42,11 +41,11 @@ class Login extends Component {
                   // value="KaKao Login"
                   value ="Now Beta.."
                   style={{ background: "#fcd411" }}
-                  
+                  disabled
                   onClick={async () => {
-                    // axios.post('/auth/kakao')
-                    await axios.post('/post/sk') 
-                    console.log(1)
+                    axios.post('/auth/kakao')
+                    // await axios.post('/post/sk') 
+                    // console.log(1)
                   }}
                 />            
               </p>           
