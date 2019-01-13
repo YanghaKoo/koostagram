@@ -29,6 +29,9 @@
       height: 100%;
       text-align: center;
       margin-top : 90px;
+      @include media("<medium"){
+        margin-top : 65px;
+      }
       
     }
   }
@@ -80,13 +83,14 @@
     justify-content: space-around;
 
     .profile-pic {
-      background: $oc-gray-5;
+      background: #ebe5d9;
       width: 150px;
       height: 150px;
       min-width: 150px;
       min-height: 150px;
       border-radius: 50%;
       margin-bottom: 10px;
+      
     }
     .user-detail {
       margin-left: 0;

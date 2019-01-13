@@ -114,7 +114,7 @@ class Feed extends Component {
 
   initializer = async () => {
     
-    const { location, user, history } = this.props;
+    const { location, user, } = this.props;
     const query = qs.parse(location.search);
 
     // 로그인 안해도 해쉬태그 검색은 볼 수 있음

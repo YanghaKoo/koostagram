@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import "./WritingForm.scss";
+import Spinner from "../../../lib/Spinner";
 
 
 class WritingForm extends Component {
   state = {
-    selectedFile: null
+    selectedFile: null,
+    uploading : false
   };
 
   handleSubmit = async data => {
@@ -50,6 +52,7 @@ class WritingForm extends Component {
     console.log(submit.data);
     onChange("");
 
+    this.setState({uploading : true})
     history.push(`/user/${submit.data.userId}/${submit.data.id}`);
   };
 
@@ -77,7 +80,11 @@ class WritingForm extends Component {
       ? "Selected!"
       : "Click HERE to Select Image";
 
+    // 업로드 버튼 눌러서 업로딩으로 들어가면 스피너 띄우게
+    if(this.state.uploading) return <Spinner width="50px" height="50px" pw="100%" ph="90vh" />;
+
     return (
+      
       <center>        
         <div className="writing-form">
           <div className="title">Post Your Contents</div>

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import "./Comment.scss";
-// import unlike from "images/unlike.png";
-// import like from "images/like.png";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import EachComment from "../EachComment/EachComment";
