@@ -129,6 +129,15 @@ class Feed extends Component {
     let listData = followingList.data;
     
 
+    if (listData.length > 3) {
+      this.infiniteScroll(listData);
+    } else {                    
+      this.endOfList = true;
+      this.setState({
+        tk: !this.state.tk
+      });
+    }
+
     if (listData === "no data") {
       this.setState({
         noPost: 1
@@ -138,22 +147,14 @@ class Feed extends Component {
     } else {
       this.it = listData.length;
       listData = listData.reverse();
-      this.items = listData.slice(0, 3);
+      this.items = listData.splice(0, 3);
 
       // to rendering
       this.setState({
         tk: !this.state.tk
       });
 
-      if (listData.length > 3) {
-        this.infiniteScroll(listData);
-      } else {            
-        
-        this.endOfList = true;
-        this.setState({
-          tk: !this.state.tk
-        });
-      }
+      
     }
   };
 
