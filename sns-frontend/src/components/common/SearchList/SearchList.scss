@@ -1,7 +1,6 @@
 $userlist  : #E7DFE0;
 $hashlist :#DBB2AF;
 
-
 .search-list {  
   border : white;
   text-align: center;
@@ -26,8 +25,6 @@ $hashlist :#DBB2AF;
       border : none;
       height: 100px;
       width : 100%;
-      
- 
     }
 
     .hash-list{
@@ -45,6 +42,8 @@ $hashlist :#DBB2AF;
       height: 33.3px;
       background: #E7DFE0;            
       font-size : 1.25rem;
+      font-weight: 700;
+      
       &:hover{
         background: $oc-gray-5;
       }
@@ -56,9 +55,20 @@ $hashlist :#DBB2AF;
       height: 33.3px;
       background: #DBB2AF;
       font-size : 1.25rem;
+      font-weight: 800;
+      color : $oc-blue-7;
+
       &:hover{
         background: $oc-gray-5;
       }
+    }
+    .noresult{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 90%;
+      font-size: 1.5rem;
+      font-weight: 800;
     }
   }
 }

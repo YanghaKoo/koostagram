@@ -84,7 +84,6 @@ class SearchList extends Component {
           </div>
         );
       } else if (user[0] && !hashtag[0]) {
-        
         // 유저만 검색됨
         return (
           <div className="search-list">
@@ -111,7 +110,9 @@ class SearchList extends Component {
 
         return (
           <div className="search-list">
-            <div className="list">no result</div>
+            <div className="list">
+              <div className="noresult">No Result</div>
+            </div>
           </div>
         );
       }

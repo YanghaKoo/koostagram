@@ -4,13 +4,17 @@
   grid-auto-rows: 200px;
   grid-template-columns: 200px 200px repeat(auto-fit, 200px);
   grid-gap: 20px;
-  
+
   cursor: pointer;
   
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 1%;
   /* width : 80%;  */
+  @include media("<medium"){
+    grid-auto-rows: 170px;
+    grid-template-columns: 170px 170px repeat(auto-fit, 170px);
+  }  
 
   img{
     border-radius: 20%;
@@ -24,7 +28,7 @@
     
   }
   @include media("<medium"){      
-    grid-template-columns: 200px 200px;      
+    grid-template-columns: 170px 170px;      
   }
 }
 

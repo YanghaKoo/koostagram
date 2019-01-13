@@ -5,7 +5,9 @@
   align-items: center;
   box-shadow: 5px 5px 39px -9px #000000;
   margin-bottom: 30px;
-  overflow-x: hidden;
+  overflow-x : hidden;
+  overflow-y : hidden;
+
 
   .profile-pic {
     background: #ebe5d9;
@@ -15,7 +17,7 @@
     border-radius: 50%;
     margin-top: 20px;
     margin-bottom: 20px;
-    @include material-shadow(5);
+    @include material-shadow(3);    
     img {
       border-radius: 50%;
       width: 100%;

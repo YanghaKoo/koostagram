@@ -1,13 +1,21 @@
-.edit{    
-  @include media("<large"){
+.edit {
+  .writing-form {
+    height: 50vh;
+    margin-top: 20vh;
+    @include media("<large") {  
+      height: auto;
+      margin : 0;
+    }
+  }
+  @include media("<large") {
     background: white;
-  }  
-  .file-wrapper{
-    margin-top : 5%;
-    display: flex;    
+  }
+  .file-wrapper {
+    margin-top: 5%;
+    display: flex;
     justify-content: space-around;
     align-items: center;
-    width : 250px;
+    width: 250px;
     height: 300px;
     display: flex;
     align-items: center;

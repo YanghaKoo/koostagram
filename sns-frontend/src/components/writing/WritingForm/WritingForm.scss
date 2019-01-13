@@ -1,9 +1,10 @@
 .writing-form {
   background: white;
-  height: calc(100vh - 300px);
+  height: 800px;
   display : flex;
   flex-direction: column;
-  margin-top : 13vh;
+  width : 50%;
+  margin-top : 5vh;
   @include media("<large"){
     height: auto;
     margin-top : 0;
@@ -41,9 +42,14 @@
     padding: 10px;
     background: $oc-blue-6;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #fff;
-    width: 300px;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: 800;
     margin-bottom: 20px;
     &:hover {
       background-color: $oc-blue-8;

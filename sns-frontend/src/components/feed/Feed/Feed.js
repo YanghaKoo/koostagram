@@ -88,7 +88,7 @@ class Feed extends Component {
   endOfList = false;
 
   componentDidMount() {
-    console.log("Component did mount");
+    // console.log("Component did mount");
     setTimeout(() => {
       this.initializer();
     }, 100);
@@ -96,7 +96,7 @@ class Feed extends Component {
 
   // feed에서 query가 바뀔때 바로 적용하기 위해서
   componentDidUpdate(prevProps, prevState) {
-    console.log("Component did UPDATA!!!!");
+    // console.log("Component did UPDATA!!!!");
     const { ht } = this.props;
     if (prevProps.ht !== ht) {
       this.initializer();
@@ -119,11 +119,10 @@ class Feed extends Component {
       history.push("/");
       return;
     }
-    //this.setState({isLoading : true})
+    
     const followingList = query.hashtag
       ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
       : await axios.post("/post/getFollowingPosts", { userid: user.id });
-//    this.setState({isLoading : false})
 
     let listData = followingList.data;
 
@@ -181,7 +180,6 @@ class Feed extends Component {
     this.items = items.concat(temp);
 
     setTimeout(() => {
-      console.log(this.items);
       this.setState({ loadingState: false });
     }, 1000);
   }
@@ -191,7 +189,7 @@ class Feed extends Component {
     const { history, location } = this.props;
     const query = qs.parse(location.search);
 
-    console.log("render items  : ", items);
+    // console.log("render items  : ", items);
 
     if (this.state.noPost) {
       return (
