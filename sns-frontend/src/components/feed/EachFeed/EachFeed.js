@@ -3,7 +3,9 @@ import "./EachFeed.scss";
 import axios from "axios";
 import Hashtag from "../../post/Hashtag/Hashtag";
 import Spinner from "../../../lib/Spinner";
-import likeImage from "../../../images/like.png";
+
+
+const likeImage = "https://cdn1.iconfinder.com/data/icons/love-icons/512/love-heart-512.png"
 
 class EachFeed extends Component {
   state = {

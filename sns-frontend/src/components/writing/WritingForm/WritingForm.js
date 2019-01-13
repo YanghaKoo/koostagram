@@ -75,7 +75,7 @@ class WritingForm extends Component {
 
     const imageButtonLabel = this.state.selectedFile
       ? "Selected!"
-      : "Click to Select Image";
+      : "Click HERE to Select Image";
 
     return (
       <center>

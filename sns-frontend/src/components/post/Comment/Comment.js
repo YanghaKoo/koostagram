@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import "./Comment.scss";
-import unlike from "images/unlike.png";
-import like from "images/like.png";
+// import unlike from "images/unlike.png";
+// import like from "images/like.png";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import EachComment from "../EachComment/EachComment";
 
+const unlike = "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png"
+const like = "https://cdn1.iconfinder.com/data/icons/love-icons/512/love-heart-512.png"
+
 // TODO : this.props.nick은 댓글 작성할 때 쓸 것
 class Comment extends Component {
+  
+  
+
   state = {
     like: unlike,
     likeCount: 0,
