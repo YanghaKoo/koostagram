@@ -146,10 +146,9 @@ class Feed extends Component {
 
       if (listData.length > 3) {
         this.infiniteScroll(listData);
-      } else {
-        
-        
+      } else {            
         console.log('listdata.length <= 3 에서 걸린건가?')
+        console.log(listData)
         this.endOfList = true;
         this.setState({
           tk: !this.state.tk
@@ -171,7 +170,6 @@ class Feed extends Component {
 
   loadMoreItems(listData) {
     if (this.items.length >= this.it) {
-      console.log('items.length >= this.it에서 걸린건가')
       this.endOfList = true;
       this.setState({
         tk: !this.state.tk
