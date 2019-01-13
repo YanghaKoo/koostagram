@@ -127,6 +127,7 @@ class Feed extends Component {
       : await axios.post("/post/getFollowingPosts", { userid: user.id });
 
     let listData = followingList.data;
+    console.log(listData)
 
     if (listData === "no data") {
       this.setState({
@@ -148,7 +149,7 @@ class Feed extends Component {
         this.infiniteScroll(listData);
       } else {            
         console.log('listdata.length <= 3 에서 걸린건가?')
-        console.log(listData)
+        console.log(listData) // 여기서 하나 일본여행 가고싶다 걸림
         this.endOfList = true;
         this.setState({
           tk: !this.state.tk
