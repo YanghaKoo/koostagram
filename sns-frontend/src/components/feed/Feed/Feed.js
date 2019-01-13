@@ -110,17 +110,18 @@ class Feed extends Component {
   }
 
   initializer = async () => {
+    
     const { location, user, history } = this.props;
     const query = qs.parse(location.search);
 
     // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
-    setTimeout(()=>{
+    
       if (!user && !query.hashtag) {
-        alert("Please Login First");
-        history.push("/");
+        // alert("Please Login First");
+        // history.push("/");
         return;
       }
-    }, 50)
+    
     
     
     const followingList = query.hashtag
