@@ -21,9 +21,7 @@ const upload = multer({
 });
 
 // 글 작성
-router.post("/", upload.single("img"), async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
+router.post("/", upload.single("img"), async (req, res, next) => {  
   try {
     const post = await Post.create({
       content: req.body.text,
