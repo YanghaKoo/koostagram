@@ -24,6 +24,11 @@ router.post('/join', async (req,res,next)=>{
       nick,
       password : hash
     })   
+
+    // 가입과 동시에 자기자신을 팔로우 하게 함
+    const user = await User.find({where : { email }})
+    await user.addFollowers(user.dataValues.id)
+    
     return res.send("success")
 
   }catch(e){
@@ -96,10 +101,6 @@ router.post("/emailCheck", async (req, res, next)=>{
   }
 })
 
-
-
-
-
 router.get('/logout', (req,res)=>{
   req.logout();
   req.session.destroy(); // req.user, 세션을 지워주는 거임
@@ -107,15 +108,12 @@ router.get('/logout', (req,res)=>{
   
 })
 
-
 // 프론트에서 로그아웃
 router.post('/logout',(req,res)=>{
   req.logout();
   req.session.destroy();
   res.redirect('/auth/login')
 })
-
-
 
 // 카카오 로그인 관련
 // 이  url로 오면 카카오 전략이 실행되게 한거임, 카카오 서버가 우리대신 로그인 인증을 대신해줌

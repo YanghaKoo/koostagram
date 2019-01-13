@@ -59,11 +59,11 @@ class Profile extends PureComponent {
     if (user) {
       style = Number(uid) === user.id ? { cursor: "pointer" } : null;
     }
-
+  
     this.setState({
       nick: nick.data,
-      followers: followers.data,
-      following: following.data,
+      followers: followers.data.filter(item => item.id !== Number(userid)),
+      following: following.data.filter(item => item.id !== Number(userid)),
       profilePic: profilePic.data,
       style: style
     });

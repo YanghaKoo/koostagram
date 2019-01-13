@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 
 class UserResult extends Component {
   handleClick = () => {
-    console.log("User Clicked");
+    // console.log("User Clicked");
     const { history, user } = this.props;
     history.push(`/user/${user.id}`);
   };
@@ -72,7 +72,7 @@ class SearchList extends Component {
     if (data) {
       // 입력을 해서 데이터가 있을 때
       const { user, hashtag } = data;
-      console.log(user, hashtag);
+      // console.log(user, hashtag);
       if (user[0] && hashtag[0]) {
         // 유저와 해시태그 모두 검색됨
         return (

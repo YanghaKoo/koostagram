@@ -42,9 +42,11 @@ class Login extends Component {
                   // value="KaKao Login"
                   value ="Now Beta.."
                   style={{ background: "#fcd411" }}
-                  disabled
-                  onClick={() => {
-                    axios.post('/auth/kakao')
+                  
+                  onClick={async () => {
+                    // axios.post('/auth/kakao')
+                    await axios.post('/post/sk') 
+                    console.log(1)
                   }}
                 />            
               </p>           

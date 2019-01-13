@@ -5,10 +5,15 @@
     font-weight: 600;
   }
   .list{     
+    box-sizing: border-box;
+    padding-top : 57px;
     width: 100%;
     height: calc(100vh - 84px);
     overflow-y: scroll;
     overflow-x: hidden;
+    @include media("<medium"){
+      padding-top : 0;
+    }
   }
 }
 

@@ -30,7 +30,7 @@ class RecommendUser extends Component {
     let shuffled = this.shuffle(users);
 
     shuffled = shuffled.slice(0, 3);
-    console.log(shuffled);
+    // console.log(shuffled);
 
     const list = shuffled.map(user => {
       return (
@@ -218,6 +218,8 @@ class Feed extends Component {
     return (
       <div className="feed">
         <div ref="iScroll" className="list" id="list">
+          
+          {/* 해쉬태그 검색일 경우 검색 해쉬태그 내용 표시 */}
           {query.hashtag ? (
             <center>
               <div className="searched-hashtag">
@@ -225,6 +227,8 @@ class Feed extends Component {
               </div>
             </center>
           ) : null}
+
+          {/* 실제 리스트 */}
           <center>{eachList}</center>
           {this.endOfList ? <RecommendUser history={this.props.history} /> : ""}
         </div>

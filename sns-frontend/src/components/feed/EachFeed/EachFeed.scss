@@ -1,39 +1,38 @@
 .each-feed {
-  margin-top : 20px;
+  margin-top: 20px;
   margin-bottom: 100px;
   @include media("<medium") {
     margin-left: 0;
     margin-right: 0;
   }
-  
 
   .top {
     font-size: 1.5rem;
-    
+
     padding-left: 15px;
     display: flex;
-    
+
     background: white;
-    box-sizing: initial;    
-    padding-left : 30px;
+    box-sizing: initial;
+    padding-left: 30px;
     padding-right: 30px;
-    padding-bottom : 10px;
-    padding-top : 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
     border-radius: 20px 20px 0 0;
-        
     justify-content: space-between;
     align-items: center;
-    width : 690px;
-    
-    @include media("<medium") {
+    width: 690px;
+
+    @include media("<large") {
       width: 100%;
+      
       font-size: 1.25rem;
     }
 
     .left {
       min-width: 115px;
-      width : 200px;
-      display : flex;
+      width: 200px;
+      display: flex;
       align-items: center;
       .profile-pic {
         background: $oc-gray-3;
@@ -41,93 +40,82 @@
         height: 80px;
         border-radius: 50%;
         margin-right: 10px;
-        @include media("<large"){
-          width : 50px;
+        @include media("<large") {
+          width: 50px;
           height: 50px;
         }
 
-        img{
+        img {
           border-radius: 50%;
-          width : 100%;
+          width: 100%;
           height: 100%;
           object-fit: contain;
-          
         }
       }
     }
-    .right{      
-      width : 300px;
+    .right {
+      width: 300px;
     }
   }
 
   .img-area {
-    .onimg{
+    .onimg {
       cursor: pointer;
     }
     width: 750px;
-    height: auto;    
+    height: auto;
     @include media("<large") {
       width: 100%;
     }
 
     img {
       width: 100%;
-      object-fit: contain;            
-      margin-bottom : -5px;
+      object-fit: contain;
+      margin-bottom: -5px;
     }
 
-
-    .bottom{
+    .bottom {
       background: white;
       border-radius: 0 0 20px 20px;
-      .comment-area{
-        font-size : 1.5rem;     
+
+      .comment-area {
+        font-size: 1.5rem;
         display: flex;
-        width : 20px;                
-        justify-content: center;   
-        .cCount{
+        width: 20px;
+        justify-content: center;
+        .cCount {
           display: flex;
-          
         }
       }
-      .test{
+      .test {
         font-size: 1.5rem;
-        padding-top : 10px;
-        padding-left : 30px;
+        padding-top: 10px;
+        padding-left: 30px;
         padding-right: 30px;
-        padding-bottom: 20px;                 
-        border-top : 2px solid $oc-gray-5;
+        padding-bottom: 20px;
+        border-top: 2px solid $oc-gray-5;
 
         @include media("<medium") {
           width: 100%;
           font-size: 1.25rem;
         }
-      
-    }
+      }
     }
   }
-
-  
-  
 }
 
+// .content-area {
+//   font-size: 1.5rem;
+//   margin-bottom: 5px;
+//   padding-left: 5px;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 700px;
+//   margin-bottom: 20px;
 
-
-
-
-    // .content-area {
-    //   font-size: 1.5rem;
-    //   margin-bottom: 5px;
-    //   padding-left: 5px;
-    //   display: flex;
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   width: 700px;      
-    //   margin-bottom: 20px;
-      
-      
-    //   @include media("<medium") {
-    //     width: 100%;
-    //     font-size: 1.25rem;
-    //   }
-    // }
+//   @include media("<medium") {
+//     width: 100%;
+//     font-size: 1.25rem;
+//   }
+// }
