@@ -4,7 +4,7 @@ import PostTemplate from '../../components/post/PostTemplate/PostTemplate';
 
 class PostTemplateContainer extends Component {
   render() {
-    console.log(this.props.user)
+    
     return (
       <div>
         <PostTemplate user={this.props.user}/>

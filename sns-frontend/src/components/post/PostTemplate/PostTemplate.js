@@ -62,7 +62,7 @@ class PostTemplate extends Component {
     if (content) {
       contentWithHashtag = content.split(/\s+/);      // space or newline으로 나눠줌
       contentWithHashtag = contentWithHashtag.map((item) => {
-        console.log(item)
+        // console.log(item)
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>

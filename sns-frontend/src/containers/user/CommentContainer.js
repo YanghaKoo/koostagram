@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 class CommentContainer extends Component {
   render() {
     const { user, previewCount } = this.props;
-    console.log(user);
+    // console.log(user);
     return (
       <div style={{ height: "36%" }}>
         <Comment  user={user} previewCount={previewCount}/>

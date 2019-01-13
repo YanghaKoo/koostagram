@@ -97,8 +97,10 @@ class Feed extends Component {
   // feed에서 query가 바뀔때 바로 적용하기 위해서
   componentDidUpdate(prevProps, prevState) {
     // console.log("Component did UPDATA!!!!");
-    const { ht } = this.props;
-    if (prevProps.ht !== ht) {
+   
+
+    const { user, ht } = this.props;
+    if ( (prevProps.user !== user) || (prevProps.ht !== ht)) {
       this.initializer();
       try {
         document.getElementById("list").scrollTo(0, 0);
@@ -107,6 +109,7 @@ class Feed extends Component {
         return;
       }
     }
+    
   }
 
   initializer = async () => {
@@ -115,12 +118,14 @@ class Feed extends Component {
     const query = qs.parse(location.search);
 
     // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
+    // setTimeout(() => {
       if (!user && !query.hashtag) {
         // alert("Please Login First");
         // history.push("/");
         return;
-      }
-    
+      }    
+    // }, 100);
+      
     
     
     const followingList = query.hashtag
