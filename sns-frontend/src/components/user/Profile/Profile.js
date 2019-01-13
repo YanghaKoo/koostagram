@@ -134,7 +134,6 @@ class Profile extends PureComponent {
   // 본인의 page일 때만 프로필사진 편집이 가능하게 구현, 남의 page에선 동작 X
   editProfile = () => {
     const { uid, user, history } = this.props;
-    console.log(uid, user.id);
     if (Number(uid) === user.id) {
       history.push("/edit");
     } else {
@@ -143,7 +142,6 @@ class Profile extends PureComponent {
   };
 
   render() {
-    console.log(localStorage.getItem("nick"));
     const { userid } = this.props.match.params;
     const { user } = this.props;
     const {
@@ -157,7 +155,7 @@ class Profile extends PureComponent {
       style,
       isLoading
     } = this.state;
-    console.log("Profile rendered");
+    // console.log("Profile rendered");
 
     // 로딩 puff 보여주기
     if (isLoading) {

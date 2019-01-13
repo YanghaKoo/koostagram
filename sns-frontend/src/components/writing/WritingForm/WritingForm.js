@@ -78,7 +78,7 @@ class WritingForm extends Component {
       : "Click HERE to Select Image";
 
     return (
-      <center>
+      <center>        
         <div className="writing-form">
           <div className="title">Post Your Contents</div>
           <label className="file-wrapper">
@@ -103,7 +103,7 @@ class WritingForm extends Component {
           <div className="word-count" style={style}>
             {input.length < 140 ? input.length + " / 140" : "글자수 초과"}
           </div>
-
+          
           <input
             type="button"
             value="Submit!"

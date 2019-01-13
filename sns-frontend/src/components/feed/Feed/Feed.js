@@ -117,16 +117,10 @@ class Feed extends Component {
     const { location, user, history } = this.props;
     const query = qs.parse(location.search);
 
-    // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
-    // setTimeout(() => {
-      if (!user && !query.hashtag) {
-        // alert("Please Login First");
-        // history.push("/");
-        return;
-      }    
-    // }, 100);
-      
-    
+    // 로그인 안해도 해쉬태그 검색은 볼 수 있음
+    if (!user && !query.hashtag) {
+      return;
+    }    
     
     const followingList = query.hashtag
       ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
@@ -217,6 +211,7 @@ class Feed extends Component {
         date={item.createdAt}
         userid={item.userId}
         content={item.content}
+        loggedInUser ={this.props.user}
       />
     ));
 

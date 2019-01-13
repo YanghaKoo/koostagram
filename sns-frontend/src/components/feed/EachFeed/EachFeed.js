@@ -5,14 +5,18 @@ import Hashtag from "../../post/Hashtag/Hashtag";
 import Spinner from "../../../lib/Spinner";
 
 
+const unlikeImage = "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png";
 const likeImage = "https://cdn1.iconfinder.com/data/icons/love-icons/512/love-heart-512.png"
+const commentImage = "https://cdn4.iconfinder.com/data/icons/vectory-basic/40/comment_2-512.png"
 
 class EachFeed extends Component {
   state = {
     nick: "",
     likeCounts: 0,
     profilePic: "",
-    isLoading: false
+    isLoading: false,
+    like : unlikeImage,
+    commentsCount : 0
   };
 
   componentDidMount() {
@@ -23,22 +27,35 @@ class EachFeed extends Component {
   initializer = async () => {
     this.setState({ isLoading: true });
 
-    const { id } = this.props;
+    const { id, loggedInUser : user } = this.props;
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
     });
 
     const likeCounts = await axios.post("/post/getLikeCount", { postid: id });
+    const commentsCount = await axios.post("/post/getComments", { postid: id });
     const profilePic = await axios.post("/post/getUserPic", {
       userid: this.props.userid
     });
-    this.setState({ isLoading: false });
+    
     //console.log(nick.data)
     this.setState({
       nick: nick.data,
       likeCounts: likeCounts.data.length,
-      profilePic: profilePic.data
+      profilePic: profilePic.data,
+      commentsCount : commentsCount.data.length
     });
+
+    if (user) {
+      likeCounts.data.map(item => {
+        if (item.id === user.id) {
+          this.setState({
+            like: likeImage
+          });          
+        }
+      });
+    }
+    this.setState({ isLoading: false });
   };
 
   handleClick = () => {
@@ -46,14 +63,31 @@ class EachFeed extends Component {
     history.push(`/user/${userid}/${postid}`);
   };
 
-  // makeHashTag = content => {
-  //   return content.replace(/#[^\s]*/g, "테스트");
-  // };
+  handleLikeClick = () => {
+    const { id : postid, loggedInUser } = this.props;
+    if (this.state.like === unlikeImage) {
+      this.setState({
+        like: likeImage,
+        likeCounts: this.state.likeCounts + 1
+      });
+      axios.post("/post/like", { userid: loggedInUser.id, postid });
+    } else {
+      this.setState({
+        like: unlikeImage,
+        likeCounts: this.state.likeCounts - 1
+      });
+      axios.post("/post/unlike", { userid: loggedInUser.id, postid });
+    }
+  };
+
+
+
 
   render() {
     const { img, date, content, userid, history } = this.props;
-    const { nick, likeCounts, profilePic } = this.state;
+    const { nick, likeCounts, profilePic, like, commentsCount } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
+
 
     if (this.state.isLoading) {
       return <Spinner width="100px" height="100px" pw="100%" ph="90vh" />;
@@ -61,12 +95,13 @@ class EachFeed extends Component {
 
     let contentWithHashtag;
     if (content) {
-      contentWithHashtag = content.split(" ");
-      contentWithHashtag = contentWithHashtag.map(item => {
+      contentWithHashtag = content.split(/\s+/);      // space or newline으로 나눠줌
+      contentWithHashtag = contentWithHashtag.map((item) => {
+        // console.log(item)
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>
-              <Hashtag hashtag={item} history={this.props.history} />
+              <Hashtag hashtag={item} history={this.props.history} />              
             </div>
           );
         }
@@ -100,13 +135,23 @@ class EachFeed extends Component {
           <div className="bottom">
             <div className="comment-area">
               <img
-                src={likeImage}
+                src={like}
                 width={30}
                 height={30}
                 alt=""
-                style={{ marginTop: "5px", marginRight : "5px" }}
+                style={{ cursor : "pointer" ,marginTop: "5px", marginRight : "5px", marginLeft : "-10px" }}
+                onClick={this.handleLikeClick}
               />
               <div style={{ width: "100%" }}>{likeCounts}</div>{" "}
+              <img
+                src={commentImage}
+                width={30}
+                height={30}
+                alt=""
+                style={{ marginTop: "5px", marginLeft : "10px" }}
+
+              />
+              <div className="cCount">{commentsCount}</div>
             </div>
             <div className="test">{contentWithHashtag}</div>
           </div>

@@ -300,12 +300,10 @@ router.post("/uploadComment", async (req, res, next) => {
       usernick: usernick
     })
       .then(success => {
-        console.log("------------------------------------------------------");
         console.log(success);
         res.send("success");
       })
       .catch(e => {
-        console.log("------------------------------------------------------");
         console.log(e);
         res.send(null);
         next(e);

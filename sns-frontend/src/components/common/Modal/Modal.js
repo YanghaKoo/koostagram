@@ -12,6 +12,7 @@ class Modal extends Component {
   handleOpenModal = () => {
     this.props.handleModal(true);
   };
+  
   handleCloseModal = () => {
     this.props.handleModal(false);
   };
