@@ -214,6 +214,7 @@ class Feed extends Component {
         date={item.createdAt}
         userid={item.userId}
         content={item.content}
+        loggedInUser={this.props.user}
       />
     ));
 
