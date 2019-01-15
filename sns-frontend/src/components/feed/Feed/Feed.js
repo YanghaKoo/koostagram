@@ -115,11 +115,16 @@ class Feed extends Component {
 
     // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
     if (!user && !query.hashtag) {
-      alert("Please Login First");
-      history.push("/");
+      // alert("Please Login First");
+      // history.push("/");
+      this.setState({
+        noPost : 1
+      })
       return;
     }
     //this.setState({isLoading : true})
+
+
     const followingList = query.hashtag
       ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
       : await axios.post("/post/getFollowingPosts", { userid: user.id });
