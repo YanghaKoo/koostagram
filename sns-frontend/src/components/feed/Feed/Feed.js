@@ -118,9 +118,6 @@ class Feed extends Component {
     if (!user && !query.hashtag) {
       // alert("Please Login First");
       // history.push("/");
-      this.setState({
-        noPost : 1
-      })
       return;
     }
     //this.setState({isLoading : true})
