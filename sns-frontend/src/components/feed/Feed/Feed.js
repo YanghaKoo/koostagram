@@ -97,7 +97,12 @@ class Feed extends Component {
   // feed에서 query가 바뀔때 바로 적용하기 위해서
   componentDidUpdate(prevProps, prevState) {
     // console.log("Component did UPDATA!!!!");
-    const { ht } = this.props;
+
+
+    const { ht, user } = this.props;
+
+    if(user !== prevProps.user) this.initializer()
+
     if (prevProps.ht !== ht) {
       this.initializer();
       try {
