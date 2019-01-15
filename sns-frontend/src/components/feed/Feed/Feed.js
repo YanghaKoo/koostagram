@@ -98,12 +98,8 @@ class Feed extends Component {
   componentDidUpdate(prevProps, prevState) {
     // console.log("Component did UPDATA!!!!");
 
-
-    const { ht, user } = this.props;
-
-    if(user !== prevProps.user) this.initializer()
-
-    if (prevProps.ht !== ht) {
+    const { user, ht } = this.props;
+    if (prevProps.user !== user || prevProps.ht !== ht) {
       this.initializer();
       try {
         document.getElementById("list").scrollTo(0, 0);
