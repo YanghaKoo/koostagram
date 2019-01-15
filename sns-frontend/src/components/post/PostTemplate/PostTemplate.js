@@ -13,7 +13,7 @@ class PostTemplate extends Component {
     nick: null
   };
 
-  // hashtags = []
+  
 
   async componentDidMount() {
     const { userid, postid } = this.props.match.params;

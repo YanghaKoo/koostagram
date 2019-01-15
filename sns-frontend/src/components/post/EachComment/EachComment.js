@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './EachComment.scss'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
+import Hashtag from '../Hashtag/Hashtag';
+
 
 class EachComment extends Component {
 
@@ -24,13 +26,30 @@ class EachComment extends Component {
 
   render() {
     const {content, usernick } = this.props
+    let withHT;
+    if (content) {
+      withHT = content.split(/\s+/);      // space or newline으로 나눠줌
+      withHT = withHT.map((item) => {
+        // console.log(item)
+        if (item[0] === "#" && item.length > 1) {
+          return (
+            <div>
+              <Hashtag hashtag={item} history={this.props.history} />              
+            </div>
+          );
+        }
+        return <div className="word">{item}</div>;
+      });
+    }
+    
     return (
       <div className="each-comment">
         <div onClick={this.handleClick} className="nick-area">{usernick} &nbsp; </div>
-        <div className="contents"> {content}</div>
+        <div className="test"> {withHT}</div>
       </div>
     );
   }
+  
 }
 
 export default withRouter(EachComment)

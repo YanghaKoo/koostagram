@@ -27,12 +27,10 @@ class RecommendUser extends Component {
 
   render() {
     const { users } = this.state;
-    let filtered = users
+    let shuffled = this.shuffle(users);
 
-    // 로그인이 되어있다면 본인 제외 친구추천
-    if(this.props.user) filtered = users.filter(item => item.id !== this.props.user.id)
-    let shuffled = this.shuffle(filtered);
     shuffled = shuffled.slice(0, 3);
+    // console.log(shuffled);
 
     const list = shuffled.map(user => {
       return (
@@ -66,12 +64,8 @@ const EachRecommend = ({ user, history, pic }) => {
         history.push(`/user/${user.id}`);
       }}
     >
-      <div className="profile-pic">
-        {pic ? (
-          <img src={pic} width={100} height={100} alt="" />
-        ) : (
-          <div style={{ marginTop: "38px" }}>no image</div>
-        )}
+      <div className="profile-pic">        
+        {pic?  <img src={pic} width={100} height={100} alt="" />    : <div style={{marginTop : "38px"}}>no image</div>} 
       </div>
       <div className="nick">{user.nick}</div>
     </div>
@@ -85,7 +79,7 @@ class Feed extends Component {
     noPost: null,
     tk: 0,
     wrongAccess: null,
-    isLoading: false
+    isLoading : false
   };
 
   // 인피니트 스크롤 관련 변수들
@@ -103,9 +97,8 @@ class Feed extends Component {
   // feed에서 query가 바뀔때 바로 적용하기 위해서
   componentDidUpdate(prevProps, prevState) {
     // console.log("Component did UPDATA!!!!");
-
-    const { user, ht } = this.props;
-    if (prevProps.user !== user || prevProps.ht !== ht) {
+    const { ht } = this.props;
+    if (prevProps.ht !== ht) {
       this.initializer();
       try {
         document.getElementById("list").scrollTo(0, 0);
@@ -117,38 +110,29 @@ class Feed extends Component {
   }
 
   initializer = async () => {
-    const { location, user } = this.props;
+    const { location, user, history } = this.props;
     const query = qs.parse(location.search);
 
-    // 로그인 안해도 해쉬태그 검색은 볼 수 있음
+    // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
     if (!user && !query.hashtag) {
+      alert("Please Login First");
+      history.push("/");
       return;
     }
-
+    //this.setState({isLoading : true})
     const followingList = query.hashtag
       ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
       : await axios.post("/post/getFollowingPosts", { userid: user.id });
+//    this.setState({isLoading : false})
 
     let listData = followingList.data;
-
-    try {
-      if (listData.length > 3) {
-        this.infiniteScroll(listData);
-      } else {
-        this.endOfList = true;
-        this.setState({
-          tk: !this.state.tk
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
 
     if (listData === "no data") {
       this.setState({
         noPost: 1
       });
       return;
+      
     } else {
       this.it = listData.length;
       listData = listData.reverse();
@@ -158,6 +142,15 @@ class Feed extends Component {
       this.setState({
         tk: !this.state.tk
       });
+
+      if (listData.length > 3) {
+        this.infiniteScroll(listData);
+      } else {
+        this.endOfList = true;
+        this.setState({
+          tk: !this.state.tk
+        });
+      }
     }
   };
 
@@ -188,6 +181,7 @@ class Feed extends Component {
     this.items = items.concat(temp);
 
     setTimeout(() => {
+      // console.log(this.items);
       this.setState({ loadingState: false });
     }, 1000);
   }
@@ -217,14 +211,12 @@ class Feed extends Component {
         date={item.createdAt}
         userid={item.userId}
         content={item.content}
-        loggedInUser={this.props.user}
       />
     ));
 
     return (
       <div className="feed">
         <div ref="iScroll" className="list" id="list">
-          {/* 해쉬태그 검색일 경우 검색 해쉬태그 내용 표시 */}
           {query.hashtag ? (
             <center>
               <div className="searched-hashtag">
@@ -232,10 +224,8 @@ class Feed extends Component {
               </div>
             </center>
           ) : null}
-
-          {/* 실제 리스트 */}
           <center>{eachList}</center>
-          {this.endOfList ? <RecommendUser history={this.props.history} user={this.props.user} /> : ""}
+          {this.endOfList ? <RecommendUser history={this.props.history} /> : ""}
         </div>
       </div>
     );

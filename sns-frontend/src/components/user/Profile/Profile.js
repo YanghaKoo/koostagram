@@ -161,9 +161,10 @@ class Profile extends PureComponent {
     if (isLoading) {
       let ph;
       window.innerWidth > 676 ? (ph = "240px") : (ph = "370px");
+      const spinnerSize = window.innerWidth > 450 ? "100px" : "50px";
       return (
         <div className="profile">
-          <Spinner width="100px" height="100px" pw="100%" ph={ph} />
+          <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph={ph} />
         </div>
       );
     }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./RegisterForm.scss";
 import axios from "axios";
+import Spinner from 'lib/Spinner'
 
 class RegisterForm extends Component {
   state = {
@@ -15,6 +16,8 @@ class RegisterForm extends Component {
     e_validity: 0,
     n_validity: 0,
     p_validity: 0,
+
+    isLoading : false
 
   };
 
@@ -111,12 +114,12 @@ class RegisterForm extends Component {
 
   handleSubmit =async (e) => {
     e.preventDefault()
+    this.setState({isLoading:true})
     const {email, nick, password, e_validity, n_validity, p_validity} = this.state
     if(e_validity && n_validity && p_validity)  {
-      const register = await axios.post("/auth/join", { email, nick, password})
-      register.data === "success" ? this.props.history.push('/') : alert("Something went wrong")
-    } 
-    
+      const register = await axios.post("/auth/join", { email, nick, password})  
+      register.data === "success" ? this.props.history.push('/') : alert("작은 오류가 발생했습니다. 회원가입은 정상적으로 되어있을 수 있으니 로그인을 시도해 보세요!"); this.props.history.push('/')
+    }     
     else alert("조건에 맞게 요소들을 작성해주세요.")
     
   }
@@ -129,6 +132,7 @@ class RegisterForm extends Component {
       e_validity,
       n_validity,
       p_validity,
+      isLoading
     } = this.state;
 
     
@@ -139,8 +143,17 @@ class RegisterForm extends Component {
       //   style: { color: "red", background: "blue" }
       // });
     }
+    const spinnerSize = 
+      window.innerWidth > 450
+        ? "100px"
+        : "50px";
+
+
+    if(isLoading) return <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph="90vh" />;
 
     return (
+
+
       <form>
         <center>
           <div className="register-form">

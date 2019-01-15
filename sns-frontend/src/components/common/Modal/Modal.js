@@ -36,14 +36,17 @@ class Modal extends Component {
             key={item.id}
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <div>{item.nick}</div>
+            <div>
+              <img src={item.pic} className="img" alt=""/>
+            </div>
+            <div className="nick">{item.nick}</div>
             <div
               className="show-profile"
               onClick={() => {
                 this.showProfile(item.id);
               }}
             >
-              show profile
+              Profile
             </div>
           </div>
         );

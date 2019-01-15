@@ -118,6 +118,8 @@ class EachFeed extends Component {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic, like, commentsCount } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
+    
+    
 
     if (this.state.isLoading) {
       return <Spinner width="100px" height="100px" pw="100%" ph="90vh" />;

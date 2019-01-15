@@ -43,8 +43,8 @@ router.post("/", upload.single("img"), async (req, res, next) => {
         )
       );
       await post.addHashtags(result.map(r => r[0]));
+      
     }
-
     res.json(post);
   } catch (e) {
     console.log(e);
@@ -293,21 +293,33 @@ router.post("/getHashTagPost", async (req, res, next) => {
 // 댓글 등록
 router.post("/uploadComment", async (req, res, next) => {
   try {
-    const { usernick, postid, content } = req.body;
-    Comment.create({
+    const { usernick, postid, content } = req.body;              
+    const comment = await Comment.create({
       content: content,
       postId: postid,
       usernick: usernick
     })
-      .then(success => {
-        console.log(success);
-        res.send("success");
-      })
-      .catch(e => {
-        console.log(e);
-        res.send(null);
-        next(e);
-      });
+    
+    const post = await Post.find({where : { id : postid}})
+    
+    // 해쉬태그 db에 추가
+    const hashtags = content.match(/#[^(\s|#)]*/g);
+    if (hashtags) {
+      const result = await Promise.all(
+        hashtags.map(tag =>
+          Hashtag.findOrCreate({
+            where: { title: tag.slice(1).toLowerCase() }
+          }).catch(e => {
+            console.log(e);
+          })
+        )
+      );
+      await post.addHashtags(result.map(r => r[0]));
+      
+    }
+
+
+    res.send(comment)
   } catch (e) {
     console.log(e);
     next(e);

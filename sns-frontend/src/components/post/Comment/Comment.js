@@ -6,6 +6,7 @@ import EachComment from "../EachComment/EachComment";
 import Modal from "../../common/Modal/Modal";
 import Spinner from "../../../lib/Spinner";
 
+
 const unlike =
   "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png";
 const like =
@@ -115,11 +116,11 @@ class Comment extends Component {
     const { comment } = this.state;
     const { nick } = this.props.user;
 
-    if (!comment) alert("내용을 입력해주세요.");
+    if (!comment) {alert("내용을 입력해주세요."); return }
     await axios.post("/post/uploadComment", {
       content: comment,
       postid,
-      usernick: nick
+      usernick: nick,      
     });
     this.setState({
       comment: ""

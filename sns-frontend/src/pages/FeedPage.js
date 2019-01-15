@@ -5,7 +5,7 @@ import qs from 'query-string'
 const FeedPage = ({location}) => {
   const query = qs.parse(location.search).hashtag  
   return (
-    <div>
+    <div style={{overflow : "hidden"}}>
       <FeedContainer ht={query}/>
     </div>
   );

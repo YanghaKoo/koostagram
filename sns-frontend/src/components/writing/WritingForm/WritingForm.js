@@ -48,11 +48,11 @@ class WritingForm extends Component {
       headers: { "Content-Type": "multipart/form-data" }
     };
 
-    const submit = await axios.post("/post", fd, contentType);
-    console.log(submit.data);
-    onChange("");
-
     this.setState({uploading : true})
+
+    const submit = await axios.post("/post", fd, contentType);
+    // console.log(submit.data);
+    onChange("");    
     history.push(`/user/${submit.data.userId}/${submit.data.id}`);
   };
 
@@ -65,7 +65,7 @@ class WritingForm extends Component {
     this.setState({
       selectedFile: e.target.files[0]
     });
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
   };
 
   render() {
@@ -76,18 +76,24 @@ class WritingForm extends Component {
         ? "오늘의 하루는 어떠셨나요? :)"
         : "오늘의 하루는\n어떠셨나요? :)";
 
+    const spinnerSize = 
+      window.innerWidth > 450
+        ? "100px"
+        : "50px";
+
     const imageButtonLabel = this.state.selectedFile
-      ? "Selected!"
-      : "Click HERE to Select Image";
+      ? "선택완료 :)"
+      : "업로드할 사진 고르기";
 
     // 업로드 버튼 눌러서 업로딩으로 들어가면 스피너 띄우게
-    if(this.state.uploading) return <Spinner width="50px" height="50px" pw="100%" ph="90vh" />;
+    if(this.state.uploading) return <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph="90vh" />;
+    
 
     return (
       
       <center>        
         <div className="writing-form">
-          <div className="title">Post Your Contents</div>
+          <div className="title">Post Your Content!</div>
           <label className="file-wrapper">
             {imageButtonLabel}
             <input

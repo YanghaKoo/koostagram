@@ -3,10 +3,12 @@ import "./Edit.scss";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Spinner from "../../lib/Spinner";
 
 class Edit extends Component {
   state = {
-    selectedFile: null
+    selectedFile: null,
+    uploading: false
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -29,6 +31,11 @@ class Edit extends Component {
     const { history, user } = this.props;
     const { selectedFile } = this.state;
 
+    if (!selectedFile) {
+      alert("프로필 사진을 선택해주세요.");
+      return;
+    }
+
     const fd = new FormData();
     console.log(selectedFile);
     fd.append("img", selectedFile, selectedFile.name); // 파일의 원본 파일이름 그대로
@@ -38,28 +45,35 @@ class Edit extends Component {
       headers: { "Content-Type": "multipart/form-data" }
     };
 
-    const submit = await axios.post("/post/profile", fd, contentType);
-    console.log(submit.data);
+    this.setState({
+      uploading: true
+    });
+    await axios.post("/post/profile", fd, contentType);
     history.push(`/user/${user.id}`);
   };
 
   render() {
-    const {selectedFile} = this.state
-    console.log(selectedFile)
+    const { selectedFile } = this.state;
+
+    const spinnerSize = window.innerWidth > 450 ? "100px" : "50px";
+    if(this.state.uploading) return <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph="90vh" />;
+    
     return (
       <div className="edit">
         <center>
           <div className="writing-form">
-            <label className="file-wrapper">{selectedFile ? "Selected!" : "Click HERE to Select New Profile!"}
+            <label className="file-wrapper">
+              {selectedFile ? "선택완료 :)" : "프로필 사진 선택하기"}
               <input
                 id="img"
                 name="img"
                 type="file"
                 className="file-upload"
                 onChange={this.handleFileChange}
+                accept=".gif, .jpg, .png"
               />
             </label>
-            {selectedFile ? selectedFile.name : ''}
+            {selectedFile ? selectedFile.name : ""}
             <input
               type="button"
               value="Submit"

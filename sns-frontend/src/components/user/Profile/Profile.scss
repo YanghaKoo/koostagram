@@ -1,3 +1,6 @@
+$pic_back_ground : $oc-gray-4;
+
+
 .profile {
   background: #e9ecef;
   display: flex;
@@ -10,7 +13,7 @@
 
 
   .profile-pic {
-    background: #ebe5d9;
+    background: $pic_back_ground;
     width: 200px;
     height: 200px;
     min-width: 200px;
@@ -37,7 +40,7 @@
   }
 
   .user-detail {
-    background: #ebe5d9;
+    background: $pic_back_ground;
     border-radius: 3%;
     @include material-shadow(2);
     width: 500px;
@@ -83,7 +86,7 @@
     justify-content: space-around;
 
     .profile-pic {
-      background: #ebe5d9;
+      background: $pic_back_ground;
       width: 150px;
       height: 150px;
       min-width: 150px;
