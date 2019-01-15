@@ -38,7 +38,7 @@ class Modal extends Component {
           >
             <div>
               <img src={item.pic} className="img" alt=""/>
-            </div>
+            </div> 
             <div className="nick">{item.nick}</div>
             <div
               className="show-profile"
