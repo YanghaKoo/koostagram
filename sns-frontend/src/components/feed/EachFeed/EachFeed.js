@@ -69,10 +69,10 @@ class EachFeed extends Component {
 
   handleLikeClick = () => {
     const { id: postid, loggedInUser } = this.props;
-    
-    if(!loggedInUser) {
-      alert('좋아요는 로그인 후에 가능합니다.')
-      return
+
+    if (!loggedInUser) {
+      alert("좋아요는 로그인 후에 가능합니다.");
+      return;
     }
 
     if (this.state.like === unlikeImage) {
@@ -92,19 +92,17 @@ class EachFeed extends Component {
 
   toggleComment = () => {
     const { commentToggle } = this.state;
-    const {loggedInUser} = this.props
+    const { loggedInUser } = this.props;
 
-    if(!loggedInUser) {
-      alert('댓글 작성은 로그인 후에 가능합니다.')
-      return
+    if (!loggedInUser) {
+      alert("댓글 작성은 로그인 후에 가능합니다.");
+      return;
     }
 
     this.setState({
       commentToggle: !commentToggle
     });
   };
-
-
 
   handleCommentAction = () => {
     const { commentsCount } = this.state;
@@ -118,8 +116,6 @@ class EachFeed extends Component {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic, like, commentsCount } = this.state;
     const time = date.substr(11, 12).substr(0, 5);
-    
-    
 
     if (this.state.isLoading) {
       return <Spinner width="100px" height="100px" pw="100%" ph="90vh" />;
@@ -152,7 +148,14 @@ class EachFeed extends Component {
             style={{ cursor: "pointer" }}
           >
             <div className="profile-pic">
-              {profilePic ? <img src={profilePic} alt="" /> : null}
+              <img
+                src={
+                  profilePic
+                    ? profilePic
+                    : "https://myspace.com/common/images/user.png"
+                }
+                alt=""
+              />
             </div>
             {nick}
           </div>
@@ -185,7 +188,11 @@ class EachFeed extends Component {
                 width={30}
                 height={30}
                 alt=""
-                style={{ marginTop: "5px", marginLeft: "10px", cursor: "pointer"}}
+                style={{
+                  marginTop: "5px",
+                  marginLeft: "10px",
+                  cursor: "pointer"
+                }}
                 onClick={this.toggleComment}
               />
               <div className="cCount">{commentsCount}</div>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./EachFeedComment.scss";
-import axios from 'axios';
+import axios from "axios";
 
 class EachFeedComment extends Component {
   state = {
@@ -13,21 +13,28 @@ class EachFeedComment extends Component {
     });
   };
 
-
-
   handleSubmit = async () => {
-    const {handleCommentAction, user, id} = this.props    
-    const isSuccess = await axios.post('/post/uploadComment', {content : this.state.content, postid : id, usernick : user.nick})
-    if(isSuccess.data ==="success") handleCommentAction();
-    else alert('잠시 후 다시 시도해주세요.')
-  }
+    const { handleCommentAction, user, id } = this.props;
+    const { content } = this.state;
+    if (content.match(/#.*\S#/g)) {
+      alert("해쉬태그는 연결해서 등록할수 없어요!");
+      return;
+    }
 
-  handleEnter =(e) =>{
+    const isSuccess = await axios.post("/post/uploadComment", {
+      content: this.state.content,
+      postid: id,
+      usernick: user.nick
+    });
+    if (isSuccess.data === "success") handleCommentAction();
+    else alert("잠시 후 다시 시도해주세요.");
+  };
+
+  handleEnter = e => {
     if (e.key === "Enter") this.handleSubmit();
-  }
+  };
 
   render() {
-
     return (
       <div className="each-feed-comment">
         <input
@@ -37,7 +44,12 @@ class EachFeedComment extends Component {
           onChange={this.handleChange}
           onKeyPress={this.handleEnter}
         />
-        <input type="button" value="Submit" className="submit-button" onClick={this.handleSubmit}/>
+        <input
+          type="button"
+          value="Submit"
+          className="submit-button"
+          onClick={this.handleSubmit}
+        />
       </div>
     );
   }

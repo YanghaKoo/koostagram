@@ -187,11 +187,7 @@ class Profile extends PureComponent {
           />
         )}
         <div className="profile-pic" onClick={this.editProfile} style={style}>
-          {profilePic ? (
-            <img src={profilePic} alt="" />
-          ) : (
-            <div className="no-image">No Image</div>
-          )}
+          <img src={profilePic? profilePic : "https://myspace.com/common/images/user.png"} alt=""/>          
         </div>
         <div className="user-detail">
           <div style={{ textAlign: "center" }}>

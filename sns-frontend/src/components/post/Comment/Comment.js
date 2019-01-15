@@ -6,7 +6,6 @@ import EachComment from "../EachComment/EachComment";
 import Modal from "../../common/Modal/Modal";
 import Spinner from "../../../lib/Spinner";
 
-
 const unlike =
   "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png";
 const like =
@@ -20,18 +19,17 @@ class Comment extends Component {
     comment: "",
     commentsBefore: null,
     modal: false,
-    likers : [],
-    isloading : false
+    likers: [],
+    isloading: false
   };
 
-  
   // likeUsers에 좋아요 누른 애들 정보 들어있음
   componentDidMount() {
     this.initializer();
   }
 
   initializer = async () => {
-    this.setState({isloading : true})
+    this.setState({ isloading: true });
     const { postid } = this.props.match.params;
     const { user } = this.props;
 
@@ -41,7 +39,7 @@ class Comment extends Component {
     this.setState({
       likeCount: likeUsers.data.length,
       commentsBefore: commentsBefore.data,
-      likers : likeUsers.data
+      likers: likeUsers.data
     });
 
     if (user) {
@@ -53,7 +51,7 @@ class Comment extends Component {
         }
       });
     }
-    this.setState({isloading : false})
+    this.setState({ isloading: false });
   };
 
   // 댓글 등록 후 실시간으로 업데이트 시키기, 댓글 등록후 스크롤 맨 아래로 내려서 본인이 등록한 댓글 확인
@@ -103,24 +101,34 @@ class Comment extends Component {
   };
 
   handleSubmit = async e => {
+    const { postid } = this.props.match.params;
+    const { comment } = this.state;
+    const { nick } = this.props.user;
+    
     if (!this.props.user) {
       alert("먼저 로그인해 주세요.");
       return;
     }
+
     if (this.state.comment.length >= 50) {
       alert("댓글은 50자 이내로 입력해 주세요.");
       return;
     }
 
-    const { postid } = this.props.match.params;
-    const { comment } = this.state;
-    const { nick } = this.props.user;
+    if(comment.match(/#.*\S#/g)){
+      alert("해쉬태그는 연결해서 등록할수 없어요!")
+      return
+    }
+  
 
-    if (!comment) {alert("내용을 입력해주세요."); return }
+    if (!comment) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
     await axios.post("/post/uploadComment", {
       content: comment,
       postid,
-      usernick: nick,      
+      usernick: nick
     });
     this.setState({
       comment: ""
@@ -138,21 +146,20 @@ class Comment extends Component {
     });
   };
 
-    // modal 열기/닫기
-    handleModal = bool => {
-      this.setState({
-        modal: bool
-      });
-    };
+  // modal 열기/닫기
+  handleModal = bool => {
+    this.setState({
+      modal: bool
+    });
+  };
 
   render() {
     const { previewCount } = this.props;
-    const { commentsBefore, modal,isloading } = this.state;
+    const { commentsBefore, modal, isloading, comment } = this.state;
 
-    if(isloading){
+    if (isloading) {
       return <Spinner width="50px" height="50px" pw="100%" ph="150%" />;
     }
-
 
     let list =
       commentsBefore &&
@@ -186,8 +193,7 @@ class Comment extends Component {
             onClick={this.handleLikeClick}
           />
           <span className="show-likers" onClick={this.showLikers}>
-            &nbsp;{this.state.likeCount}{" "}
-            likes
+            &nbsp;{this.state.likeCount} likes
           </span>
         </div>
         <div className="comments-list" id="cl">

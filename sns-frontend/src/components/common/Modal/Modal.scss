@@ -8,38 +8,41 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
-
-  .content {    
-    background:white;
-    
+  .content {
+    background: white;
     padding: 3rem;
     width: 300px;
     min-width: 200px;
     height: auto;
     font-size: 1.2rem;
     .flist {
-      max-height: 200px;
+      
+      padding : 10px;
+      max-height:400px;
       overflow: auto;
-      .img{
+      .img {
         background: $oc-gray-3;
         border-radius: 50%;
-        width : 60px;
+        width: 60px;
         height: 60px;
+        object-fit: contain;
+        margin:5px;
+        margin-bottom: -5px;
+        
       }
-      .nick{        
-        width : 100%; 
-        height: 60px;       
+      .nick {
+        width: 100%;
+        height: 60px;
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
-        @include media("<medium"){
-          font-size : 1rem;
+        @include media("<medium") {
+          font-size: 1rem;
         }
       }
     }
-    .close {      
+    .close {
       transition: 0.3s;
       padding: 3px;
       background: $oc-blue-6;
@@ -48,11 +51,21 @@
       color: #fff;
       width: 70px;
       border-radius: 5%;
-      border : white;
-      
+      border: white;
+
       &:hover {
         background-color: $oc-blue-8;
       }
+    }
+  }
+  
+  .each-user {
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;    
+    border-radius: 20px;    
+    &:hover {
+      background: $oc-gray-3;
     }
   }
 }
