@@ -314,12 +314,10 @@ router.post("/uploadComment", async (req, res, next) => {
           })
         )
       );
-      await post.addHashtags(result.map(r => r[0]));
-      
+      await post.addHashtags(result.map(r => r[0]));      
     }
 
-
-    res.send(comment)
+    res.send("success")
   } catch (e) {
     console.log(e);
     next(e);
