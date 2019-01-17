@@ -160,7 +160,7 @@ class Profile extends PureComponent {
     // 로딩 puff 보여주기
     if (isLoading) {
       let ph;
-      window.innerWidth > 676 ? (ph = "240px") : (ph = "370px");
+      window.innerWidth > 676 ? (ph = "240px") : (ph = "310px");
       const spinnerSize = window.innerWidth > 450 ? "100px" : "50px";
       return (
         <div className="profile">
