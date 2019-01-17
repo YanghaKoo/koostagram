@@ -10,7 +10,7 @@
   font-size : 2rem;
   box-shadow: 5px 5px 39px -9px #000000;
 
-  @include media("<small"){
+  @include media("<ultrasmall"){
     font-size: 1.7rem;
   }
   
@@ -50,7 +50,7 @@
     align-items : center;
     justify-content: space-around;
     
-    @include media("<small"){
+    @include media("<ultrasmall"){
       width : 160px; 
       justify-content: space-between;
     }
