@@ -16,6 +16,12 @@ class EachFeedComment extends Component {
   handleSubmit = async () => {
     const { handleCommentAction, user, id } = this.props;
     const { content } = this.state;
+
+    if(!content){
+      alert("내용을 입력해주세요.")
+      return 
+    }
+
     if (content.match(/#.*\S#/g)) {
       alert("해쉬태그는 연결해서 등록할수 없어요!");
       return;

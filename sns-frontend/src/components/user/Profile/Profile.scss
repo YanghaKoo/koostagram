@@ -10,7 +10,10 @@ $pic_back_ground : $oc-gray-4;
   margin-bottom: 30px;
   overflow-x : hidden;
   overflow-y : hidden;
-
+  
+  @include media("<medium"){
+    position: relative;  
+  }
 
   .profile-pic {
     background: $pic_back_ground;
@@ -20,29 +23,37 @@ $pic_back_ground : $oc-gray-4;
     border-radius: 50%;
     margin-top: 20px;
     margin-bottom: 20px;
-    @include material-shadow(3);    
     img {
       border-radius: 50%;
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
+    @include material-shadow(3);    
+    @include media("<medium"){
+      position: absolute;
+      margin : 0;
+      margin-top : -70px;
+      margin-left : 5px;
+    }
+
+
+
+
     .no-image{
       width : 100%;
       height: 100%;
       text-align: center;
       margin-top : 90px;
       @include media("<medium"){
-        margin-top : 65px;
+        margin-top : 65px;        
       }
-      
     }
   }
 
   .user-detail {
     background: $pic_back_ground;
     border-radius: 3%;
-    @include material-shadow(2);
     width: 500px;
     height: 170px;
     margin-left: 10%;
@@ -50,9 +61,20 @@ $pic_back_ground : $oc-gray-4;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    
+    @include material-shadow(2);
+    @include media("<medium"){
+      margin-top :120px;
+    }
 
     .nick{
       margin-bottom: -13px;
+      width : 93px;
+      overflow: hidden;
+      font-size : 1.5rem;
+      @include media("<small"){
+        font-size : 1.25rem;
+      }
     }
 
     .follow-button {
@@ -66,7 +88,7 @@ $pic_back_ground : $oc-gray-4;
       cursor: pointer;
       font-size: 1rem;
       color: #fff;
-      width: 100px;
+      width: 90px;
       &:hover {
         background-color: $oc-blue-8;
       }

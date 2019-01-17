@@ -169,6 +169,12 @@ class Profile extends PureComponent {
       );
     }
 
+    let fontstyle
+    if(nick.length >= 8){
+      fontstyle = {fontSize : "1rem"}
+    }
+    
+
     return (
       <div className="profile">
         {select ? (
@@ -192,7 +198,7 @@ class Profile extends PureComponent {
         <div className="user-detail">
           <div style={{ textAlign: "center" }}>
             <div>
-              <div className="nick" style={{ fontSize: "1.5rem" }}>
+              <div className="nick" style={fontstyle}>
                 {nick ? "@" + nick : "loading..."}
               </div>{" "}
               <br />

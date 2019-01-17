@@ -7,10 +7,12 @@
 
   cursor: pointer;
   
-  padding-left: 10%;
-  padding-right: 10%;
+
+  // 여기서 패딩 left, rigth로 post 그리드의 넓이 조정
+  padding-left: 25%;
+  padding-right: 25%;
   padding-top: 1%;
-  /* width : 80%;  */
+
   @include media("<medium"){
     grid-auto-rows: 170px;
     grid-template-columns: 170px 170px repeat(auto-fit, 170px);

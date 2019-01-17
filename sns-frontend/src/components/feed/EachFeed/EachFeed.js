@@ -112,20 +112,49 @@ class EachFeed extends Component {
     });
   };
 
+  timeConversion = millisec => {
+    const seconds = (millisec / 1000).toFixed(0);
+    const minutes = (millisec / (1000 * 60)).toFixed(0);
+    const hours = (millisec / (1000 * 60 * 60)).toFixed(0);
+  
+    if (seconds < 60) {
+      return seconds + " sec ago";
+    } else if (minutes < 60) {
+      return minutes + " min ago";
+    } else if (hours < 24) {
+      return hours + " hrs ago";
+    }
+  };
+
   render() {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic, like, commentsCount } = this.state;
-    const time = date.substr(11, 12).substr(0, 5);
+
+    // 게시글 작성 시간과 현재 시간의 날짜를 구해옴
+    const writtenDate = date.substr(0, 10);
+    const nowDate = new Date().toISOString().substr(0,10)
+
+    // n시간 전
+    let postTime= null
+    if(writtenDate === nowDate){
+      postTime = this.timeConversion(new Date() - Date.parse(date))
+    }else {
+      postTime = writtenDate
+    }
+  
+    let spinnerSize = '100px'
+    if(window.innerWidth < 500){
+      spinnerSize = "50px"
+    }
 
     if (this.state.isLoading) {
-      return <Spinner width="100px" height="100px" pw="100%" ph="90vh" />;
+      return <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph="90vh" />;
     }
 
     let contentWithHashtag;
     if (content) {
       contentWithHashtag = content.split(/\s+/); // space or newline으로 나눠줌
       contentWithHashtag = contentWithHashtag.map(item => {
-        // console.log(item)
         if (item[0] === "#" && item.length > 1) {
           return (
             <div>
@@ -160,7 +189,8 @@ class EachFeed extends Component {
             {nick}
           </div>
           <div className="right">
-            {date.substr(0, 10)} {time}
+            {postTime}
+            {/* {date.substr(0, 10)} {time} */}
           </div>
         </div>
         <div className="img-area">

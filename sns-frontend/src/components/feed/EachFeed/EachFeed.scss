@@ -25,13 +25,15 @@
 
     @include media("<large") {
       width: 100%;
-      
       font-size: 1.25rem;
+      @include media("<small"){
+        font-size : 1rem;
+      }
     }
 
     .left {
       min-width: 115px;
-      width: 200px;
+      width: 350px;
       display: flex;
       align-items: center;
       .profile-pic {
@@ -44,6 +46,7 @@
           width: 50px;
           height: 50px;
         }
+        
 
         img {
           border-radius: 50%;
@@ -54,7 +57,8 @@
       }
     }
     .right {
-      width: 300px;
+      width: 200px;
+      margin-right: 15px;      
     }
   }
 

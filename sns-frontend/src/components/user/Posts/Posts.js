@@ -53,8 +53,9 @@ class Posts extends Component {
   
   render() {
     const { posts, isLoading } = this.state;
+    const spinnerSize = window.innerWidth > 450 ? "100px" : "50px";
     if(isLoading) {
-      return <Spinner width="100px" height="100px" pw="100%" ph="60vh"/>
+      return <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph="60vh"/>
     }
   
 

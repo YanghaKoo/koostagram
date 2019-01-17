@@ -16,9 +16,8 @@
     height: auto;
     font-size: 1.2rem;
     .flist {
-      
       padding : 10px;
-      max-height:400px;
+      max-height:200px;
       overflow: auto;
       .img {
         background: $oc-gray-3;
@@ -27,8 +26,7 @@
         height: 60px;
         object-fit: contain;
         margin:5px;
-        margin-bottom: -5px;
-        
+        margin-bottom: -5px;        
       }
       .nick {
         width: 100%;
