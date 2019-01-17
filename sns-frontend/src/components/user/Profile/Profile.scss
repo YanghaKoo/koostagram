@@ -69,11 +69,12 @@ $pic_back_ground : $oc-gray-4;
 
     .nick{
       margin-bottom: -13px;
-      width : 93px;
-      overflow: hidden;
+      
       font-size : 1.5rem;
       @include media("<small"){
         font-size : 1.25rem;
+        width : 95px;
+        overflow: hidden;
       }
     }
 

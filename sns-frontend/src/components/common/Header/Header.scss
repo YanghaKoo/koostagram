@@ -13,9 +13,7 @@
   @include media("<small"){
     font-size: 1.7rem;
   }
-  @include media("<medium"){
-    
-  }
+  
 
   .search-container{
     @include media("<medium"){
