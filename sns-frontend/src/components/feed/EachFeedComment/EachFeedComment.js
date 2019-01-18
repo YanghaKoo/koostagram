@@ -16,6 +16,7 @@ class EachFeedComment extends Component {
   handleSubmit = async () => {
     const { handleCommentAction, user, id } = this.props;
     const { content } = this.state;
+    const re  = content.match(/#[^\s]*/g).filter(item => item.length >= 14)
 
     if(!content){
       alert("내용을 입력해주세요.")
@@ -25,7 +26,12 @@ class EachFeedComment extends Component {
     if (content.match(/#.*\S#/g)) {
       alert("해쉬태그는 연결해서 등록할수 없어요!");
       return;
+    }else if(re[0]){
+      alert("14자가 넘는 해쉬태그가 존재합니다.")
+      return
     }
+
+    
 
     const isSuccess = await axios.post("/post/uploadComment", {
       content: this.state.content,

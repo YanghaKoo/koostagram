@@ -16,7 +16,7 @@ class RecommendUser extends Component {
     });
   }
 
-  // 친구추천을 위한 랜덤 3명 추천 logic
+  // 친구추천을 위한 배열 셔플(섞기)
   shuffle = array => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -27,10 +27,13 @@ class RecommendUser extends Component {
 
   render() {
     const { users } = this.state;
-    let shuffled = this.shuffle(users);
+    const { recommendedUsersNumber, isFirstLogin, loginuser } = this.props;
 
-    shuffled = shuffled.slice(0, 3);
-    // console.log(shuffled);
+    // 본인 제외
+    let shuffled;
+    if(loginuser) shuffled = users.filter(user => user.id !== loginuser.id)
+    shuffled = this.shuffle(shuffled);
+    shuffled = shuffled.slice(0, recommendedUsersNumber);
 
     const list = shuffled.map(user => {
       return (
@@ -44,11 +47,22 @@ class RecommendUser extends Component {
     });
 
     return (
-      <div style={{ textAlign: "center" }} className="rec-user">
+      <div
+        style={{ textAlign: "center", paddingLeft: "10%", paddingRight: "10%" }}
+        className="rec-user"
+      >
         <div
           style={{ fontSize: "1.25rem", fontWeight: "700", marginTop: "30px" }}
         >
-          Feed에 더 이상 소식이 없습니다. 아래 계정들도 둘러보세요!
+          {isFirstLogin ? (
+            <div className="greeting">Feed에 더 이상 소식이 없습니다.<br/> 아래 계정들도 둘러보세요!</div>
+          ) : (
+            <div className="greeting">
+              Koostagram 가입을 환영합니다!
+              <br />
+              Follow할 계정을 둘러보세요!
+            </div>
+          )}
         </div>
         <div className="following-rec">{list}</div>
       </div>
@@ -64,8 +78,12 @@ const EachRecommend = ({ user, history, pic }) => {
         history.push(`/user/${user.id}`);
       }}
     >
-      <div className="profile-pic">        
-        {pic?  <img src={pic} width={100} height={100} alt="" />    : <div style={{marginTop : "38px"}}>no image</div>} 
+      <div className="profile-pic">
+        {pic ? (
+          <img src={pic} alt="" />
+        ) : (
+          <img src="https://myspace.com/common/images/user.png" alt="" />
+        )}
       </div>
       <div className="nick">{user.nick}</div>
     </div>
@@ -79,7 +97,7 @@ class Feed extends Component {
     noPost: null,
     tk: 0,
     wrongAccess: null,
-    isLoading : false
+    isLoading: false
   };
 
   // 인피니트 스크롤 관련 변수들
@@ -111,22 +129,18 @@ class Feed extends Component {
   }
 
   initializer = async () => {
-    const { location, user, history } = this.props;
+    const { location, user } = this.props;
     const query = qs.parse(location.search);
 
     // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
-    if (!user && !query.hashtag) {
-      // alert("Please Login First");
-      // history.push("/");
+    if (!user && !query.hashtag) {      
       return;
     }
-    //this.setState({isLoading : true})
-
-
+  
     const followingList = query.hashtag
       ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
       : await axios.post("/post/getFollowingPosts", { userid: user.id });
-//    this.setState({isLoading : false})
+
 
     let listData = followingList.data;
 
@@ -135,7 +149,6 @@ class Feed extends Component {
         noPost: 1
       });
       return;
-      
     } else {
       this.it = listData.length;
       listData = listData.reverse();
@@ -194,12 +207,16 @@ class Feed extends Component {
     const { history, location } = this.props;
     const query = qs.parse(location.search);
 
-    // console.log("render items  : ", items);
-
-    if (this.state.noPost) {
+    // ??
+    if (this.state.noPost && this.it === 0) {
       return (
         <div style={{ marginTop: "100px" }}>
-          <RecommendUser history={this.props.history} />
+          <RecommendUser
+            loginuser={this.props.user}
+            history={this.props.history}
+            recommendedUsersNumber={10}
+            
+          />
         </div>
       );
     }
@@ -218,18 +235,34 @@ class Feed extends Component {
       />
     ));
 
+    // 첫 로그인 시(팔로우 하는 사람이 0 일 시) 추천친구를 100명 보여줌
+    let recommendUsers = 3;
+    if (this.it === 0) recommendUsers = 100;
+
     return (
       <div className="feed">
         <div ref="iScroll" className="list" id="list">
           {query.hashtag ? (
             <center>
               <div className="searched-hashtag">
-                Searched Hashtag : <span className="ht">#{query.hashtag}</span>
+                Searched Hashtag : {window.innerWidth < 450 ? <br/> : null}<span className="ht">#{query.hashtag}</span>
               </div>
             </center>
-          ) : null}
+          ) : (
+            <div style={{ height: "30px" }} />
+          )}
+
           <center>{eachList}</center>
-          {this.endOfList ? <RecommendUser history={this.props.history} /> : ""}
+          {this.endOfList ? (
+            <RecommendUser
+              history={this.props.history}
+              recommendedUsersNumber={recommendUsers}
+              isFirstLogin={this.it}
+              loginuser={this.props.user}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

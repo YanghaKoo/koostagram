@@ -30,8 +30,9 @@ router.post('/join', async (req,res,next)=>{
     await user.addFollowers(user.dataValues.id)
     
     // 가입과 동시에 관리자 계정을 팔로우 하게함 & 관리자가 해당 계정을 팔로우하게 함    
+    //  1.18 : 관리자가 해당 계정을 팔로우만 하게 끔 수정,
     await user.addFollowers(2)
-    await user.addFollowing(2)
+    // await user.addFollowing(2)
     
     return res.send("success")
 

@@ -104,21 +104,27 @@ class Comment extends Component {
     const { postid } = this.props.match.params;
     const { comment } = this.state;
     const { nick } = this.props.user;
+
+    const re  = comment.match(/#[^\s]*/g).filter(item => item.length >= 14)
     
     if (!this.props.user) {
       alert("먼저 로그인해 주세요.");
       return;
     }
-
-    if (this.state.comment.length >= 50) {
+    if (comment.length >= 50) {
       alert("댓글은 50자 이내로 입력해 주세요.");
       return;
     }
-
     if(comment.match(/#.*\S#/g)){
       alert("해쉬태그는 연결해서 등록할수 없어요!")
       return
+    }else if(re[0]){
+      alert("14자가 넘는 해쉬태그가 존재합니다.")
+      return
     }
+
+    
+    
   
 
     if (!comment) {
