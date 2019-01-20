@@ -8,9 +8,8 @@ import {withRouter} from 'react-router-dom'
 class LoginContainer extends Component {
   
   constructor(props){
-    super(props)        
-    const { user } = this.props
-    if(user){      
+    super(props)            
+    if(!localStorage.getItem("id")){      
       // this.props.history.push(`/user/${user.id}`)    
       this.props.history.push('/feed')
       return  
