@@ -12,8 +12,8 @@ class Edit extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { user, history } = this.props;
-    if (!user) {
+    const { history } = this.props;
+    if (!Number(localStorage.getItem('id'))) {
       alert("Please login first");
       history.push("/");
       return;
@@ -28,7 +28,7 @@ class Edit extends Component {
   };
 
   handleSubmit = async () => {
-    const { history, user } = this.props;
+    const { history } = this.props;
     const { selectedFile } = this.state;
 
     if (!selectedFile) {
@@ -39,7 +39,7 @@ class Edit extends Component {
     const fd = new FormData();
     console.log(selectedFile);
     fd.append("img", selectedFile, selectedFile.name); // 파일의 원본 파일이름 그대로
-    fd.append("userid", user.id);
+    fd.append("userid", Number(localStorage.getItem('id')));
 
     const contentType = {
       headers: { "Content-Type": "multipart/form-data" }
@@ -49,7 +49,7 @@ class Edit extends Component {
       uploading: true
     });
     await axios.post("/post/profile", fd, contentType);
-    history.push(`/user/${user.id}`);
+    history.push(`/user/${localStorage.getItem('id')}`);
   };
 
   render() {

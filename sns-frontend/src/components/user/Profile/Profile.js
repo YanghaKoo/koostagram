@@ -56,10 +56,13 @@ class Profile extends PureComponent {
 
     // 자기 프로필 일 때만 커서를 pointer로 해서 edit 하기 위함
     let style = null;
-    if (user) {
-      style = Number(uid) === user.id ? { cursor: "pointer" } : null;
+    if (Number(localStorage.getItem("id"))) {
+      style =
+        Number(uid) === Number(localStorage.getItem("id"))
+          ? { cursor: "pointer" }
+          : null;
     }
-  
+
     this.setState({
       nick: nick.data,
       followers: followers.data.filter(item => item.id !== Number(userid)),
@@ -70,13 +73,12 @@ class Profile extends PureComponent {
     this.checkFollow();
   };
 
-  checkFollow = () => {
-    const { user } = this.props;
+  checkFollow = () => {    
     const { followers } = this.state;
 
-    if (user) {
+    if (Number(localStorage.getItem('id'))) {
       followers.map(item => {
-        if (item.id === user.id) {
+        if (item.id === Number(localStorage.getItem("id"))) {
           this.setState({
             buttonLabel: "unfollow"
           });
@@ -89,20 +91,31 @@ class Profile extends PureComponent {
   handleFollow = e => {
     //팔로우 버튼 누르면
     const { userid } = this.props.match.params;
-    const { user } = this.props;
     const { followers, buttonLabel } = this.state;
 
     if (buttonLabel === "follow") {
-      axios.post("/post/follow", { followid: user.id, userid });
+      axios.post("/post/follow", {
+        followid: Number(localStorage.getItem("id")),
+        userid
+      });
       this.setState({
         buttonLabel: "unfollow",
-        followers: followers.concat({ id: user.id, nick: user.nick })
+        followers: followers.concat({
+          id: Number(localStorage.getItem("id")),
+          nick: localStorage.getItem("nick"),
+          pic: localStorage.getItem("pic")
+        })
       });
     } else {
-      axios.post("/post/unfollow", { followid: user.id, userid });
+      axios.post("/post/unfollow", {
+        followid: Number(localStorage.getItem("id")),
+        userid
+      });
       this.setState({
         buttonLabel: "follow",
-        followers: followers.filter(item => item.id !== user.id)
+        followers: followers.filter(
+          item => item.id !== Number(localStorage.getItem("id"))
+        )
       });
     }
   };
@@ -133,8 +146,8 @@ class Profile extends PureComponent {
 
   // 본인의 page일 때만 프로필사진 편집이 가능하게 구현, 남의 page에선 동작 X
   editProfile = () => {
-    const { uid, user, history } = this.props;
-    if (Number(uid) === user.id) {
+    const { uid, history } = this.props;
+    if (Number(uid) === Number(localStorage.getItem("id"))) {
       history.push("/edit");
     } else {
       return;
@@ -143,7 +156,7 @@ class Profile extends PureComponent {
 
   render() {
     const { userid } = this.props.match.params;
-    const { user } = this.props;
+
     const {
       followers,
       following,
@@ -155,8 +168,6 @@ class Profile extends PureComponent {
       style,
       isLoading
     } = this.state;
-    
-    
 
     // 로딩 puff 보여주기
     if (isLoading) {
@@ -171,8 +182,8 @@ class Profile extends PureComponent {
     }
 
     let fontstyle;
-    if( window.innerWidth < 450 &&  nick.length >= 8){
-      fontstyle = {fontSize : "1rem", fontWeight : "800"}
+    if (window.innerWidth < 450 && nick.length >= 8) {
+      fontstyle = { fontSize: "1rem", fontWeight: "800" };
     }
 
     return (
@@ -193,16 +204,24 @@ class Profile extends PureComponent {
           />
         )}
         <div className="profile-pic" onClick={this.editProfile} style={style}>
-          <img src={profilePic? profilePic : "https://myspace.com/common/images/user.png"} alt=""/>          
+          <img
+            src={
+              profilePic
+                ? profilePic
+                : "https://myspace.com/common/images/user.png"
+            }
+            alt=""
+          />
         </div>
         <div className="user-detail">
           <div style={{ textAlign: "center" }}>
             <div>
               <div className="nick" style={fontstyle}>
-                {nick ?   '' +nick : "loading..."}
+                {nick ? "" + nick : "loading..."}
               </div>{" "}
               <br />
-              {!user || Number(userid) === user.id ? null : (
+              {!localStorage.getItem("id") ||
+              userid === localStorage.getItem("id") ? null : (
                 <input
                   type="button"
                   value={buttonLabel}

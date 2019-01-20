@@ -31,6 +31,7 @@ class Modal extends Component {
     // first : 넘어온 list로 목록을 구성해 줌
     if (open === true) {
       const flist = list.map(item => {
+        
         return (
           <div
             key={item.id}

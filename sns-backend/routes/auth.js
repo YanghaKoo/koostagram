@@ -77,7 +77,7 @@ router.post('/login', (req,res, next)=>{    // req.body.eamil , req.body.passwor
       // return res.redirect(`/user/${user.id}`)
 
       const user = await User.find({where : {email : req.body.email}})
-      console.log(user.dataValues)
+      
       return res.json(user.dataValues)
       // return res.redirect('/feed')
     })

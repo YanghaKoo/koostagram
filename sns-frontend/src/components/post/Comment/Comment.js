@@ -42,9 +42,9 @@ class Comment extends Component {
       likers: likeUsers.data
     });
 
-    if (user) {
+    if (localStorage.getItem('id')) {
       likeUsers.data.map(item => {
-        if (item.id === user.id) {
+        if (item.id === Number(localStorage.getItem('id'))) {
           this.setState({
             like: like
           });
@@ -74,7 +74,7 @@ class Comment extends Component {
   handleLikeClick = () => {
     const { postid } = this.props.match.params;
     const { user } = this.props;
-    if (!user) {
+    if (!localStorage.getItem("id")) {
       alert("Login 후에 시도해 주세요.");
       return;
     }
@@ -103,8 +103,7 @@ class Comment extends Component {
   handleSubmit = async e => {
     const { postid } = this.props.match.params;
     const { comment } = this.state;
-    const { nick } = this.props.user;
-
+    
     let re = []
     try{
     re  = comment.match(/#[^\s]*/g).filter(item => item.length >= 14)
@@ -113,7 +112,7 @@ class Comment extends Component {
       re =[]
     }
     
-    if (!this.props.user) {
+    if (!localStorage.getItem('id')) {
       alert("먼저 로그인해 주세요.");
       return;
     }
@@ -129,19 +128,18 @@ class Comment extends Component {
       return
     }
 
-    
-    
   
-
     if (!comment) {
       alert("내용을 입력해주세요.");
       return;
     }
+
     await axios.post("/post/uploadComment", {
       content: comment,
       postid,
       usernick: localStorage.getItem('nick')
     });
+
     this.setState({
       comment: ""
     });

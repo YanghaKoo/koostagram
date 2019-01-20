@@ -43,6 +43,7 @@ class Login extends Component {
       localStorage.setItem("nick", result.data.nick)
       localStorage.setItem("pic", result.data.pic)
 
+
       this.setState({ isLoading: false });
       this.props.history.push("/feed");
     }

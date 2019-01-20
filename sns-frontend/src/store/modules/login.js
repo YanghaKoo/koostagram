@@ -23,6 +23,7 @@ export default handleActions({
       
       localStorage.setItem('id', data.user.id)
       localStorage.setItem('nick', data.user.nick)
+      localStorage.setItem("pic", data.user.pic)
 
       // localStorage.id = data.user.id
       // localStorage.nick = data.user.nick

@@ -31,7 +31,7 @@ class EachFeed extends Component {
   initializer = async () => {
     this.setState({ isLoading: true });
 
-    const { id, loggedInUser: user, userid } = this.props;
+    const { id, userid } = this.props;
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
     });
@@ -50,15 +50,16 @@ class EachFeed extends Component {
       commentsCount: commentsCount.data.length
     });
 
-    if (user) {
+    if (localStorage.getItem('id')) {
       likeCounts.data.map(item => {
-        if (item.id === user.id) {
+        if (item.id === Number(localStorage.getItem('id'))) {
           this.setState({
             like: likeImage
           });
         }
       });
     }
+
     this.setState({ isLoading: false });
   };
 
