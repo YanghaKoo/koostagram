@@ -31,7 +31,7 @@ class RecommendUser extends Component {
     
     // 본인 제외
     let shuffled = [];
-    if(loginuser) shuffled = users.filter(user => user.id !== loginuser.id)
+    if(loginuser) shuffled = users.filter(user => user.id !== Number(localStorage.getItem('id')))
     shuffled = this.shuffle(shuffled);
     shuffled = shuffled.slice(0, recommendedUsersNumber);
 
@@ -46,6 +46,7 @@ class RecommendUser extends Component {
       );
     });
     
+    console.log(query)
     return (
       <div
         style={{ textAlign: "center", paddingLeft: "10%", paddingRight: "10%" }}
@@ -58,9 +59,10 @@ class RecommendUser extends Component {
             <div className="greeting">Feed에 더 이상 소식이 없습니다.<br/> 아래 계정들도 둘러보세요!</div>
           ) : (
             <div className="greeting">
-              { !query.hashtag ? "Koostagram 가입을 환영합니다!" : "검색결과 없음" }
-              <br />
+              { !query ? "Koostagram 가입을 환영합니다!" : "검색결과 없음" }
+              <br />              
               Follow할 계정을 둘러보세요!
+              { query ? null : <div>혹시 구정연씨라면 용돈좀 부탁드립니다^^</div> }
             </div>
           )}
         </div>
@@ -89,6 +91,12 @@ const EachRecommend = ({ user, history, pic }) => {
     </div>
   );
 };
+
+
+
+
+
+
 
 class Feed extends Component {
   state = {
@@ -129,11 +137,10 @@ class Feed extends Component {
   }
 
   initializer = async () => {
-    const { location, user } = this.props;
+    const { location } = this.props;
     const query = qs.parse(location.search);
 
-    // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
-    // console.log(localStorage.getItem('id'))
+    // 로그인 안해도 검색한 해쉬태그는 볼 수 있게    
     if (!localStorage.getItem("id") && !query.hashtag) {      
       return;
     }
