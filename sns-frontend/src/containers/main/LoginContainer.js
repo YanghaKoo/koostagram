@@ -9,7 +9,8 @@ class LoginContainer extends Component {
   
   constructor(props){
     super(props)            
-    if(!localStorage.getItem("id")){      
+    if(localStorage.getItem("id")){      
+      
       // this.props.history.push(`/user/${user.id}`)    
       this.props.history.push('/feed')
       return  
