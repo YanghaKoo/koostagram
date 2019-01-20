@@ -84,13 +84,13 @@ class Comment extends Component {
         like: like,
         likeCount: this.state.likeCount + 1
       });
-      axios.post("/post/like", { userid: user.id, postid });
+      axios.post("/post/like", { userid: Number(localStorage.getItem("id")), postid });
     } else {
       this.setState({
         like: unlike,
         likeCount: this.state.likeCount - 1
       });
-      axios.post("/post/unlike", { userid: user.id, postid });
+      axios.post("/post/unlike", { userid: Number(localStorage.getItem("id")), postid });
     }
   };
 
@@ -140,7 +140,7 @@ class Comment extends Component {
     await axios.post("/post/uploadComment", {
       content: comment,
       postid,
-      usernick: nick
+      usernick: localStorage.getItem('nick')
     });
     this.setState({
       comment: ""

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => (
       allowNull : false
     },
     img : {     // 우리는 이미지의 주소를 올릴거기 때문에 STRING임
-      type : DataTypes.STRING(200),
+      type : DataTypes.STRING(150),
       allowNull: true
     }
   },{

@@ -88,7 +88,7 @@ class Login extends Component {
               />
             </p>
 
-            <p>
+            <p style={{textAlign:"center"}}>              
               <input
                 className="submit"
                 type="submit"
@@ -111,13 +111,13 @@ class Login extends Component {
             >
               If you don't have account...
             </div>
-            <p>
+            <p style={{textAlign:"center"}}>   
               <Link to="/register">
                 <input className="submit" type="button" value="New Account" />
               </Link>
             </p>
 
-            <p>
+            <p style={{textAlign:"center"}}>   
               <input
                 className="submit"
                 type="submit"

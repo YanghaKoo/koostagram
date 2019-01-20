@@ -21,7 +21,7 @@ class PostTemplate extends Component {
     // 게시글 가져오기 실패는 빈 배열이라도 리턴해 주니까 catch가 아닌 이런 방식으로 해야함
     const post = await axios.post("/post/getSinglePost", { postid });
     if (!post.data) {
-      alert("Wrong Request(해당 게시글이 존재하지 않습니다.)");
+      alert("Wrong Request(해당 게시글이 존재하지 않습니다-100.)");
       this.props.history.push("/");
       return;
     }

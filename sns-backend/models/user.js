@@ -23,7 +23,7 @@ module.exports =  (sequelize ,DataTypes) => (
         allowNull : true
       },
       pic : {
-        type : DataTypes.STRING(200),
+        type : DataTypes.STRING(150),
         allowNull : true,
       }
   },{

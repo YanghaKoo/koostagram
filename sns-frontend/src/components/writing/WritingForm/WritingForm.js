@@ -50,18 +50,20 @@ class WritingForm extends Component {
     };
 
     this.setState({uploading : true})
-
     const submit = await axios.post("/post", fd, contentType);
     
     // console.log(submit.data)
     
     if(submit.data === "failure") {
+      this.setState({uploading : false})
       alert("업로드에 실패하였습니다. 관리자에게 카톡주세요.")
       history.push('/write')
+    }else{
+      onChange("");    
+      history.push(`/user/${submit.data.userId}/${submit.data.id}`);
     }
 
-    onChange("");    
-    history.push(`/user/${submit.data.userId}/${submit.data.id}`);
+    
   };
 
   handleChange = e => {

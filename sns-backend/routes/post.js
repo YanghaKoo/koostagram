@@ -311,10 +311,12 @@ router.post("/uploadComment", async (req, res, next) => {
     const post = await Post.find({where : { id : postid}})
     
     // 해쉬태그 db에 추가
-    const hashtags = content.match(/#[^(\s|#)]*/g);
-    if (hashtags) {
+    let hashtags = content.match(/#[^(\s|#)]*/g);
+        
+
+    if (hashtags) {  
       const result = await Promise.all(
-        hashtags.map(tag =>
+        hashtags.map((tag) =>
           Hashtag.findOrCreate({
             where: { title: tag.slice(1).toLowerCase() }
           }).catch(e => {

@@ -40,8 +40,10 @@
     outline: none;
     border: none;
     border-bottom: 1px solid #343a40;
-    font-size : 1.5rem;    
-    
+    font-size : 1.5rem;   
+    @include media("<medium"){
+      width : 250px;
+    }     
   }
   
 
@@ -54,10 +56,14 @@
     border-radius: 10px;
     border : none;
     color : white;
+    text-align: center;
     cursor : pointer; 
     &:hover{
       background: $oc-blue-6;
       transition: 0.5s;
+    }
+    @include media("<medium"){
+      width : 250px;
     }
   }
     

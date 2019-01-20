@@ -27,11 +27,10 @@ class RecommendUser extends Component {
 
   render() {
     const { users } = this.state;
-    const { recommendedUsersNumber, isFirstLogin, loginuser, location } = this.props;
-    const query = qs.parse(location.search);
-
+    const { recommendedUsersNumber, isFirstLogin, loginuser, query } = this.props;
+    
     // 본인 제외
-    let shuffled;
+    let shuffled = [];
     if(loginuser) shuffled = users.filter(user => user.id !== loginuser.id)
     shuffled = this.shuffle(shuffled);
     shuffled = shuffled.slice(0, recommendedUsersNumber);
@@ -219,7 +218,7 @@ class Feed extends Component {
             loginuser={this.props.user}
             history={this.props.history}
             recommendedUsersNumber={100}
-            location={this.props.location}
+            query={query}
           />
         </div>
       );
@@ -263,6 +262,7 @@ class Feed extends Component {
               recommendedUsersNumber={recommendUsers}
               isFirstLogin={this.it}
               loginuser={this.props.user}
+              location={this.props.user}
             />
           ) : (
             ""

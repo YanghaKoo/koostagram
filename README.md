@@ -17,3 +17,4 @@
   2) 로그인 화면 spa 식으로 변경(redirection 없이 restful로 해결)
   3) 로그인 유지 redux --> redux with localstorage로 변경
   4) 문제 발생으로 인한 게시글 업로드 실패 시 경고창 생성
+  5) 내용에 이모티콘 및 이모티콘 해쉬태그 가능하게 수정
