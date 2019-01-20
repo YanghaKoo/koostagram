@@ -16,7 +16,7 @@ class Header extends Component {
 
   render() {
     const { isAble, to, input, handleChange, handleBlur } = this.props;
-    const { toggle } = this.state;
+    
 
     return (
       <div className="wrapper">

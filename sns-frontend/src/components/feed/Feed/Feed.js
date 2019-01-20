@@ -27,7 +27,8 @@ class RecommendUser extends Component {
 
   render() {
     const { users } = this.state;
-    const { recommendedUsersNumber, isFirstLogin, loginuser } = this.props;
+    const { recommendedUsersNumber, isFirstLogin, loginuser, location } = this.props;
+    const query = qs.parse(location.search);
 
     // 본인 제외
     let shuffled;
@@ -45,7 +46,7 @@ class RecommendUser extends Component {
         />
       );
     });
-
+    
     return (
       <div
         style={{ textAlign: "center", paddingLeft: "10%", paddingRight: "10%" }}
@@ -58,7 +59,7 @@ class RecommendUser extends Component {
             <div className="greeting">Feed에 더 이상 소식이 없습니다.<br/> 아래 계정들도 둘러보세요!</div>
           ) : (
             <div className="greeting">
-              Koostagram 가입을 환영합니다!
+              { !query.hashtag ? "Koostagram 가입을 환영합니다!" : "검색결과 없음" }
               <br />
               Follow할 계정을 둘러보세요!
             </div>
@@ -133,13 +134,14 @@ class Feed extends Component {
     const query = qs.parse(location.search);
 
     // 로그인 안해도 검색한 해쉬태그는 볼 수 있게
-    if (!user && !query.hashtag) {      
+    // console.log(localStorage.getItem('id'))
+    if (!localStorage.getItem("id") && !query.hashtag) {      
       return;
     }
   
     const followingList = query.hashtag
       ? await axios.post("/post/getHashTagPost", { tag: query.hashtag })
-      : await axios.post("/post/getFollowingPosts", { userid: user.id });
+      : await axios.post("/post/getFollowingPosts", { userid: Number(localStorage.getItem('id')) });
 
 
     let listData = followingList.data;
@@ -207,15 +209,17 @@ class Feed extends Component {
     const { history, location } = this.props;
     const query = qs.parse(location.search);
 
-    // ??
+    // console.log(localStorage.getItem('id'), localStorage.getItem('nick'))
+
+    // 해쉬태그 검색결과가 없을 때 ( no post )
     if (this.state.noPost && this.it === 0) {
       return (
         <div style={{ marginTop: "100px" }}>
           <RecommendUser
             loginuser={this.props.user}
             history={this.props.history}
-            recommendedUsersNumber={10}
-            
+            recommendedUsersNumber={100}
+            location={this.props.location}
           />
         </div>
       );

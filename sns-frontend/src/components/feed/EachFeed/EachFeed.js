@@ -31,7 +31,7 @@ class EachFeed extends Component {
   initializer = async () => {
     this.setState({ isLoading: true });
 
-    const { id, loggedInUser: user } = this.props;
+    const { id, loggedInUser: user, userid } = this.props;
     const nick = await axios.post("/post/getNick", {
       userid: this.props.userid
     });
@@ -39,7 +39,7 @@ class EachFeed extends Component {
     const likeCounts = await axios.post("/post/getLikeCount", { postid: id });
     const commentsCount = await axios.post("/post/getComments", { postid: id });
     const profilePic = await axios.post("/post/getUserPic", {
-      userid: this.props.userid
+      userid
     });
 
     //console.log(nick.data)
@@ -68,9 +68,9 @@ class EachFeed extends Component {
   };
 
   handleLikeClick = () => {
-    const { id: postid, loggedInUser } = this.props;
+    const { id: postid } = this.props;
 
-    if (!loggedInUser) {
+    if (!localStorage.getItem("id")) {
       alert("좋아요는 로그인 후에 가능합니다.");
       return;
     }
@@ -80,21 +80,26 @@ class EachFeed extends Component {
         like: likeImage,
         likeCounts: this.state.likeCounts + 1
       });
-      axios.post("/post/like", { userid: loggedInUser.id, postid });
+      axios.post("/post/like", {
+        userid: Number(localStorage.getItem("id")),
+        postid
+      });
     } else {
       this.setState({
         like: unlikeImage,
         likeCounts: this.state.likeCounts - 1
       });
-      axios.post("/post/unlike", { userid: loggedInUser.id, postid });
+      axios.post("/post/unlike", {
+        userid: Number(localStorage.getItem("id")),
+        postid
+      });
     }
   };
 
   toggleComment = () => {
     const { commentToggle } = this.state;
-    const { loggedInUser } = this.props;
 
-    if (!loggedInUser) {
+    if (!localStorage.getItem("nick")) {
       alert("댓글 작성은 로그인 후에 가능합니다.");
       return;
     }
@@ -116,7 +121,7 @@ class EachFeed extends Component {
     const seconds = (millisec / 1000).toFixed(0);
     const minutes = (millisec / (1000 * 60)).toFixed(0);
     const hours = (millisec / (1000 * 60 * 60)).toFixed(0);
-  
+
     if (seconds < 60) {
       return seconds + " sec ago";
     } else if (minutes < 60) {
@@ -132,23 +137,25 @@ class EachFeed extends Component {
 
     // 게시글 작성 시간과 현재 시간의 날짜를 구해옴
     const writtenDate = date.substr(0, 10);
-    const nowDate = new Date().toISOString().substr(0,10)
+    const nowDate = new Date().toISOString().substr(0, 10);
 
     // n시간 전
-    let postTime= null
-    if(writtenDate === nowDate){
-      postTime = this.timeConversion(new Date() - Date.parse(date))
-    }else {
-      postTime = writtenDate
+    let postTime = null;
+    if (writtenDate === nowDate) {
+      postTime = this.timeConversion(new Date() - Date.parse(date));
+    } else {
+      postTime = writtenDate;
     }
-  
-    let spinnerSize = '100px'
-    if(window.innerWidth < 500){
-      spinnerSize = "50px"
+
+    let spinnerSize = "100px";
+    if (window.innerWidth < 500) {
+      spinnerSize = "50px";
     }
 
     if (this.state.isLoading) {
-      return <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph="90vh" />;
+      return (
+        <Spinner width={spinnerSize} height={spinnerSize} pw="100%" ph="90vh" />
+      );
     }
 
     let contentWithHashtag;
@@ -231,7 +238,6 @@ class EachFeed extends Component {
             {this.state.commentToggle ? (
               <EachFeedComment
                 handleCommentAction={this.handleCommentAction}
-                user={this.props.loggedInUser}
                 id={this.props.id}
               />
             ) : null}

@@ -105,7 +105,13 @@ class Comment extends Component {
     const { comment } = this.state;
     const { nick } = this.props.user;
 
-    const re  = comment.match(/#[^\s]*/g).filter(item => item.length >= 14)
+    let re = []
+    try{
+    re  = comment.match(/#[^\s]*/g).filter(item => item.length >= 14)
+    }catch(e){
+      console.log(e)
+      re =[]
+    }
     
     if (!this.props.user) {
       alert("먼저 로그인해 주세요.");

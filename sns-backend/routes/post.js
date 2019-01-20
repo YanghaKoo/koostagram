@@ -26,7 +26,8 @@ router.post("/", upload.single("img"), async (req, res, next) => {
     const post = await Post.create({
       content: req.body.text,
       img: `/img/${req.file.filename}`,
-      userId: req.user["id"]
+      userId : req.body.id
+      // userId: req.user["id"]
     });
 
     // 해쉬태그 db에 추가
@@ -42,15 +43,20 @@ router.post("/", upload.single("img"), async (req, res, next) => {
           })
         )
       );
-      await post.addHashtags(result.map(r => r[0]));
-      
+      await post.addHashtags(result.map(r => r[0]));      
     }
+    
+    
     res.json(post);
   } catch (e) {
+    
     console.log(e);
+    res.send('failure')
     next(e);
   }
 });
+
+
 
 // 프로필사진 변경 ///////////////////
 router.post("/profile", upload.single("img"), async (req, res, next) => {
@@ -69,6 +75,8 @@ router.post("/profile", upload.single("img"), async (req, res, next) => {
     next(e);
   }
 });
+
+
 
 // 여기는 user에 페이지에 각각의 데이터를 뿌려주는 부분
 router.post("/getNick", async (req, res, next) => {

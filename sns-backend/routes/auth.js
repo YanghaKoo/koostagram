@@ -50,9 +50,12 @@ router.get('/login',(req,res)=>{
   res.json({'user':req.user})
 })
 
+
+
 // 로그인
-router.post('/login',(req,res, next)=>{    // req.body.eamil , req.body.password가 넘어오지
-  
+router.post('/login', (req,res, next)=>{    // req.body.eamil , req.body.password가 넘어오지  
+  console.log(req.body.email, req.body.password)
+
   passport.authenticate('local', (authError, user, info)=>{
     if(authError){
       console.log(authError)
@@ -60,22 +63,32 @@ router.post('/login',(req,res, next)=>{    // req.body.eamil , req.body.password
     }
 
     if(!user){ // 로그인 에러, 유저가 없음
-      return res.redirect('/')
+      return res.send("failure")
+      // return res.redirect('/')
     }
 
     // 성공인 경우
-    return req.login(user, (loginError)=>{   // req.user에 로그인한 사용자 정보를 찾을 수 있음
+    return req.login(user, async (loginError)=>{   // req.user에 로그인한 사용자 정보를 찾을 수 있음
       if(loginError){
         console.log(loginError)
         return next(loginError)
       }
       
       // return res.redirect(`/user/${user.id}`)
-      return res.redirect('/feed')
+
+      const user = await User.find({where : {email : req.body.email}})
+      console.log(user.dataValues)
+      return res.json(user.dataValues)
+      // return res.redirect('/feed')
     })
 
   })(req,res,next);
 })
+
+
+
+
+
 
 // 닉네임 중복 검사
 router.post("/nickCheck", async (req, res, next)=>{

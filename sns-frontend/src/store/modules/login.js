@@ -2,7 +2,7 @@ import {createAction, handleActions} from 'redux-actions'
 import {pender} from 'redux-pender'
 import axios from 'axios'
 
-const checkLogin = () => axios.get('/auth/login')
+const checkLogin = async () => await axios.get('/auth/login')
 
 const LOGIN = 'login/LOGIN'
 
@@ -19,6 +19,11 @@ export default handleActions({
     type : LOGIN,
     onSuccess : (state,action) =>{
       const { data } = action.payload
+      
+      
+      localStorage.setItem('id', data.user.id)
+      localStorage.setItem('nick', data.user.nick)
+
       // localStorage.id = data.user.id
       // localStorage.nick = data.user.nick
       

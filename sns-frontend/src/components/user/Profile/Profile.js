@@ -155,7 +155,8 @@ class Profile extends PureComponent {
       style,
       isLoading
     } = this.state;
-    // console.log("Profile rendered");
+    
+    
 
     // 로딩 puff 보여주기
     if (isLoading) {

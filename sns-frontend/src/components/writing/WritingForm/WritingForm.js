@@ -17,7 +17,7 @@ class WritingForm extends Component {
 
     let re = input.match(/#[^\s]*/g);
     let isLinkedTagExist = input.match(/#.*\S#/g)    
-    console.log(isLinkedTagExist)
+    // console.log(isLinkedTagExist)
     
     // 사진을 업로드하지 않은 경우
     if (!selectedFile) {
@@ -40,9 +40,10 @@ class WritingForm extends Component {
     }
 
     const fd = new FormData();
-    console.log(selectedFile);
+    // console.log(selectedFile);
     fd.append("img", selectedFile, selectedFile.name); // 파일의 원본 파일이름 그대로
     fd.append("text", input);
+    fd.append("id", Number(localStorage.getItem("id")))
 
     const contentType = {
       headers: { "Content-Type": "multipart/form-data" }
@@ -51,7 +52,14 @@ class WritingForm extends Component {
     this.setState({uploading : true})
 
     const submit = await axios.post("/post", fd, contentType);
-    // console.log(submit.data);
+    
+    // console.log(submit.data)
+    
+    if(submit.data === "failure") {
+      alert("업로드에 실패하였습니다. 관리자에게 카톡주세요.")
+      history.push('/write')
+    }
+
     onChange("");    
     history.push(`/user/${submit.data.userId}/${submit.data.id}`);
   };

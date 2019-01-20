@@ -6,12 +6,11 @@ import HeaderContainer from '../containers/HeaderContainer/HeaderContainer';
 
 class App extends Component {
   render() {
-    const {user} = this.props
-
+    const id = localStorage.getItem('id')
     return (
       <div>
         
-        {user ? (<HeaderContainer isAble={true} to={`/user/${user.id}`} />) : (<HeaderContainer isAble={false} to="123"/>)}             
+        { id !== null ? (<HeaderContainer isAble={true} to={`/user/${id}`} />) : (<HeaderContainer isAble={false} to="123"/>)}             
         <Switch>
           <Route exact path='/' component={MainPage} />          
           <Route path='/user/:userid/:postid' component={EachPostPage} />

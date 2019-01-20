@@ -14,9 +14,13 @@ class EachFeedComment extends Component {
   };
 
   handleSubmit = async () => {
-    const { handleCommentAction, user, id } = this.props;
+    const { handleCommentAction, id } = this.props;
     const { content } = this.state;
-    const re  = content.match(/#[^\s]*/g).filter(item => item.length >= 14)
+
+    let re =[]
+    try{
+      re  = content.match(/#[^\s]*/g).filter(item => item.length >= 14)
+    }catch(e){}
 
     if(!content){
       alert("내용을 입력해주세요.")
@@ -36,7 +40,7 @@ class EachFeedComment extends Component {
     const isSuccess = await axios.post("/post/uploadComment", {
       content: this.state.content,
       postid: id,
-      usernick: user.nick
+      usernick: localStorage.getItem("nick")
     });
     if (isSuccess.data === "success") handleCommentAction();
     else alert("잠시 후 다시 시도해주세요.");
