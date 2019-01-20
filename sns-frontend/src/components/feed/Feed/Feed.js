@@ -14,6 +14,8 @@ class RecommendUser extends Component {
     this.setState({
       users: users.data
     });
+    console.log('cdm')
+    
   }
 
   // 친구추천을 위한 배열 셔플(섞기)
@@ -27,15 +29,19 @@ class RecommendUser extends Component {
 
   render() {
     const { users } = this.state;
-    const { recommendedUsersNumber, isFirstLogin, loginuser, query } = this.props;
+    const { recommendedUsersNumber, isFirstLogin, query } = this.props;
     
+    console.log(Number(localStorage.getItem('id')))
+
     // 본인 제외
     let shuffled = [];
-    if(loginuser) shuffled = users.filter(user => user.id !== Number(localStorage.getItem('id')))
+    if(Number(localStorage.getItem('id'))) shuffled = users.filter(user => user.id !== Number(localStorage.getItem('id')))
     shuffled = this.shuffle(shuffled);
     shuffled = shuffled.slice(0, recommendedUsersNumber);
+    console.log(shuffled)
 
     const list = shuffled.map(user => {
+      
       return (
         <EachRecommend
           user={user}
@@ -46,7 +52,7 @@ class RecommendUser extends Component {
       );
     });
     
-    console.log(query)
+    
     return (
       <div
         style={{ textAlign: "center", paddingLeft: "10%", paddingRight: "10%" }}
