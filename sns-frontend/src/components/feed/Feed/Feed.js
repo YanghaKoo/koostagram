@@ -31,14 +31,13 @@ class RecommendUser extends Component {
     const { users } = this.state;
     const { recommendedUsersNumber, isFirstLogin, query } = this.props;
     
-    console.log(Number(localStorage.getItem('id')))
-
+    
     // 본인 제외
     let shuffled = [];
     if(Number(localStorage.getItem('id'))) shuffled = users.filter(user => user.id !== Number(localStorage.getItem('id')))
     shuffled = this.shuffle(shuffled);
     shuffled = shuffled.slice(0, recommendedUsersNumber);
-    console.log(shuffled)
+    
 
     const list = shuffled.map(user => {
       

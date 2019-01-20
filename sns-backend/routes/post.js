@@ -2,6 +2,7 @@ const router = require("express").Router();
 const multer = require("multer");
 const path = require("path");
 const Sequelize = require("sequelize");
+const fs = require('fs')
 
 const { Post, Hashtag, User, Comment } = require("../models");
 
@@ -395,7 +396,7 @@ router.post("/search", async (req, res, next) => {
 router.post("/deletePost", async (req, res, next) => {
   try {
     const { postid } = req.body;
-    const id = await Post.destroy({ where: { id: postid } });        
+    const id = await Post.destroy({ where: { id: postid } });            
     res.send(toString(id));
   } catch (e) {
     console.log(e);
