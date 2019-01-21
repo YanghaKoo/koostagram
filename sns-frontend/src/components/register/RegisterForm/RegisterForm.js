@@ -21,9 +21,9 @@ class RegisterForm extends Component {
 
   };
 
-  componentDidMount() {
+  // componentDidMount() {
     //document.getElementById("submit").disabled = true;
-  }
+  // }
 
   // componentDidUpdate(prevProps, prevState) {
     

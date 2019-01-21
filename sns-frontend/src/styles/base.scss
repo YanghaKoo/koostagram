@@ -8,16 +8,22 @@ body {
   background: #e9ecef;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
+  // 아이폰 스크롤 문제?
+  -webkit-overflow-scrolling: touch;
+  
+  
   // safari shaping 문제 해결
   textarea,
   input.text,
   input[type="text"],
   input[type="button"],
   input[type="submit"],
+
   .input-checkbox {
     -webkit-appearance: none;
     border-radius: 0;
   }
+  
 }
 
 // box-sizing 일괄 설정

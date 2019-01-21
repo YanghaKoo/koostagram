@@ -67,7 +67,7 @@ class RecommendUser extends Component {
               { !query ? "Koostagram 가입을 환영합니다!" : "검색결과 없음" }
               <br />              
               Follow할 계정을 둘러보세요!
-              { query ? null : <div>혹시 구정연씨라면 용돈좀 부탁드립니다^^</div> }
+              
             </div>
           )}
         </div>
