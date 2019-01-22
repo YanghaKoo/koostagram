@@ -14,9 +14,17 @@ class PostTemplate extends Component {
     nick: null
   };
 
-  
 
   async componentDidMount() {
+    this.initializer()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if( (prevProps.token1 !== this.props.token1)  || (prevProps.token2 !== this.props.token2) ) this.initializer()
+  }
+  
+
+  initializer = async () => {
     const { userid, postid } = this.props.match.params;
 
     // 게시글 가져오기 실패는 빈 배열이라도 리턴해 주니까 catch가 아닌 이런 방식으로 해야함
@@ -34,6 +42,7 @@ class PostTemplate extends Component {
       return;
     });
 
+    
     this.setState({
       img: post.data.img,
       content: post.data.content,
@@ -112,7 +121,7 @@ class PostTemplate extends Component {
             <div className="test">{contentWithHashtag}</div>
             <div>{this.hashtags}</div>
           </div>
-          <CommentContainer previewCount={5} />
+          <CommentContainer previewCount={5} token1={this.props.token1} token2={this.props.token2}/>
         </div>
       </div>
     );

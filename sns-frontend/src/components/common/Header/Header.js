@@ -22,6 +22,7 @@ class Header extends Component {
   }
 
   handleToggleNotify = () =>{
+    if(!localStorage.getItem('id')) { alert("로그인 후 가능합니다."); return}
     this.setState({
       toggle : !this.state.toggle
     })

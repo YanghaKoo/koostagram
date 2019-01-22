@@ -8,7 +8,7 @@ class CommentContainer extends Component {
     // console.log(user);
     return (
       <div style={{ height: "36%" }}>
-        <Comment  user={user} previewCount={previewCount}/>
+        <Comment  user={user} previewCount={previewCount} token1={this.props.token1} token2={this.props.token2}/>
       </div>
     );
   }

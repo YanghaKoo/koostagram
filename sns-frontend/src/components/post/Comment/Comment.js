@@ -28,6 +28,10 @@ class Comment extends Component {
     this.initializer();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if( (prevProps.token1 !== this.props.token1)  || (prevProps.token2 !== this.props.token2) ) this.initializer()
+  }
+
   initializer = async () => {
     this.setState({ isloading: true });
     const { postid } = this.props.match.params;

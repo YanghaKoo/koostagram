@@ -141,6 +141,7 @@ router.post("/unlike", async (req, res, next) => {
   try {
     const post = await Post.find({ where: { id: postid } });
     await post.removeLiker(userid);
+
   } catch (e) {
     console.log(e);
     next(e);
@@ -319,7 +320,7 @@ router.post("/uploadComment", async (req, res, next) => {
     console.log(user.dataValues.id)
 
 
-
+    // 알림
     await Notify.create({      
         category: "comment",
         notifying: user.dataValues.id,
@@ -414,6 +415,23 @@ router.post("/deletePost", async (req, res, next) => {
     res.send(toString(id));
   } catch (e) {
     console.log(e);
+    next(e);
+  }
+});
+
+
+// get my notification 
+router.post("/notification", async (req, res, next) => {
+  try {
+    const {userid} = req.body
+    let  notify = await Notify.findAll({where : {notified : userid}})
+    notify = notify.filter(item => item.notifying !== userid).reverse().slice(0,10)
+    res.send(notify)
+  
+  
+  } catch (e) {
+    console.log(e);
+    res.send("failure")
     next(e);
   }
 });

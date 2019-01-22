@@ -10,37 +10,82 @@
   justify-content: center;
   text-align: center;
 
-  .content{
+  .content {
     background: white;
+    border-radius: 20px;
     padding: 1rem;
     width: 700px;
     height: auto;
-    @include media("<large"){
-      width : 90%;
+    @include media("<medium") {
+      width: 100%;
+      padding: 0;
     }
-
-    .notifications{
+    .notifications {
+      cursor : pointer;
       height: 500px;
-      background: $oc-blue-1;
+      border-radius: 20px;
+      background: $oc-gray-2;
       margin-bottom: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      @include media("<medium") {
+      }
     }
-    .close{
+    .close {
       outline: none;
       background: $oc-blue-5;
-      color :white;
-      border : none;
+      color: white;
+      border: none;
       font-weight: 700;
       font-size: 1rem;
-      width : 100px;
+      width: 100px;
       height: 30px;
       @include material-shadow(2);
-      cursor : pointer;
-      &:hover{
+      cursor: pointer;
+      &:hover {
         background: $oc-blue-7;
       }
-
     }
   }
 }
 
-
+.each-noti {
+  font-size: 1.3rem;
+  font-weight: 800;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  transition: 0.3s;
+  border-radius: 25%;
+  &:hover {
+    background: $oc-gray-4;
+  }
+  @include media("<medium") {
+    font-size: 0.9rem;
+    width: 100%;
+  }
+  .word {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    
+    .nickname {
+      color :$oc-blue-6;
+    }
+  }
+  .img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+  .postpic {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+}
