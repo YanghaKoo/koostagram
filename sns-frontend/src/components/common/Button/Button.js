@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Button.css";
+import "./Button.scss";
 import {withRouter} from 'react-router-dom'
 
 const Div = ({ children, ...rest }) => <div {...rest}>{children}</div>;
@@ -35,10 +35,6 @@ class Button extends React.Component {
     </Element>
   );
 };
-
-
-
-    
   
 }
 

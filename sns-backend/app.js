@@ -19,8 +19,11 @@ const passportConfig = require("./passport");
 const logger = require("./logger");
 
 const app = express();
+
 sequelize.sync();
 // sequelize.sync({force : true})
+
+
 passportConfig(passport);
 
 app.set("view engine", "jade");

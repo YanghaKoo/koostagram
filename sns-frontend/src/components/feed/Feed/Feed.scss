@@ -96,5 +96,8 @@
   color : $oc-gray-7;
   margin-top : 15px;
   margin-bottom : 15px;
+  @include media("<medium"){
+    margin-bottom : 40px;
+  }
 }
 

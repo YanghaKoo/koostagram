@@ -14,14 +14,12 @@ class Post extends Component {
   render() {
     const {item} = this.props
     return (
-      // <div className="post">
         <img
           src={item.img}
           style={{ width: "100%", height: "100%" }}
           alt=""
           onClick={this.handleClick}        
-        />
-      // </div>
+        />      
     );
   }
 }

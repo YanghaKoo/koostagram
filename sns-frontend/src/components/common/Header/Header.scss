@@ -1,67 +1,84 @@
-.header{
-  background : #343a40; 
+.header {
+  background: #343a40;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height : 80px;
-  width : 100%;
-  color : white;
+  height: 80px;
+  width: 100%;
+  color: white;
   font-weight: 600;
-  font-size : 2rem;
+  font-size: 2rem;
   box-shadow: 5px 5px 39px -9px #000000;
 
-  @include media("<ultrasmall"){
+  @include media("<ultrasmall") {
     font-size: 1.7rem;
   }
-  
 
-  .search-container{
-    @include media("<medium"){
+  .search-container {
+    @include media("<medium") {
       display: none;
-    }       
+    }
   }
-  .search{
+  .search {
     height: 40px;
-    width : 300px;
-    border : white;      
+    width: 300px;
+    border: white;
     border-radius: 3%;
-    margin : 10px;
+    margin: 10px;
     background: $oc-gray-7;
-    color : white;
+    color: white;
     text-align: center;
     font-weight: 700;
-    font-size : 1.5rem;
+    font-size: 1.5rem;
 
-    @include media("<medium"){
-      width : 200px;
+    @include media("<medium") {
+      width: 200px;
     }
-    
-    &:focus {      
-      outline : none;
+
+    &:focus {
+      outline: none;
       transition: 0.3s;
       background: $oc-gray-6;
-      
     }
   }
 
-  .right-part{
-    width : 180px;  
+  .right-part {
+    width: 180px;
     display: flex;
-    align-items : center;
+    align-items: center;
     justify-content: space-around;
-    
-    @include media("<ultrasmall"){
-      width : 160px; 
+
+    @include media("<ultrasmall") {
+      width: 160px;
       justify-content: space-between;
     }
-    .mobile-search-icon{
-      display: none;
-      margin-top : 10px;
-      margin-left : 10px;
-      @include media("<medium"){
-        display: initial;
+
+    .button-icon {
+      // cursor: pointer;
+      height: 50px;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.3s;
+      border-radius: 10px;
+      &:hover {
+        background: $oc-gray-6;
+      }
+
+      .imgs {
+        width: 50px;
+        height: auto;
       }
     }
-  } 
-}
 
+    // .mobile-search-icon{
+    //   display: none;
+    //   margin-top : 10px;
+    //   margin-left : 10px;
+    //   @include media("<medium"){
+    //     display: initial;
+    //   }
+    // }
+  }
+}

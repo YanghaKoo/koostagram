@@ -13,9 +13,7 @@ class RecommendUser extends Component {
     const users = await axios.post("/post/getAlluser");
     this.setState({
       users: users.data
-    });
-    console.log('cdm')
-    
+    });    
   }
 
   // 친구추천을 위한 배열 셔플(섞기)
@@ -66,8 +64,7 @@ class RecommendUser extends Component {
             <div className="greeting">
               { !query ? "Koostagram 가입을 환영합니다!" : "검색결과 없음" }
               <br />              
-              Follow할 계정을 둘러보세요!
-              
+              Follow할 계정을 둘러보세요!              
             </div>
           )}
         </div>

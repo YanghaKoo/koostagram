@@ -8,6 +8,7 @@ const ModalPortal = ({ children }) => {
   return ReactDOM.createPortal(children, el);
 };
 
+
 class Modal extends Component {
   handleOpenModal = () => {
     this.props.handleModal(true);

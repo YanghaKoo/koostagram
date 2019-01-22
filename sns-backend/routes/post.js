@@ -2,9 +2,8 @@ const router = require("express").Router();
 const multer = require("multer");
 const path = require("path");
 const Sequelize = require("sequelize");
-const fs = require('fs')
 
-const { Post, Hashtag, User, Comment } = require("../models");
+const { Post, Hashtag, User, Comment, Notify } = require("../models");
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -22,12 +21,12 @@ const upload = multer({
 });
 
 // 글 작성
-router.post("/", upload.single("img"), async (req, res, next) => {  
+router.post("/", upload.single("img"), async (req, res, next) => {
   try {
     const post = await Post.create({
       content: req.body.text,
       img: `/img/${req.file.filename}`,
-      userId : req.body.id
+      userId: req.body.id
       // userId: req.user["id"]
     });
 
@@ -44,20 +43,16 @@ router.post("/", upload.single("img"), async (req, res, next) => {
           })
         )
       );
-      await post.addHashtags(result.map(r => r[0]));      
+      await post.addHashtags(result.map(r => r[0]));
     }
-    
-    
+
     res.json(post);
   } catch (e) {
-    
     console.log(e);
-    res.send('failure')
+    res.send("failure");
     next(e);
   }
 });
-
-
 
 // 프로필사진 변경 ///////////////////
 router.post("/profile", upload.single("img"), async (req, res, next) => {
@@ -76,8 +71,6 @@ router.post("/profile", upload.single("img"), async (req, res, next) => {
     next(e);
   }
 });
-
-
 
 // 여기는 user에 페이지에 각각의 데이터를 뿌려주는 부분
 router.post("/getNick", async (req, res, next) => {
@@ -126,6 +119,16 @@ router.post("/like", async (req, res, next) => {
   try {
     const post = await Post.find({ where: { id: postid } });
     await post.addLiker(userid);
+
+    // 게시글 작성자에게 알림 주기
+    await Notify.findOrCreate({
+      where: {
+        category: "like",
+        notifying: userid,
+        notified: post.dataValues.userId,
+        post: postid
+      }
+    });
   } catch (e) {
     console.log(e);
     next(e);
@@ -302,22 +305,34 @@ router.post("/getHashTagPost", async (req, res, next) => {
 // 댓글 등록
 router.post("/uploadComment", async (req, res, next) => {
   try {
-    const { usernick, postid, content } = req.body;              
+    const { usernick, postid, content } = req.body;
     const comment = await Comment.create({
       content: content,
       postId: postid,
       usernick: usernick
+    });
+
+    const post = await Post.find({ where: { id: postid } });
+    const user = await User.find({where : { nick : usernick}})
+
+    console.log('============================')
+    console.log(user.dataValues.id)
+
+
+
+    await Notify.create({      
+        category: "comment",
+        notifying: user.dataValues.id,
+        notified: post.dataValues.userId,
+        post: postid
     })
-    
-    const post = await Post.find({where : { id : postid}})
-    
+
     // 해쉬태그 db에 추가
     let hashtags = content.match(/#[^(\s|#)]*/g);
-        
 
-    if (hashtags) {  
+    if (hashtags) {
       const result = await Promise.all(
-        hashtags.map((tag) =>
+        hashtags.map(tag =>
           Hashtag.findOrCreate({
             where: { title: tag.slice(1).toLowerCase() }
           }).catch(e => {
@@ -325,10 +340,10 @@ router.post("/uploadComment", async (req, res, next) => {
           })
         )
       );
-      await post.addHashtags(result.map(r => r[0]));      
+      await post.addHashtags(result.map(r => r[0]));
     }
 
-    res.send("success")
+    res.send("success");
   } catch (e) {
     console.log(e);
     next(e);
@@ -361,7 +376,7 @@ router.post("/getIdByNick", async (req, res, next) => {
 router.post("/search", async (req, res, next) => {
   try {
     const { input } = req.body;
-    const results = {}
+    const results = {};
 
     // 유저를 검색해줌
     const uresults = await User.findAll({
@@ -381,8 +396,8 @@ router.post("/search", async (req, res, next) => {
       }
     });
 
-    results.user = uresults
-    results.hashtag = hresults
+    results.user = uresults;
+    results.hashtag = hresults;
 
     res.send(results);
   } catch (e) {
@@ -391,19 +406,16 @@ router.post("/search", async (req, res, next) => {
   }
 });
 
-
 //delete post
 router.post("/deletePost", async (req, res, next) => {
   try {
     const { postid } = req.body;
-    const id = await Post.destroy({ where: { id: postid } });            
+    const id = await Post.destroy({ where: { id: postid } });
     res.send(toString(id));
   } catch (e) {
     console.log(e);
     next(e);
   }
 });
-
-
 
 module.exports = router;

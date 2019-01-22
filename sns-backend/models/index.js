@@ -15,6 +15,8 @@ db.User = require('./user')(sequelize, Sequelize)
 db.Post = require('./post')(sequelize, Sequelize)
 db.Hashtag = require('./hashtag')(sequelize, Sequelize)
 db.Comment = require('./comment')(sequelize, Sequelize)
+db.Notify = require('./notify')(sequelize, Sequelize)
+
 
 // ***관계 설정***
 // 얘네는 1:다 관계, 유저는 포스트가 여러개고 포스트는 하나의 유저만 갖고

@@ -15,3 +15,4 @@ module.exports = (sequelize, DataTypes) => (
     collate : 'utf8_general_ci',
   })
 )
+
