@@ -3,41 +3,48 @@ import "./NotifyModal.scss";
 import ReactDOM from "react-dom";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import Spinner from 'lib/Spinner'
 
 const ModalPortal = ({ children }) => {
   const el = document.getElementById("modal");
   return ReactDOM.createPortal(children, el);
 };
 
+
 class EachNotification extends Component {
   state = {
     nickname: null,
     pic: null,
-    postpic: null
+    postpic: null,    
+    style : {
+      color : "black"
+    }
   };
 
-  async componentDidMount() {
-    const { userid, postid } = this.props;
-    const nickname = await axios.post("/post/getNick", { userid });
-    const pic = await axios.post("/post/getUserPic", {
-      userid
-    });
-    const getPostInfo = await axios.post("/post/getSinglePost", {
-      postid
-    });
-
-
+  async componentDidMount() {    
+    const { isChecked, userid, postid } = this.props;    
+    const style = isChecked ? {color : "gray"} : {color : "black"}
+    
+    const [nickname, pic, getPostInfo, test] = await Promise.all([
+      await axios.post("/post/getNick", { userid }),
+      await axios.post("/post/getUserPic", {userid}),
+      await axios.post("/post/getSinglePost", {postid }),
+      await axios.post("/post/togglenotification", {userid : Number(localStorage.getItem("id"))})
+    ]);
+    
     this.setState({
       nickname: nickname.data,
       pic: pic.data,
       postpic: getPostInfo.data.img,
-      postUserId : getPostInfo.data.userId
+      postUserId: getPostInfo.data.userId,
+      style
+
     });
   }
 
   handleClick = () => {
     const { history, postid, handleCloseModal } = this.props;
-    const {postUserId} = this.state
+    const { postUserId } = this.state;
 
     handleCloseModal();
     history.push(`/user/${postUserId}/${postid}`);
@@ -49,18 +56,16 @@ class EachNotification extends Component {
 
     if (!(nickname && pic && postpic))
       return (
-        <div className="each-noti" onClick={this.handleClick}>                    
-          <div className="word">
-            loading...
-          </div>          
+        <div onClick={this.handleClick}>        
+          <Spinner ph={45}/>
         </div>
       );
 
     if (nickname && pic && postpic)
       return (
-        <div className="each-noti" onClick={this.handleClick}>
-          <img src={pic} alt="" className="img" />
-          <div className="word">
+        <div className="each-noti" onClick={this.handleClick} >
+          <img src={pic ? pic : "https://myspace.com/common/images/user.png"} alt="" className="img" />
+          <div className="word" style={this.state.style}>
             <div className="nickname">{nickname}</div>님이{" "}
             {category === "like"
               ? "게시물을 좋아합니다."
@@ -72,36 +77,27 @@ class EachNotification extends Component {
   }
 }
 
+
+
 class NotifyModal extends Component {
-  state = {
-    notifications: []
-  };
-
-  async componentDidMount() {
-    const userid = Number(localStorage.getItem("id"));
-    const myNotifications = await axios.post("/post/notification", { userid });
-
-    this.setState({
-      notifications: myNotifications.data
-    });
-  }
-
-  handleCloseModal = () => {
+   handleCloseModal = () => {
     this.props.handleToggle();
   };
 
   render() {
-    const { notifications } = this.state;
+    const { notifications } = this.props;
 
     const flist = notifications.map(item => (
       <EachNotification
-        userid ={item.notifying}
+        userid={item.notifying}
         postid={item.post}
         category={item.category}
         history={this.props.history}
+        isChecked={item.isChecked}
         handleCloseModal={this.handleCloseModal}
       />
     ));
+    
 
     return (
       <ModalPortal>
@@ -112,7 +108,7 @@ class NotifyModal extends Component {
             {notifications[0] ? (
               <div className="notifications">{flist}</div>
             ) : (
-              <div className="notifications">loading...</div>
+              <Spinner ph={520}/>
             )}
             <div>
               <button onClick={this.handleCloseModal} className="close">

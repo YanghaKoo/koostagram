@@ -436,4 +436,21 @@ router.post("/notification", async (req, res, next) => {
   }
 });
 
+
+// 알림 확인하면 isChecked를 true로 
+router.post("/togglenotification", async (req, res, next) => {
+  try {
+    const {userid} = req.body
+    const notify = await Notify.update({ isChecked : true},{ where : { notified : userid, isChecked : false} })    
+    res.send(notify)
+  
+  
+  } catch (e) {
+    console.log(e);
+    res.send("failure")
+    next(e);
+  }
+});
+
+
 module.exports = router;

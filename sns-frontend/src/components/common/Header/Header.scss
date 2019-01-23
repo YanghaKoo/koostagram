@@ -54,16 +54,25 @@
       justify-content: space-between;
     }
 
-    .button-icon {
-      // cursor: pointer;
 
+    .button-icon {
       display: flex;
       justify-content: center;
       align-items: center;
 
-      
-     
-
+      .dot{
+        width : 10px;
+        height: 10px;
+        background: red;
+        position : absolute;
+        border-radius: 50%; 
+        margin-top :24px;
+        margin-left :20px;
+        @include media("<small"){
+          margin-top :10px;
+          margin-left :10px;
+        }
+      }
       .imgs {
         width: 50px;
         height: 50px;

@@ -25,8 +25,7 @@ class Login extends Component {
 
     const { email, password } = this.state;
     const result = await axios.post("/auth/login", { email, password });
-    console.log(result.data);
-
+    
     if (result.data === "failure") {
       // 시각적 효과를 위함
       setTimeout( () => {
@@ -42,7 +41,6 @@ class Login extends Component {
       localStorage.setItem("id", result.data.id)
       localStorage.setItem("nick", result.data.nick)
       localStorage.setItem("pic", result.data.pic)
-
 
       this.setState({ isLoading: false });
       this.props.history.push("/feed");

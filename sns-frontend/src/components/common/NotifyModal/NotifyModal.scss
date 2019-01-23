@@ -16,6 +16,7 @@
     padding: 1rem;
     width: 700px;
     height: auto;
+    text-align: center;
     @include media("<medium") {
       width: 100%;
       padding: 0;
@@ -72,6 +73,7 @@
     height: 40px;
     display: flex;
     align-items: center;
+    text-align: center;
     
     .nickname {
       color :$oc-blue-6;
