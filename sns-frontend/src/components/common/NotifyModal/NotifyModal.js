@@ -20,7 +20,7 @@ class EachNotification extends Component {
     }
   };
 
-  
+   
 
   async componentDidMount() {
     const { isChecked, userid, postid } = this.props;
