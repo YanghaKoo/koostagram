@@ -19,7 +19,7 @@ class EachNotification extends Component {
       color: "black"
     }
   };
-
+ 
    
 
   async componentDidMount() {
