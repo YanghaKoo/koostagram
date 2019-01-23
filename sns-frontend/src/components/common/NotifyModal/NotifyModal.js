@@ -92,9 +92,9 @@ class NotifyModal extends Component {
         userid={item.notifying}
         postid={item.post}
         category={item.category}
-        history={this.props.history}
-        isChecked={item.isChecked}
+        history={this.props.history}        
         handleCloseModal={this.handleCloseModal}
+        isChecked={item.isChecked}
       />
     ));
     
