@@ -427,8 +427,8 @@ router.post("/notification", async (req, res, next) => {
     let  notify = await Notify.findAll({where : {notified : userid}})
     notify = notify.filter(item => item.notifying !== userid).reverse().slice(0,10)
     res.send(notify)
-  
-  
+
+    
   } catch (e) {
     console.log(e);
     res.send("failure")

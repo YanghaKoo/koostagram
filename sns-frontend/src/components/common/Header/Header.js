@@ -13,18 +13,43 @@ class Header extends Component {
   };
 
   async componentDidMount() {
+    const userid = Number(localStorage.getItem("id"));
+    if(userid){
+
+    
+    setInterval(async () => {
+      const myNotifications = await axios.post("/post/notification", {
+        userid
+      });
+      for (const item of myNotifications.data) {
+        if (!item.isChecked) {
+          this.setState({ hasNewNotification: true });
+          break;
+        }
+      }
+
+      this.setState({
+        notifications: myNotifications.data
+      });
+    }, 10*1000);      // 1분
+  }   
     this.initializer();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(this.state.notifications !== prevState.notifications) this.initializer()
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   try {
+  //     if(prevProps.notifications[0].id === this.props.NotifyModal[0].id){
+  //       this.initializer()
+  //     }
+  //   }catch(e){
+      
+  //   }
+  // }
   
 
   initializer = async () => {
     const userid = Number(localStorage.getItem("id"));
 
-    // 최초에 한번 바로 받아오고
     const myNotifications = await axios.post("/post/notification", { userid });
     for (const item of myNotifications.data) {
       if (!item.isChecked) {
@@ -41,22 +66,7 @@ class Header extends Component {
 
 
     // 그 이후에 setInterval로 일정 시간마다 받아오기, 
-    // 이렇게 안하고 페이지가 바뀔때마다로 할 수 있나?
-    // setInterval(async () => {
-    //   const myNotifications = await axios.post("/post/notification", {
-    //     userid
-    //   });
-    //   for (const item of myNotifications.data) {
-    //     if (!item.isChecked) {
-    //       this.setState({ hasNewNotification: true });
-    //       break;
-    //     }
-    //   }
-
-    //   this.setState({
-    //     notifications: myNotifications.data
-    //   });
-    // }, 60*1000);      // 1분
+ 
   };
 
   
@@ -70,7 +80,7 @@ class Header extends Component {
   handleLink = link => {
     if (localStorage.getItem("id")) this.props.history.push(link);
     else alert("로그인 후 가능합니다.");
-    //this.initializer()
+  
   };
 
   handleToggleNotify = () => {
@@ -82,6 +92,7 @@ class Header extends Component {
       toggle: !this.state.toggle,      
     });
   };
+
 
   render() {
     const { isAble, input, handleChange, handleBlur } = this.props;
@@ -96,6 +107,7 @@ class Header extends Component {
           <NotifyModal
             handleToggle={this.handleToggle}
             notifications={this.state.notifications}
+            initializer={this.initializer}
           />
         ) : null}
         <div className="header">
@@ -145,6 +157,7 @@ class Header extends Component {
                 src="https://trials.ai/wp-content/uploads/2018/09/user.png"
               />
             </div>
+
             {/* notify */}
             <div
               className="button-icon cont"

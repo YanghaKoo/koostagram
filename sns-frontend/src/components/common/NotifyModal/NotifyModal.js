@@ -3,42 +3,44 @@ import "./NotifyModal.scss";
 import ReactDOM from "react-dom";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import Spinner from 'lib/Spinner'
+import Spinner from "lib/Spinner";
 
 const ModalPortal = ({ children }) => {
   const el = document.getElementById("modal");
   return ReactDOM.createPortal(children, el);
 };
 
-
 class EachNotification extends Component {
   state = {
     nickname: null,
     pic: null,
-    postpic: null,    
-    style : {
-      color : "black"
+    postpic: null,
+    style: {
+      color: "black"
     }
   };
 
-  async componentDidMount() {    
-    const { isChecked, userid, postid } = this.props;    
-    const style = isChecked ? {color : "gray"} : {color : "black"}
-    
-    const [nickname, pic, getPostInfo, test] = await Promise.all([
+  
+
+  async componentDidMount() {
+    const { isChecked, userid, postid } = this.props;
+    const style = isChecked ? { color: "gray" } : { color: "black" };
+
+    const [nickname, pic, getPostInfo] = await Promise.all([
       await axios.post("/post/getNick", { userid }),
-      await axios.post("/post/getUserPic", {userid}),
-      await axios.post("/post/getSinglePost", {postid }),
-      await axios.post("/post/togglenotification", {userid : Number(localStorage.getItem("id"))})
+      await axios.post("/post/getUserPic", { userid }),
+      await axios.post("/post/getSinglePost", { postid }),
+      await axios.post("/post/togglenotification", {
+        userid: Number(localStorage.getItem("id"))
+      })
     ]);
-    
+  
     this.setState({
       nickname: nickname.data,
       pic: pic.data,
       postpic: getPostInfo.data.img,
       postUserId: getPostInfo.data.userId,
       style
-
     });
   }
 
@@ -54,17 +56,14 @@ class EachNotification extends Component {
     const { nickname, pic, postpic } = this.state;
     const { category } = this.props;
 
-    if (!(nickname && pic && postpic))
+    if (nickname && typeof pic === 'string' && postpic)
       return (
-        <div onClick={this.handleClick}>        
-          <Spinner ph={45}/>
-        </div>
-      );
-
-    if (nickname && pic && postpic)
-      return (
-        <div className="each-noti" onClick={this.handleClick} >
-          <img src={pic ? pic : "https://myspace.com/common/images/user.png"} alt="" className="img" />
+        <div className="each-noti" onClick={this.handleClick}>
+          <img
+            src={pic ? pic : "https://myspace.com/common/images/user.png"}
+            alt=""
+            className="img"
+          />
           <div className="word" style={this.state.style}>
             <div className="nickname">{nickname}</div>님이{" "}
             {category === "like"
@@ -74,13 +73,22 @@ class EachNotification extends Component {
           <img src={postpic} alt="" className="postpic" />
         </div>
       );
+    else
+      return (
+        <div onClick={this.handleClick}>
+          <Spinner ph={45} />
+        </div>
+      );
   }
 }
 
-
-
 class NotifyModal extends Component {
-   handleCloseModal = () => {
+  
+  componentWillReceiveProps(nextProps){
+
+  }
+  
+  handleCloseModal = () => {
     this.props.handleToggle();
   };
 
@@ -92,12 +100,11 @@ class NotifyModal extends Component {
         userid={item.notifying}
         postid={item.post}
         category={item.category}
-        history={this.props.history}        
+        history={this.props.history}
         handleCloseModal={this.handleCloseModal}
         isChecked={item.isChecked}
       />
     ));
-    
 
     return (
       <ModalPortal>
@@ -108,7 +115,7 @@ class NotifyModal extends Component {
             {notifications[0] ? (
               <div className="notifications">{flist}</div>
             ) : (
-              <Spinner ph={520}/>
+              <Spinner ph={520} />
             )}
             <div>
               <button onClick={this.handleCloseModal} className="close">
