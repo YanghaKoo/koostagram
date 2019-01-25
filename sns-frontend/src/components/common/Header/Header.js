@@ -8,7 +8,7 @@ import axios from "axios";
 class Header extends Component {
   state = {
     toggle: false,
-    notifications: [],
+    notifications: "loading",
     hasNewNotification: false
   };
 
