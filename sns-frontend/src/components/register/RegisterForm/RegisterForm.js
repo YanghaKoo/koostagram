@@ -118,7 +118,7 @@ class RegisterForm extends Component {
     const {email, nick, password, e_validity, n_validity, p_validity} = this.state
     if(e_validity && n_validity && p_validity)  {
       const register = await axios.post("/auth/join", { email, nick, password})  
-      register.data === "success" ? this.props.history.push('/') : alert("작은 오류가 발생했습니다. 회원가입은 정상적으로 되어있을 수 있으니 로그인을 시도해 보세요!"); this.props.history.push('/')
+      register.data === "success" ? this.props.history.push('/') : alert("가입을 환영합니다!"); this.props.history.push('/')
     }     
     else alert("조건에 맞게 요소들을 작성해주세요.")
     

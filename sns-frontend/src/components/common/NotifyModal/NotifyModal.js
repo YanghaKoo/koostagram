@@ -19,8 +19,7 @@ class EachNotification extends Component {
       color: "black"
     }
   };
-
-  
+ 
 
   async componentDidMount() {
     const { isChecked, userid, postid } = this.props;
@@ -112,10 +111,11 @@ class NotifyModal extends Component {
           <div className="content">
             <h3>Notifications</h3>
 
+            {notifications === "loading" && <Spinner ph={520} /> }
             {notifications[0] ? (
               <div className="notifications">{flist}</div>
             ) : (
-              <Spinner ph={520} />
+              <div className="notifications" style={{fontSize : "1.5rem", fontWeight : "500"}}>알림이 없습니다.<br/>새 게시글을 올려보세요.</div>
             )}
             <div>
               <button onClick={this.handleCloseModal} className="close">
