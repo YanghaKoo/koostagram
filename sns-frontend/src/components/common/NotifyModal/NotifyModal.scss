@@ -9,7 +9,9 @@
   align-items: center;
   text-align: center;
   justify-content: center;
-  
+  @include media("<medium"){
+
+  }
   
   .content {
     background: white;
@@ -33,8 +35,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      @include media("<medium") {
-      }
+
     }
     .close {
       outline: none;

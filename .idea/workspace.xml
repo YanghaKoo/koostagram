@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d9e2025-9205-47bc-b180-e61e9378019c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/sns-frontend/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/sns-frontend/src/components/App.js" afterDir="false" />
-    </list>
+    <list default="true" id="3d9e2025-9205-47bc-b180-e61e9378019c" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -18,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sns-frontend/src/components/main/Login/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-621">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="-2079">
+              <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -51,8 +49,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/sns-frontend/package.json" />
-        <option value="$PROJECT_DIR$/sns-frontend/src/components/main/Login/Login.js" />
         <option value="$PROJECT_DIR$/asd.js" />
+        <option value="$PROJECT_DIR$/sns-frontend/src/components/main/Login/Login.js" />
       </list>
     </option>
   </component>
@@ -149,16 +147,18 @@
       <workItem from="1545655456040" duration="83000" />
       <workItem from="1545655607999" duration="230000" />
       <workItem from="1547203750725" duration="11000" />
+      <workItem from="1548415360593" duration="74000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2650000" />
+    <option name="totallyTimeSpent" value="2724000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17250496" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17228661" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -192,8 +192,8 @@
     <entry file="file://$PROJECT_DIR$/asd.js" />
     <entry file="file://$PROJECT_DIR$/sns-frontend/src/components/main/Login/Login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-621">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="-2079">
+          <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

@@ -6,6 +6,7 @@ const session = require("express-session");
 const cors = require("cors");
 const passport = require("passport");
 const history = require('connect-history-api-fallback');
+const https = require('https')
 // const helmet = require('helmet')
 // const hpp = require('hpp')
 require("dotenv").config(); // .env를 쓸 수 있게
@@ -22,6 +23,27 @@ const app = express();
 
 sequelize.sync();
 // sequelize.sync({force : true})
+
+
+// https 적용
+const lex = require('greenlock-express').create({
+  version: 'v02', 
+  configDir: '/etc/letsencrypt', 
+  server: 'staging',
+  approveDomains: (opts, certs, cb) => {
+    if (certs) {
+      opts.domains = ['koostagram.xyz', 'www.koostagram.xyz'];
+    } else {
+      opts.email = 'yangha93@naver.com';
+      opts.agreeTos = true;
+    }
+    cb(null, { options: opts, certs });
+  },
+  renewWithin: 81 * 24 * 60 * 60 * 1000,
+  renewBy: 80 * 24 * 60 * 60 * 1000,
+});
+
+https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
 
 
 passportConfig(passport);
