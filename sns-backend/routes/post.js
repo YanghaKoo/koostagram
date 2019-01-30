@@ -141,7 +141,6 @@ router.post("/unlike", async (req, res, next) => {
   try {
     const post = await Post.find({ where: { id: postid } });
     await post.removeLiker(userid);
-
   } catch (e) {
     console.log(e);
     next(e);
@@ -314,19 +313,15 @@ router.post("/uploadComment", async (req, res, next) => {
     });
 
     const post = await Post.find({ where: { id: postid } });
-    const user = await User.find({where : { nick : usernick}})
-
-    console.log('============================')
-    console.log(user.dataValues.id)
-
+    const user = await User.find({ where: { nick: usernick } });
 
     // 알림
-    await Notify.create({      
-        category: "comment",
-        notifying: user.dataValues.id,
-        notified: post.dataValues.userId,
-        post: postid
-    })
+    await Notify.create({
+      category: "comment",
+      notifying: user.dataValues.id,
+      notified: post.dataValues.userId,
+      post: postid
+    });
 
     // 해쉬태그 db에 추가
     let hashtags = content.match(/#[^(\s|#)]*/g);
@@ -411,46 +406,49 @@ router.post("/search", async (req, res, next) => {
 router.post("/deletePost", async (req, res, next) => {
   try {
     const { postid } = req.body;
+
     const id = await Post.destroy({ where: { id: postid } });
+    const notify = await Notify.destroy({ where: { post: postid } });
+
     res.send(toString(id));
-  } catch (e) {
-    console.log(e);
-    next(e);
-  }
-});
-
-
-// get my notification 
-router.post("/notification", async (req, res, next) => {
-  try {
-    const {userid} = req.body
-    let  notify = await Notify.findAll({where : {notified : userid}})
-    notify = notify.filter(item => item.notifying !== userid).reverse().slice(0,10)
-    res.send(notify)
-
     
   } catch (e) {
     console.log(e);
-    res.send("failure")
     next(e);
   }
 });
 
-
-// 알림 확인하면 isChecked를 true로 
-router.post("/togglenotification", async (req, res, next) => {
+// get my notification
+router.post("/notification", async (req, res, next) => {
   try {
-    const {userid} = req.body
-    const notify = await Notify.update({ isChecked : true},{ where : { notified : userid, isChecked : false} })    
-    res.send(notify)
-  
-  
+    const { userid } = req.body;
+    let notify = await Notify.findAll({ where: { notified: userid } });
+    notify = notify
+      .filter(item => item.notifying !== userid)
+      .reverse()
+      .slice(0, 10);
+    res.send(notify);
   } catch (e) {
     console.log(e);
-    res.send("failure")
+    res.send("failure");
     next(e);
   }
 });
 
+// 알림 확인하면 isChecked를 true로
+router.post("/togglenotification", async (req, res, next) => {
+  try {
+    const { userid } = req.body;
+    const notify = await Notify.update(
+      { isChecked: true },
+      { where: { notified: userid, isChecked: false } }
+    );
+    res.send(notify);
+  } catch (e) {
+    console.log(e);
+    res.send("failure");
+    next(e);
+  }
+});
 
 module.exports = router;

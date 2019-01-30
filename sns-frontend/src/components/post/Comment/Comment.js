@@ -35,7 +35,6 @@ class Comment extends Component {
   initializer = async () => {
     this.setState({ isloading: true });
     const { postid } = this.props.match.params;
-    const { user } = this.props;
 
     const likeUsers = await axios.post("/post/getLikeCount", { postid });
     const commentsBefore = await axios.post("/post/getComments", { postid });
@@ -77,7 +76,7 @@ class Comment extends Component {
   // 좋아요 버튼이 눌릴 때 좋아요 및 좋아요 취소
   handleLikeClick = () => {
     const { postid } = this.props.match.params;
-    const { user } = this.props;
+
     if (!localStorage.getItem("id")) {
       alert("Login 후에 시도해 주세요.");
       return;
@@ -169,7 +168,7 @@ class Comment extends Component {
 
   render() {
     const { previewCount } = this.props;
-    const { commentsBefore, modal, isloading, comment } = this.state;
+    const { commentsBefore, modal, isloading } = this.state;
 
     if (isloading) {
       return <Spinner width="50px" height="50px" pw="100%" ph="150%" />;

@@ -34,7 +34,7 @@ class Profile extends PureComponent {
   initializer = async () => {
     this.setState({ isLoading: true }); // 읽어오기 시작!
     const { userid } = this.props.match.params;
-    const { history, uid, user } = this.props;
+    const { history, uid } = this.props;
 
     // 버튼라벨 초기화
     if (this.state.buttonLabel === "unfollow") {

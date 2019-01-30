@@ -33,12 +33,20 @@ class EachNotification extends Component {
         userid: Number(localStorage.getItem("id"))
       })
     ]);
+
+    
+
+
+
+    // 0131 이렇게 뺐음
+    const postpic = getPostInfo.data ? getPostInfo.data.img : null;
+    const postUserId = getPostInfo.data ? getPostInfo.data.userId : null;
   
     this.setState({
       nickname: nickname.data,
       pic: pic.data,
-      postpic: getPostInfo.data.img,
-      postUserId: getPostInfo.data.userId,
+      postpic: postpic,
+      postUserId: postUserId,
       style
     });
   }
