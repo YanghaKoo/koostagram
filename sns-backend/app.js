@@ -47,7 +47,7 @@ const lex = require('greenlock-express').create({
 });
 
 https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
-http.createServer(lex.middleware(require('redirect-https')())).listen(process.env.PORT || 80);
+//http.createServer(lex.middleware(require('redirect-https')())).listen(process.env.PORT || 80);
 
 
 passportConfig(passport);
