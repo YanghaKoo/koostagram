@@ -7,6 +7,8 @@ const cors = require("cors");
 const passport = require("passport");
 const history = require('connect-history-api-fallback');
 const https = require('https')
+const http = require('http')
+
 // const helmet = require('helmet')
 // const hpp = require('hpp')
 require("dotenv").config(); // .env를 쓸 수 있게
@@ -44,6 +46,7 @@ const lex = require('greenlock-express').create({
 });
 
 https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
+http.createServer(lex.middleware(require('redirect-https')())).listen(process.env.PORT || 80);
 
 
 passportConfig(passport);
