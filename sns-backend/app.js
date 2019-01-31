@@ -8,6 +8,7 @@ const passport = require("passport");
 const history = require('connect-history-api-fallback');
 const https = require('https')
 const http = require('http')
+const httpsRedirect = require('express-https-redirect');
 
 // const helmet = require('helmet')
 // const hpp = require('hpp')
@@ -62,6 +63,7 @@ app.use(history());
 // 배포
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
+  app.use('/',httpsRedirect())
   // app.use(helmet())
   // app.use(hpp())
 } else {
@@ -81,8 +83,8 @@ const sessionOption = {
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET, // 쿠키 비번과 같게
   cookie: {
-    httpOnly: false, // 이거 원래 true였음 내가 바꿈 0201
-    secure: false
+    httpOnly: true, 
+    secure: true // 이거 원래 false였음 내가 바꿈 0201
   }
 };
 
