@@ -81,7 +81,7 @@ const sessionOption = {
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET, // 쿠키 비번과 같게
   cookie: {
-    httpOnly: true,
+    httpOnly: false, // 이거 원래 true였음 내가 바꿈 0201
     secure: false
   }
 };
