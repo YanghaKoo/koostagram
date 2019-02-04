@@ -27,4 +27,4 @@
   1) https 인증서 적용 및 httpsRedirect 적용
 
 2.04 : 
-  1) 언급(mention) 기능 추가 ex- @yangha
+  1) 언급(mention) 기능 추가 ex- @yangha 
