@@ -302,7 +302,7 @@ router.post("/getHashTagPost", async (req, res, next) => {
   }
 });
 
-// 댓글 등록
+// 댓글 등록 + 언급, 해쉬태그등록 등 포함
 router.post("/uploadComment", async (req, res, next) => {
   try {
     const { usernick, postid, content } = req.body;
@@ -315,6 +315,21 @@ router.post("/uploadComment", async (req, res, next) => {
     const post = await Post.find({ where: { id: postid } });
     const user = await User.find({ where: { nick: usernick } });
 
+
+    const mentions = req.body.content.match(/@[^(\s|#)]*/g);
+    mentions.map(async (mention) => {
+      mention = mention.slice(1)
+      const result = await User.findOne({where : { nick : mention}})      
+      if(result){              
+        await Notify.create({
+          category: "mention",
+          notifying: user.dataValues.id,
+          notified: result.dataValues.id,
+          post: postid
+        });                                
+      }
+    })
+    
     // 알림
     await Notify.create({
       category: "comment",
@@ -338,6 +353,8 @@ router.post("/uploadComment", async (req, res, next) => {
       );
       await post.addHashtags(result.map(r => r[0]));
     }
+
+    
 
     res.send("success");
   } catch (e) {
@@ -450,5 +467,9 @@ router.post("/togglenotification", async (req, res, next) => {
     next(e);
   }
 });
+
+router.post("/mentionNotification", async (req, res, next) =>{
+
+})
 
 module.exports = router;

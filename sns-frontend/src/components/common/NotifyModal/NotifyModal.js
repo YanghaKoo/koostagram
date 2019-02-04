@@ -62,8 +62,26 @@ class EachNotification extends Component {
   render() {
     const { nickname, pic, postpic } = this.state;
     const { category } = this.props;
+    let content = ''
+    switch (category) {
+      case "like":
+        content = "게시물을 좋아합니다."
+        break;
+      case "comment" :
+        content = "게시물에 댓글을 남겼습니다."
+        break;
+      case "follow" :
+        content = "당신을 팔로우 했습니다."
+        break;
+      case "mention" :
+        content = "당신을 언급했습니다."
+        break;
+      default :
+        break;
+    }
 
-    if (nickname && typeof pic === 'string' && postpic)
+
+    if (nickname && typeof pic === 'string')
       return (
         <div className="each-noti" onClick={this.handleClick}>
           <img
@@ -73,11 +91,14 @@ class EachNotification extends Component {
           />
           <div className="word" style={this.state.style}>
             <div className="nickname">{nickname}</div>님이{" "}
-            {category === "like"
-              ? "게시물을 좋아합니다."
-              : "게시물에 댓글을 남겼습니다."}
+              {content}
           </div>
-          <img src={postpic} alt="" className="postpic" />
+          {       
+            postpic 
+              ? <img src={postpic} alt="" className="postpic" />
+              : <div></div>
+          }
+
         </div>
       );
     else
@@ -90,10 +111,6 @@ class EachNotification extends Component {
 }
 
 class NotifyModal extends Component {
-  
-  componentWillReceiveProps(nextProps){
-
-  }
   
   handleCloseModal = () => {
     this.props.handleToggle();

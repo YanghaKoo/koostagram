@@ -73,6 +73,7 @@ class Comment extends Component {
     );
   };
 
+
   // 좋아요 버튼이 눌릴 때 좋아요 및 좋아요 취소
   handleLikeClick = () => {
     const { postid } = this.props.match.params;
@@ -111,7 +112,7 @@ class Comment extends Component {
     try{
     re  = comment.match(/#[^\s]*/g).filter(item => item.length >= 14)
     }catch(e){
-      console.log(e)
+      // console.log(e)
       re =[]
     }
     
@@ -182,6 +183,7 @@ class Comment extends Component {
             content={item.content}
             usernick={item.usernick}
             key={item.id}
+            match={this.props.match}
           />
         );
       });
@@ -221,6 +223,7 @@ class Comment extends Component {
               onKeyPress={this.handleKeyPress}
               className="comment-input"
               placeholder="Your Comment"
+              spellCheck = {false}
             />
             <input
               type="button"

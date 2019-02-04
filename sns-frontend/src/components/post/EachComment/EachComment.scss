@@ -8,7 +8,12 @@
     font-weight: 600;
     cursor: pointer;
   }
-  .word{
-    
+  .mention{
+    color : $oc-indigo-4;
+    cursor: pointer;
+    font-weight: 600;
+    &:hover {
+      color : $oc-indigo-6;
+    } 
   }
 }
