@@ -26,7 +26,7 @@ class Mention extends Component {
 
   handleClick = () => {
     const { history } = this.props;
-    history.push(`/user/${this.state.id}`);
+    if(this.state.isExist && this.state.id) history.push(`/user/${this.state.id}`);
   };
 
   render() {

@@ -315,21 +315,22 @@ router.post("/uploadComment", async (req, res, next) => {
     const post = await Post.find({ where: { id: postid } });
     const user = await User.find({ where: { nick: usernick } });
 
-
     const mentions = req.body.content.match(/@[^(\s|#)]*/g);
-    mentions.map(async (mention) => {
-      mention = mention.slice(1)
-      const result = await User.findOne({where : { nick : mention}})      
-      if(result){              
-        await Notify.create({
-          category: "mention",
-          notifying: user.dataValues.id,
-          notified: result.dataValues.id,
-          post: postid
-        });                                
-      }
-    })
-    
+     if (mentions) {
+      mentions.map(async mention => {
+        mention = mention.slice(1);
+        const result = await User.findOne({ where: { nick: mention } });
+        if (result) {
+          await Notify.create({
+            category: "mention",
+            notifying: user.dataValues.id,
+            notified: result.dataValues.id,
+            post: postid
+          });
+        }
+      });
+    }
+
     // 알림
     await Notify.create({
       category: "comment",
@@ -353,8 +354,6 @@ router.post("/uploadComment", async (req, res, next) => {
       );
       await post.addHashtags(result.map(r => r[0]));
     }
-
-    
 
     res.send("success");
   } catch (e) {
@@ -428,7 +427,6 @@ router.post("/deletePost", async (req, res, next) => {
     const notify = await Notify.destroy({ where: { post: postid } });
 
     res.send(toString(id));
-    
   } catch (e) {
     console.log(e);
     next(e);
@@ -468,8 +466,6 @@ router.post("/togglenotification", async (req, res, next) => {
   }
 });
 
-router.post("/mentionNotification", async (req, res, next) =>{
-
-})
+router.post("/mentionNotification", async (req, res, next) => {});
 
 module.exports = router;
