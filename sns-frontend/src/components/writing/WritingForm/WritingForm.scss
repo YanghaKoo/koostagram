@@ -1,3 +1,6 @@
+
+
+
 .writing-form {
   background: white;
   height: auto;
@@ -10,6 +13,24 @@
     margin-top : 0;
     width : 100%;
   }
+
+  .preview {
+    font-size : 1.5rem;
+    width : 80%;
+
+    background: $oc-gray-6;
+    margin-bottom: 20px;
+    
+    img{
+      @include material-shadow(3);
+      width : 100%;
+      height: auto;
+      object-fit: contain;
+      display :flex;
+      align-items: center;
+    }
+  }
+
   .title {
     font-size: 2rem;
     margin-top: 30px;
@@ -47,7 +68,7 @@
     color: #fff;
     min-width: 250px;
     width : 80%;
-    height: 100px;
+    height: 50px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -58,6 +79,7 @@
     }
     .file-upload {
       display: none;
+      
     }
   }
 
