@@ -30,7 +30,7 @@ sequelize.sync();
 const lex = require('greenlock-express').create({
   version: 'v02', 
   configDir: '/etc/letsencrypt', 
-  server: 'staging',
+  server: 'production', // 'staging'
   approveDomains: (opts, certs, cb) => {
     if (certs) {
       opts.domains = ['koostagram.xyz', 'www.koostagram.xyz'];
