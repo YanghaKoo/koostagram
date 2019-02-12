@@ -45,8 +45,9 @@ class HeaderContainer extends Component {
           input={input}
           handleChange={this.handleChange}
           handleBlur={this.handleBlur}
+          id={Number(localStorage.getItem("id"))}
         />
-        <SearchList data={this.state.results} input={input} />
+        <SearchList data={this.state.results} input={input}/>
       </div>
     );
   }

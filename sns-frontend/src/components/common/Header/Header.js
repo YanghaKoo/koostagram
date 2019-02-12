@@ -9,15 +9,26 @@ class Header extends Component {
   state = {
     toggle: false,
     notifications: "loading",
-    hasNewNotification: false
+    hasNewNotification: false,
+  
   };
 
   async componentDidMount() {
     const userid = Number(localStorage.getItem("id"));
-    if(userid){
+    if (userid) {
+      this.getNotifications()
+    } 
+    this.initializer();
+  }
 
-    
+  // 비로그인 상태에서 로그인 했을때 알림 가져올 수 있게
+  componentWillReceiveProps(nextProps){
+    if(this.props.id !== nextProps.id) this.getNotifications()
+  }
+
+  getNotifications = () =>{
     setInterval(async () => {
+      const userid = Number(localStorage.getItem("id"));
       const myNotifications = await axios.post("/post/notification", {
         userid
       });
@@ -31,9 +42,7 @@ class Header extends Component {
       this.setState({
         notifications: myNotifications.data
       });
-    }, 10*1000);      // 1분
-  }   
-    this.initializer();
+    }, 5 * 1000); // 5초
   }
 
   // componentDidUpdate(prevProps, prevState) {
@@ -42,14 +51,13 @@ class Header extends Component {
   //       this.initializer()
   //     }
   //   }catch(e){
-      
+
   //   }
   // }
-  
 
   initializer = async () => {
+    
     const userid = Number(localStorage.getItem("id"));
-
     const myNotifications = await axios.post("/post/notification", { userid });
     for (const item of myNotifications.data) {
       if (!item.isChecked) {
@@ -62,25 +70,19 @@ class Header extends Component {
       notifications: myNotifications.data
     });
 
-
-
-
-    // 그 이후에 setInterval로 일정 시간마다 받아오기, 
- 
+    // 그 이후에 setInterval로 일정 시간마다 받아오기,
   };
 
-  
   handleToggle = () => {
     this.setState({
       toggle: !this.state.toggle,
-      hasNewNotification : false  
+      hasNewNotification: false
     });
   };
 
   handleLink = link => {
     if (localStorage.getItem("id")) this.props.history.push(link);
     else alert("로그인 후 가능합니다.");
-  
   };
 
   handleToggleNotify = () => {
@@ -89,14 +91,17 @@ class Header extends Component {
       return;
     }
     this.setState({
-      toggle: !this.state.toggle,      
+      toggle: !this.state.toggle
     });
   };
-
 
   render() {
     const { isAble, input, handleChange, handleBlur } = this.props;
     const { toggle, hasNewNotification } = this.state;
+
+
+  
+
 
     // isAble로 클릭 가능한지 정하기
     let cursorStyle = isAble ? { cursor: "pointer" } : null;

@@ -10,6 +10,8 @@ const ModalPortal = ({ children }) => {
   return ReactDOM.createPortal(children, el);
 };
 
+
+
 class EachNotification extends Component {
   state = {
     nickname: null,
@@ -20,7 +22,6 @@ class EachNotification extends Component {
     }
   };
  
-
   async componentDidMount() {
     const { isChecked, userid, postid } = this.props;
     const style = isChecked ? { color: "gray" } : { color: "black" };
@@ -112,6 +113,11 @@ class EachNotification extends Component {
 
 class NotifyModal extends Component {
   
+  componentDidMount() {
+    this.props.initializer()
+  }
+  
+
   handleCloseModal = () => {
     this.props.handleToggle();
   };

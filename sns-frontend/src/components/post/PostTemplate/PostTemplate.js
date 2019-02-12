@@ -5,13 +5,15 @@ import { withRouter } from "react-router-dom";
 import CommentContainer from "../../../containers/user/CommentContainer";
 import Hashtag from "../Hashtag/Hashtag";
 import Spinner from "../../../lib/Spinner";
+import Mention from "../Mention/Mention";
 
 
 class PostTemplate extends Component {
   state = {
     img: null,
     content: null,
-    nick: null
+    nick: null,
+    createdAt : null
   };
 
 
@@ -30,14 +32,14 @@ class PostTemplate extends Component {
     // 게시글 가져오기 실패는 빈 배열이라도 리턴해 주니까 catch가 아닌 이런 방식으로 해야함
     const post = await axios.post("/post/getSinglePost", { postid });
     if (!post.data) {
-      alert("Wrong Request(해당 게시글이 존재하지 않습니다-100.)");
+      alert("해당 게시글이 존재하지 않습니다.");
       this.props.history.push("/");
       return;
     }
 
     // nick은 가져오기 실패시 catch로 디버깅
     const user = await axios.post("/post/getNick", { userid }).catch(e => {
-      alert("Wrong Request(해당 유저가 존재하지 않습니다.)");
+      alert("해당 유저가 존재하지 않습니다.");
       this.props.history.push("/");
       return;
     });
@@ -46,7 +48,8 @@ class PostTemplate extends Component {
     this.setState({
       img: post.data.img,
       content: post.data.content,
-      nick: user.data
+      nick: user.data,
+      createdAt : post.data.createdAt
     });
   }
 
@@ -62,10 +65,17 @@ class PostTemplate extends Component {
     }
   };
 
+
+
+  
+
   render() {
-    const { img, content } = this.state;
+    const { img, content, createdAt } = this.state;
     const { userid } = this.props.match.params;
     const { history } = this.props;
+
+
+
 
     // 본문의 hashtag부분을 해당 해쉬태그 검색과 연결시키는 부분, string형태의 본문을 재구성하여 해쉬태그부분을 차별화
     let contentWithHashtag;
@@ -77,6 +87,12 @@ class PostTemplate extends Component {
           return (
             <div>
               <Hashtag hashtag={item} history={this.props.history} />              
+            </div>
+          );
+        }else if (item[0] === "@" && item.length > 1) {
+          return (
+            <div>
+              <Mention mention={item} history={this.props.history} match={this.props.match}/>              
             </div>
           );
         }
@@ -121,7 +137,7 @@ class PostTemplate extends Component {
             <div className="test">{contentWithHashtag}</div>
             <div>{this.hashtags}</div>
           </div>
-          <CommentContainer previewCount={5} token1={this.props.token1} token2={this.props.token2}/>
+          <CommentContainer previewCount={5} token1={this.props.token1} token2={this.props.token2} createdAt={createdAt}/>
         </div>
       </div>
     );

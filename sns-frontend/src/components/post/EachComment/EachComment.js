@@ -11,10 +11,6 @@ class EachComment extends Component {
     tk: true
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // if(this.props !== nextProps) return false
-  }
-
   async componentDidMount() {
     const link = await axios.post("/post/getIdByNick", {
       nick: this.props.usernick

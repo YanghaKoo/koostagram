@@ -30,6 +30,26 @@ router.post("/", upload.single("img"), async (req, res, next) => {
       // userId: req.user["id"]
     });
 
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    console.log(post.dataValues.id)
+  
+    const mentions = req.body.text.match(/@[^(\s|#)]*/g);
+     if (mentions) {
+      mentions.map(async mention => {
+        mention = mention.slice(1);
+        const result = await User.findOne({ where: { nick: mention } });
+        if (result) {
+          await Notify.create({
+            category: "mention",
+            notifying: req.body.id,
+            notified: result.dataValues.id,
+            post: post.dataValues.id
+          });
+        }
+      });
+    }
+
+
     // 해쉬태그 db에 추가
     // const hashtags = req.body.text.match(/#[^\s]*/g);
     const hashtags = req.body.text.match(/#[^(\s|#)]*/g);
@@ -438,6 +458,7 @@ router.post("/notification", async (req, res, next) => {
   try {
     const { userid } = req.body;
     let notify = await Notify.findAll({ where: { notified: userid } });
+
     notify = notify
       .filter(item => item.notifying !== userid)
       .reverse()

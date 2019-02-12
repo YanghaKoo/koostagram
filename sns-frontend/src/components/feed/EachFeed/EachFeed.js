@@ -51,7 +51,7 @@ class EachFeed extends Component {
     });
 
     if (localStorage.getItem('id')) {
-      likeCounts.data.map(item => {
+      likeCounts.data.forEach(item => {
         if (item.id === Number(localStorage.getItem('id'))) {
           this.setState({
             like: likeImage
@@ -136,6 +136,7 @@ class EachFeed extends Component {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic, like, commentsCount } = this.state;
 
+    
     // 게시글 작성 시간과 현재 시간의 날짜를 구해옴
     const writtenDate = date.substr(0, 10);
     const nowDate = new Date().toISOString().substr(0, 10);

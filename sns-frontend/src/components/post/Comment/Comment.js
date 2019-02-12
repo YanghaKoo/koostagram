@@ -29,7 +29,11 @@ class Comment extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if( (prevProps.token1 !== this.props.token1)  || (prevProps.token2 !== this.props.token2) ) this.initializer()
+    if (
+      prevProps.token1 !== this.props.token1 ||
+      prevProps.token2 !== this.props.token2
+    )
+      this.initializer();
   }
 
   initializer = async () => {
@@ -45,9 +49,9 @@ class Comment extends Component {
       likers: likeUsers.data
     });
 
-    if (localStorage.getItem('id')) {
+    if (localStorage.getItem("id")) {
       likeUsers.data.map(item => {
-        if (item.id === Number(localStorage.getItem('id'))) {
+        if (item.id === Number(localStorage.getItem("id"))) {
           this.setState({
             like: like
           });
@@ -73,7 +77,6 @@ class Comment extends Component {
     );
   };
 
-
   // 좋아요 버튼이 눌릴 때 좋아요 및 좋아요 취소
   handleLikeClick = () => {
     const { postid } = this.props.match.params;
@@ -88,13 +91,19 @@ class Comment extends Component {
         like: like,
         likeCount: this.state.likeCount + 1
       });
-      axios.post("/post/like", { userid: Number(localStorage.getItem("id")), postid });
+      axios.post("/post/like", {
+        userid: Number(localStorage.getItem("id")),
+        postid
+      });
     } else {
       this.setState({
         like: unlike,
         likeCount: this.state.likeCount - 1
       });
-      axios.post("/post/unlike", { userid: Number(localStorage.getItem("id")), postid });
+      axios.post("/post/unlike", {
+        userid: Number(localStorage.getItem("id")),
+        postid
+      });
     }
   };
 
@@ -107,16 +116,16 @@ class Comment extends Component {
   handleSubmit = async e => {
     const { postid } = this.props.match.params;
     const { comment } = this.state;
-    
-    let re = []
-    try{
-    re  = comment.match(/#[^\s]*/g).filter(item => item.length >= 14)
-    }catch(e){
+
+    let re = [];
+    try {
+      re = comment.match(/#[^\s]*/g).filter(item => item.length >= 14);
+    } catch (e) {
       // console.log(e)
-      re =[]
+      re = [];
     }
-    
-    if (!localStorage.getItem('id')) {
+
+    if (!localStorage.getItem("id")) {
       alert("먼저 로그인해 주세요.");
       return;
     }
@@ -124,15 +133,14 @@ class Comment extends Component {
       alert("댓글은 50자 이내로 입력해 주세요.");
       return;
     }
-    if(comment.match(/#.*\S#/g)){
-      alert("해쉬태그는 연결해서 등록할수 없어요!")
-      return
-    }else if(re[0]){
-      alert("14자가 넘는 해쉬태그가 존재합니다.")
-      return
+    if (comment.match(/#.*\S#/g)) {
+      alert("해쉬태그는 연결해서 등록할수 없어요!");
+      return;
+    } else if (re[0]) {
+      alert("14자가 넘는 해쉬태그가 존재합니다.");
+      return;
     }
 
-  
     if (!comment) {
       alert("내용을 입력해주세요.");
       return;
@@ -141,7 +149,7 @@ class Comment extends Component {
     await axios.post("/post/uploadComment", {
       content: comment,
       postid,
-      usernick: localStorage.getItem('nick')
+      usernick: localStorage.getItem("nick")
     });
 
     this.setState({
@@ -167,12 +175,39 @@ class Comment extends Component {
     });
   };
 
+  timeConversion = millisec => {
+    const seconds = (millisec / 1000).toFixed(0);
+    const minutes = (millisec / (1000 * 60)).toFixed(0);
+    const hours = (millisec / (1000 * 60 * 60)).toFixed(0);
+
+    if (seconds < 60) {
+      return seconds + " sec ago";
+    } else if (minutes < 60) {
+      return minutes + " min ago";
+    } else if (hours < 24) {
+      return hours + " hrs ago";
+    }
+  };
+
   render() {
-    const { previewCount } = this.props;
+    const { previewCount, createdAt } = this.props;
     const { commentsBefore, modal, isloading } = this.state;
 
     if (isloading) {
       return <Spinner width="50px" height="50px" pw="100%" ph="150%" />;
+    }
+
+    let postTime = null;
+    if (createdAt) {
+      const writtenDate = createdAt.substr(0, 10);
+      const nowDate = new Date().toISOString().substr(0, 10);
+
+      // n시간 전
+      if (writtenDate === nowDate) {
+        postTime = this.timeConversion(new Date() - Date.parse(createdAt));
+      } else {
+        postTime = writtenDate;
+      }
     }
 
     let list =
@@ -199,38 +234,53 @@ class Comment extends Component {
           list={this.state.likers}
         />
         <div>
-          <img
-            style={{ cursor: "pointer" }}
-            src={this.state.like}
-            width={30}
-            height={30}
-            alt=""
-            onClick={this.handleLikeClick}
-          />
-          <span className="show-likers" onClick={this.showLikers}>
-            &nbsp;{this.state.likeCount} likes
-          </span>
+          <div className="like-wrap">
+            <div>
+              <img
+                style={{ cursor: "pointer" }}
+                src={this.state.like}
+                width={30}
+                height={30}
+                alt=""
+                onClick={this.handleLikeClick}
+              />
+              <span className="show-likers" onClick={this.showLikers}>
+                &nbsp;{this.state.likeCount} likes
+              </span>
+            </div>
+            <div className="sk-requirement">
+              <img
+                src="https://cdn3.iconfinder.com/data/icons/glyph/141/Alarm-Clock-512.png"
+                width={30}
+                height={30}
+                alt=""
+              />
+              <span>{postTime}</span>
+            </div>
+          </div>
         </div>
         <div className="comments-list" id="cl">
           {list}
         </div>
 
         {previewCount >= 5 ? (
-          <div className="comment-write">
-            <input
-              value={this.state.comment}
-              onChange={this.handleCommentChange}
-              onKeyPress={this.handleKeyPress}
-              className="comment-input"
-              placeholder="Your Comment"
-              spellCheck = {false}
-            />
-            <input
-              type="button"
-              value="Submit"
-              onClick={this.handleSubmit}
-              className="comment-submit"
-            />
+          <div>
+            <div className="comment-write">
+              <input
+                value={this.state.comment}
+                onChange={this.handleCommentChange}
+                onKeyPress={this.handleKeyPress}
+                className="comment-input"
+                placeholder="Your Comment"
+                spellCheck={false}
+              />
+              <input
+                type="button"
+                value="Submit"
+                onClick={this.handleSubmit}
+                className="comment-submit"
+              />
+            </div>
           </div>
         ) : null}
       </div>

@@ -52,8 +52,6 @@ class WritingForm extends Component {
     this.setState({ uploading: true });
     const submit = await axios.post("/post", fd, contentType);
 
-    // console.log(submit.data)
-
     if (submit.data === "failure") {
       this.setState({ uploading: false });
       alert("업로드에 실패하였습니다. 관리자에게 카톡주세요.");
