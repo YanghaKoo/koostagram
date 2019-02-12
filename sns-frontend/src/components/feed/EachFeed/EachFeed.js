@@ -4,6 +4,7 @@ import axios from "axios";
 import Hashtag from "../../post/Hashtag/Hashtag";
 import Spinner from "../../../lib/Spinner";
 import EachFeedComment from "../EachFeedComment";
+import Mention from "../../post/Mention/Mention";
 
 const unlikeImage =
   "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png";
@@ -168,6 +169,12 @@ class EachFeed extends Component {
           return (
             <div>
               <Hashtag hashtag={item} history={this.props.history} />
+            </div>
+          );
+        }else if (item[0] === "@" && item.length > 1) {
+          return (
+            <div>
+              <Mention mention={item} history={this.props.history} match={this.props.match}/>                            
             </div>
           );
         }
