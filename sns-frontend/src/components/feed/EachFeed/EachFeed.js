@@ -205,14 +205,14 @@ class EachFeed extends Component {
             {nick}
           </div>
           <div className="right">
-          {/* <img
+            <img
                 src="https://cdn3.iconfinder.com/data/icons/glyph/141/Alarm-Clock-512.png"
-                width={30}
-                height={30}
+                width={20}
+                height={20}
                 alt=""
-              /> */}
+              />
             
-            {postTime}
+            <span className="span">{postTime}</span>
             {/* {date.substr(0, 10)} {time} */}
           </div>
         </div>
