@@ -60,7 +60,7 @@ app.use(history());
 // 배포
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
-  // app.use('/',httpsRedirect())
+  app.use('/',httpsRedirect())
   // app.use(helmet())
   // app.use(hpp())
 } else {
