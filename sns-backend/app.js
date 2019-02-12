@@ -24,7 +24,6 @@ const logger = require("./logger");
 const app = express();
 
 sequelize.sync();
-// sequelize.sync({force : true})
 
 
 // https 적용
@@ -46,7 +45,6 @@ const lex = require('greenlock-express').create({
 });
 
 https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
-
 
 
 passportConfig(passport);
