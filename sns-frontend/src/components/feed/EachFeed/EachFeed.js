@@ -207,8 +207,8 @@ class EachFeed extends Component {
           <div className="right">
             <img
                 src="https://cdn3.iconfinder.com/data/icons/glyph/141/Alarm-Clock-512.png"
-                width={20}
-                height={20}
+                width={30}
+                height={30}
                 alt=""
               />
             

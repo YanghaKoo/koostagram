@@ -30,8 +30,7 @@ router.post("/", upload.single("img"), async (req, res, next) => {
       // userId: req.user["id"]
     });
 
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    console.log(post.dataValues.id)
+    
   
     const mentions = req.body.text.match(/@[^(\s|#)]*/g);
      if (mentions) {

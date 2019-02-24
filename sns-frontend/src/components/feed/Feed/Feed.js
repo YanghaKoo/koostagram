@@ -181,9 +181,10 @@ class Feed extends Component {
   };
 
   infiniteScroll = listData => {
+    
     this.refs.iScroll.addEventListener("scroll", () => {
       if (
-        this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight >=
+        this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight + 25 >=
         this.refs.iScroll.scrollHeight
       ) {
         this.loadMoreItems(listData);
