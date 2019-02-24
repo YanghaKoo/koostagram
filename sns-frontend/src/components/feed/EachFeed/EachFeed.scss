@@ -54,17 +54,22 @@
           object-fit: contain;
         }
       }
+    
     }
     .right {
       width: 200px;
       margin-right: 15px;  
       @include media("<medium"){
+        width : 250px;
         margin-right: 50px;
       }
       
       .span{
         margin-left : 5px;
         font-size :1rem;
+        @include media("<ultrasmall"){
+          font-size : 0.7rem;
+        }
         
       }    
     }
