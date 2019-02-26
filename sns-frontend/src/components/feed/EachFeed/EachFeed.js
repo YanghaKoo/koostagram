@@ -6,6 +6,7 @@ import Spinner from "../../../lib/Spinner";
 import EachFeedComment from "../EachFeedComment";
 import Mention from "../../post/Mention/Mention";
 
+// 이미지 url, 좋아요, 좋아요 취소, 댓글 모양
 const unlikeImage =
   "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png";
 const likeImage =
@@ -28,7 +29,7 @@ class EachFeed extends Component {
     this.initializer();
   }
 
-  // 이니셜라이저, 요청하는 부분
+  // 최초에 정보들을 서버로부터 요청해서 받아와서 정리해줌
   initializer = async () => {
     this.setState({ isLoading: true });
 
@@ -37,13 +38,16 @@ class EachFeed extends Component {
       userid: this.props.userid
     });
 
-    const likeCounts = await axios.post("/post/getLikeCount", { postid: id });
-    const commentsCount = await axios.post("/post/getComments", { postid: id });
-    const profilePic = await axios.post("/post/getUserPic", {
-      userid
-    });
+    // const likeCounts = await axios.post("/post/getLikeCount", { postid: id });
+    // const commentsCount = await axios.post("/post/getComments", { postid: id });
+    // const profilePic = await axios.post("/post/getUserPic", { userid });
 
-    //console.log(nick.data)
+    const [likeCounts, commentsCount, profilePic] = await Promise.all([
+      axios.post("/post/getLikeCount", { postid: id }),
+      axios.post("/post/getComments", { postid: id }),
+      axios.post("/post/getUserPic", { userid })
+    ])
+
     this.setState({
       nick: nick.data,
       likeCounts: likeCounts.data.length,
@@ -51,9 +55,9 @@ class EachFeed extends Component {
       commentsCount: commentsCount.data.length
     });
 
-    if (localStorage.getItem('id')) {
+    if (localStorage.getItem("id")) {
       likeCounts.data.forEach(item => {
-        if (item.id === Number(localStorage.getItem('id'))) {
+        if (item.id === Number(localStorage.getItem("id"))) {
           this.setState({
             like: likeImage
           });
@@ -137,7 +141,6 @@ class EachFeed extends Component {
     const { img, date, content, userid, history } = this.props;
     const { nick, likeCounts, profilePic, like, commentsCount } = this.state;
 
-    
     // 게시글 작성 시간과 현재 시간의 날짜를 구해옴
     const writtenDate = date.substr(0, 10);
     const nowDate = new Date().toISOString().substr(0, 10);
@@ -171,10 +174,14 @@ class EachFeed extends Component {
               <Hashtag hashtag={item} history={this.props.history} />
             </div>
           );
-        }else if (item[0] === "@" && item.length > 1) {
+        } else if (item[0] === "@" && item.length > 1) {
           return (
             <div>
-              <Mention mention={item} history={this.props.history} match={this.props.match}/>                            
+              <Mention
+                mention={item}
+                history={this.props.history}
+                match={this.props.match}
+              />
             </div>
           );
         }
@@ -206,12 +213,12 @@ class EachFeed extends Component {
           </div>
           <div className="right">
             <img
-                src="https://cdn3.iconfinder.com/data/icons/glyph/141/Alarm-Clock-512.png"
-                width={30}
-                height={30}
-                alt=""
-              />
-            
+              src="https://cdn3.iconfinder.com/data/icons/glyph/141/Alarm-Clock-512.png"
+              width={30}
+              height={30}
+              alt=""
+            />
+
             <span className="span">{postTime}</span>
             {/* {date.substr(0, 10)} {time} */}
           </div>

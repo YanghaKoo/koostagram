@@ -50,7 +50,7 @@ class Comment extends Component {
     });
 
     if (localStorage.getItem("id")) {
-      likeUsers.data.map(item => {
+      likeUsers.data.forEach(item => {
         if (item.id === Number(localStorage.getItem("id"))) {
           this.setState({
             like: like

@@ -48,9 +48,15 @@ class Profile extends PureComponent {
       history.push("/");
     });
 
-    const followers = await axios.post("/post/getFollowers", { userid });
-    const following = await axios.post("/post/getFollowing", { userid });
-    const profilePic = await axios.post("/post/getUserPic", { userid });
+    const [followers, following, profilePic] = await Promise.all([
+      axios.post("/post/getFollowers", { userid }),
+      axios.post("/post/getFollowing", { userid }),
+      axios.post("/post/getUserPic", { userid })
+    ])
+
+    // const followers = await axios.post("/post/getFollowers", { userid });
+    // const following = await axios.post("/post/getFollowing", { userid });
+    // const profilePic = await axios.post("/post/getUserPic", { userid });
 
     this.setState({ isLoading: false }); // 읽어오기 완료!
 
@@ -77,7 +83,7 @@ class Profile extends PureComponent {
     const { followers } = this.state;
 
     if (Number(localStorage.getItem('id'))) {
-      followers.map(item => {
+      followers.forEach(item => {
         if (item.id === Number(localStorage.getItem("id"))) {
           this.setState({
             buttonLabel: "unfollow"
@@ -87,9 +93,8 @@ class Profile extends PureComponent {
     }
   };
 
-  // follow(unfollow)버튼 클릭
+  // 프로필의 follow(unfollow)버튼 클릭했을 때의 액션
   handleFollow = e => {
-    //팔로우 버튼 누르면
     const { userid } = this.props.match.params;
     const { followers, buttonLabel } = this.state;
 
@@ -120,8 +125,7 @@ class Profile extends PureComponent {
     }
   };
 
-  // select로 follower를 띄울 모달인지 following를 띄울 모달인지 구별해줌
-  // Follower와 관련된 modal을 열어줌
+    // Follower와 관련된 modal을 열어줌
   showFollowerModal = e => {
     this.setState({
       modal: true,
@@ -169,7 +173,7 @@ class Profile extends PureComponent {
       isLoading
     } = this.state;
 
-    // 로딩 puff 보여주기
+    // 로딩시 puff 보여주기
     if (isLoading) {
       let ph;
       window.innerWidth > 676 ? (ph = "240px") : (ph = "310px");
