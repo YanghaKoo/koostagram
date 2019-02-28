@@ -93,9 +93,9 @@ router.post('/login', (req,res, next)=>{    // req.body.eamil , req.body.passwor
 // 닉네임 중복 검사
 router.post("/nickCheck", async (req, res, next)=>{
   try {
-    const {nick} = req.body
+    const {input} = req.body   // 기존 input 대신 nick
     const user = await User.find({
-      where : { nick }
+      where : { nick : input } // 기존 input 대신 nick
     });
     user? res.send("duplicate") : res.send("ok")
 
@@ -108,12 +108,11 @@ router.post("/nickCheck", async (req, res, next)=>{
 
 router.post("/emailCheck", async (req, res, next)=>{
   try {
-    const {email} = req.body
+    const {input} = req.body    // 기존 input 대신 email
     const user = await User.find({
-      where : { email }
+      where : { email : input}  // 기존 input 대신 email 
     });
     user ? res.send("duplicate") : res.send("ok")
-
   } catch (e) {
     console.log(e);
     next(e);
