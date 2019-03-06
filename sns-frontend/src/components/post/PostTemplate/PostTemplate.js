@@ -132,7 +132,7 @@ class PostTemplate extends Component {
                   value="Delete"
                   onClick={this.handleDelete}
                 />
-              ) : null}
+              ) : null}\
             </div>
             <div className="test">{contentWithHashtag}</div>
             <div>{this.hashtags}</div>

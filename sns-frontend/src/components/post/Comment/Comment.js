@@ -181,7 +181,7 @@ class Comment extends Component {
     const hours = (millisec / (1000 * 60 * 60)).toFixed(0);
 
     if (seconds < 60) {
-      return seconds + " sec ago";
+      return (seconds ? seconds : 1) + " sec ago";
     } else if (minutes < 60) {
       return minutes + " min ago";
     } else if (hours < 24) {
