@@ -38,10 +38,7 @@ class EachFeed extends Component {
       userid: this.props.userid
     });
 
-    // const likeCounts = await axios.post("/post/getLikeCount", { postid: id });
-    // const commentsCount = await axios.post("/post/getComments", { postid: id });
-    // const profilePic = await axios.post("/post/getUserPic", { userid });
-
+    // 한꺼번에 필요 정보 가져오기
     const [likeCounts, commentsCount, profilePic] = await Promise.all([
       axios.post("/post/getLikeCount", { postid: id }),
       axios.post("/post/getComments", { postid: id }),
@@ -68,11 +65,13 @@ class EachFeed extends Component {
     this.setState({ isLoading: false });
   };
 
+  // 클릭했을 때 실제 게시물로 이동시키기
   handleClick = () => {
     const { history, id: postid, userid } = this.props;
     history.push(`/user/${userid}/${postid}`);
   };
 
+  // like/unlike
   handleLikeClick = () => {
     const { id: postid } = this.props;
 
@@ -104,17 +103,16 @@ class EachFeed extends Component {
 
   toggleComment = () => {
     const { commentToggle } = this.state;
-
     if (!localStorage.getItem("nick")) {
       alert("댓글 작성은 로그인 후에 가능합니다.");
       return;
     }
-
     this.setState({
       commentToggle: !commentToggle
     });
   };
 
+  // 각 feed에서 직접 댓글 남길 때
   handleCommentAction = () => {
     const { commentsCount } = this.state;
     this.setState({
@@ -129,7 +127,7 @@ class EachFeed extends Component {
     const hours = (millisec / (1000 * 60 * 60)).toFixed(0);
 
     if (seconds < 60) {
-      return seconds + " sec ago";
+      return (seconds ? seconds + " sec ago": "방금 전") 
     } else if (minutes < 60) {
       return minutes + " min ago";
     } else if (hours < 24) {

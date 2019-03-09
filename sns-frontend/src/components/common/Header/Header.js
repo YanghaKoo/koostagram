@@ -9,24 +9,24 @@ class Header extends Component {
   state = {
     toggle: false,
     notifications: "loading",
-    hasNewNotification: false,
-  
+    hasNewNotification: false
   };
 
   async componentDidMount() {
     const userid = Number(localStorage.getItem("id"));
     if (userid) {
-      this.getNotifications()
-    } 
+      this.getNotifications();
+    }
     this.initializer();
   }
 
   // 비로그인 상태에서 로그인 했을때 알림 가져올 수 있게
-  componentWillReceiveProps(nextProps){
-    if(this.props.id !== nextProps.id) this.getNotifications()
+  componentWillReceiveProps(nextProps) {
+    if (this.props.id !== nextProps.id) this.getNotifications();
   }
 
-  getNotifications = () =>{
+  // 일정시간(10초)에 한번씩 새로운 알림이 있는지 확인하기 위한 함수
+  getNotifications = () => {
     setInterval(async () => {
       const userid = Number(localStorage.getItem("id"));
       const myNotifications = await axios.post("/post/notification", {
@@ -42,21 +42,10 @@ class Header extends Component {
       this.setState({
         notifications: myNotifications.data
       });
-    }, 5 * 1000); // 5초
-  }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   try {
-  //     if(prevProps.notifications[0].id === this.props.NotifyModal[0].id){
-  //       this.initializer()
-  //     }
-  //   }catch(e){
-
-  //   }
-  // }
+    }, 10 * 1000); // 10초
+  };
 
   initializer = async () => {
-    
     const userid = Number(localStorage.getItem("id"));
     const myNotifications = await axios.post("/post/notification", { userid });
     for (const item of myNotifications.data) {
@@ -69,8 +58,6 @@ class Header extends Component {
     this.setState({
       notifications: myNotifications.data
     });
-
-    // 그 이후에 setInterval로 일정 시간마다 받아오기,
   };
 
   handleToggle = () => {
@@ -80,11 +67,13 @@ class Header extends Component {
     });
   };
 
+  // 매개변수로 온 url로 이동시키기
   handleLink = link => {
     if (localStorage.getItem("id")) this.props.history.push(link);
     else alert("로그인 후 가능합니다.");
   };
 
+  // 새로운 알림 확인/끄기
   handleToggleNotify = () => {
     if (!localStorage.getItem("id")) {
       alert("로그인 후 가능합니다.");
@@ -98,10 +87,6 @@ class Header extends Component {
   render() {
     const { isAble, input, handleChange, handleBlur } = this.props;
     const { toggle, hasNewNotification } = this.state;
-
-
-  
-
 
     // isAble로 클릭 가능한지 정하기
     let cursorStyle = isAble ? { cursor: "pointer" } : null;
@@ -176,32 +161,8 @@ class Header extends Component {
               />
               {hasNewNotification && <div className="dot" />}
             </div>
-
-            {/*             
-            <Button isAble={isAble} to="/write">
-              Write Post
-            </Button>
-            <Button isAble={isAble} to={to}>
-              My Page
-            </Button> */}
           </div>
         </div>
-
-        {/* {toggle ? 
-        <div className="header">
-              <input 
-              style={{marginLeft : '5%'}}
-              type="text"
-              className="search"
-              value={input}
-              onChange={handleChange}
-              spellCheck={false}
-              placeholder="Search"
-              onBlur={handleBlur}
-            /> 
-            </div>
-            : 
-        null} */}
       </div>
     );
   }
