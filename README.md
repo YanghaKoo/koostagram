@@ -1,5 +1,9 @@
 # Koostagram
 
+## 아래 스크린샷을 클릭해 시연영상을 확인할 수 있습니다.
+[![Video Label](http://img.youtube.com/vi/5hnub4yxyJM/0.jpg)](https://www.youtube.com/watch?v=5hnub4yxyJM)
+
+
 ## Patch notes
 1.15* 
   1) **댓글 해쉬태그 기능** 추가  
