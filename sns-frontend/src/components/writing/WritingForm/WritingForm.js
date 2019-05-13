@@ -116,7 +116,7 @@ class WritingForm extends Component {
 
     const spinnerSize = window.innerWidth > 450 ? "100px" : "50px";
     const imageButtonLabel = this.state.selectedFile
-      ? "다시고르기"
+      ? "다시 고르기"
       : "업로드할 사진 고르기";
 
     // 업로드 버튼 눌러서 업로딩으로 들어가면 스피너 띄우게

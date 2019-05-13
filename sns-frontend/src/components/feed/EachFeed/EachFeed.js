@@ -5,6 +5,7 @@ import Hashtag from "../../post/Hashtag/Hashtag";
 import Spinner from "../../../lib/Spinner";
 import EachFeedComment from "../EachFeedComment";
 import Mention from "../../post/Mention/Mention";
+// `import CommentContainer from '../../../containers/user/CommentContainer'`
 
 // 이미지 url, 좋아요, 좋아요 취소, 댓글 모양
 const unlikeImage =
@@ -257,10 +258,14 @@ class EachFeed extends Component {
             </div>
             <div className="test">{contentWithHashtag}</div>
             {this.state.commentToggle ? (
+              <div>
               <EachFeedComment
                 handleCommentAction={this.handleCommentAction}
                 id={this.props.id}
+                commentsCount={commentsCount}
               />
+              
+              </div>
             ) : null}
           </div>
         </div>

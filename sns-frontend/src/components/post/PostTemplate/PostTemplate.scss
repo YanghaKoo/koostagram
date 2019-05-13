@@ -28,6 +28,7 @@ $contentColor :  white;
 
   .right{
     height: 80%;
+    width : auto;
     background: #ECEFEE;
     @include material-shadow(3);
     @include media("<large"){
@@ -116,7 +117,7 @@ $contentColor :  white;
   margin-right: 5px;
  }
  
-.test{
+.test2{
   display: flex;
   flex-wrap : wrap;
   

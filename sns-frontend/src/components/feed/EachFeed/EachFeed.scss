@@ -111,6 +111,8 @@
         padding-right: 30px;
         padding-bottom: 20px;
         border-top: 2px solid $oc-gray-5;
+        display: flex;
+        flex-wrap : wrap;
 
         @include media("<medium") {
           width: 100%;

@@ -1,7 +1,12 @@
 .each-feed-comment {
   width : 100%;
   padding-bottom : 10px;
+  border-top: 0.5px solid $oc-gray-2;
   
+  .get-comment{
+    padding : 20px;
+    
+  }
   
   .comment-content {
     font-size: 1.3rem;

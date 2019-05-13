@@ -56,7 +56,7 @@ class EachComment extends Component {
         <div onClick={this.handleClick} className="nick-area">
           {usernick} &nbsp;{" "}
         </div>
-        <div className="test"> {withHT}</div>
+        <div className="test2"> {withHT}</div>
       </div>
     );
   }

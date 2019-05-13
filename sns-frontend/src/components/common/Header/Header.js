@@ -144,7 +144,7 @@ class Header extends Component {
               <img
                 className="imgs"
                 alt=""
-                src="https://trials.ai/wp-content/uploads/2018/09/user.png"
+                src="https://image.flaticon.com/icons/svg/149/149071.svg"
               />
             </div>
 
@@ -157,7 +157,7 @@ class Header extends Component {
               <img
                 className="imgs"
                 alt=""
-                src="https://www.materialui.co/materialIcons/action/alarm_white_192x192.png"
+                src="https://image.flaticon.com/icons/svg/148/148921.svg"
               />
               {hasNewNotification && <div className="dot" />}
             </div>
