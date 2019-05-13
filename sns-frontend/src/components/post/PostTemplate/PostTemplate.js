@@ -134,7 +134,7 @@ class PostTemplate extends Component {
                 />
               ) : null}
             </div>
-            <div className="test">{contentWithHashtag}</div>
+            <div className="test2">{contentWithHashtag}</div>
             <div>{this.hashtags}</div>
           </div>
           <CommentContainer previewCount={5} token1={this.props.token1} token2={this.props.token2} createdAt={createdAt}/>

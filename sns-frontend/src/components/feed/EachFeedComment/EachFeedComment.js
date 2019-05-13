@@ -29,7 +29,7 @@ class EachFeedComment extends Component {
       this.setState({ commentsBefore });
     }
 
-    console.log(this.state.commentsBefore);
+    
   }
 
   handleChange = e => {
