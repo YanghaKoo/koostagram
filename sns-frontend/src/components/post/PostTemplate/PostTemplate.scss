@@ -28,7 +28,6 @@ $contentColor :  white;
 
   .right{
     height: 80%;
-    width : auto;
     background: #ECEFEE;
     @include material-shadow(3);
     @include media("<large"){
