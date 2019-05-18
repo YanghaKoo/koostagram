@@ -68,14 +68,11 @@ class PostTemplate extends Component {
 
 
   
-
+ 
   render() {
     const { img, content, createdAt } = this.state;
     const { userid } = this.props.match.params;
     const { history } = this.props;
-
-
-
 
     // 본문의 hashtag부분을 해당 해쉬태그 검색과 연결시키는 부분, string형태의 본문을 재구성하여 해쉬태그부분을 차별화
     let contentWithHashtag;
